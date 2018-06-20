@@ -1,0 +1,37 @@
+[user]
+	name = Rogin Farrer
+	email = rfarrer@wayfair.com
+[color]
+	ui = true
+	status = always
+[pull]
+	# rebase = true
+[push]
+	default = current
+[fetch]
+	prune = true
+[core]
+	autocrlf = false
+	preloadindex = true
+	fscache = true
+	excludesfile = /Users/rfarrer/.gitignore_global
+	editor = code --wait
+	symlinks = false
+[log]
+	decorate = short
+[http]
+	sslVerify = false
+[alias]
+  mdiff = "!f() { git diff --full-index master > ~/Desktop/diffs/$1.diff; }; f"
+[reviewboard]
+	url = https://rb.csnzoo.com
+[mergetool]
+	keepBackup = false
+	prompt = false
+	trustExitCode = true
+[diff]
+  tool = default-difftool
+[difftool "default-difftool"]
+  cmd = code --wait --diff $LOCAL $REMOTE
+[commit]
+  template = ~/.gitmessage
