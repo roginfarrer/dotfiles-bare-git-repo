@@ -5,8 +5,12 @@
 - clean: ['~']
 
 - link:
-    ~/.dotfiles: '',
+    ~/.dotfiles: ''
     ~/.zshrc: 'zsh/.zshrc'
+    ~/.zsh: 'zsh/config/'
+    ~/.gitconfig: 'git/.gitconfig'
+    ~/.gitignore_global: 'git/.gitignore_global'
+    ~/.gitmessage: 'git/.gitmessage'
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]

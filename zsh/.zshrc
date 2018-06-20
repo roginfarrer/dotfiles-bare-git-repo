@@ -13,6 +13,10 @@ source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $ZSH/oh-my-zsh.sh
 source ${WORKLOCATION}wf/wf_complete
 
+if [ -f ~/.zshrc_local ]; then
+  source ~/.zshrc_local
+fi
+
 ### NVM node versioning
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
