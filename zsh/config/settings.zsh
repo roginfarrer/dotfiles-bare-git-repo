@@ -1,5 +1,4 @@
 ### Exports
-export ZSH=/Users/${USER}/.oh-my-zsh
 export EDITOR="${EDITOR}"
 export GIT_EDITOR="${GIT_EDITOR}"
 export DEFAULT_USER="${USER}"
@@ -20,14 +19,8 @@ export PATH="$HOME/.composer/vendor/bin:$PATH"
 autoload -U +X compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
 
-### Plugins
-plugins=(osx brew zsh-autosuggestions zsh-syntax-highlighting)
-
 ### Colors
 autoload colors; colors
-
-### Other zsh Settings
-COMPLETION_WAITING_DOTS="true"
 
 ### Set up Fuck https://github.com/nvbn/thefuck
 eval "$(thefuck --alias)"
@@ -35,5 +28,7 @@ eval "$(thefuck --alias)"
 ### Run .zsh
 . ~/z.sh
 
-### Zsh theme
-ZSH_THEME="spaceship-old-old"
+### NVM node versioning
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

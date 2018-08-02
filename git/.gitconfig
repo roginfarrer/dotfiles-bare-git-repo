@@ -16,7 +16,7 @@
 	fscache = true
 	excludesfile = /Users/rfarrer/.gitignore_global
 	editor = code --wait
-	symlinks = false
+	symlinks = true
 [log]
 	decorate = short
 [http]

@@ -8,9 +8,12 @@
     ~/.dotfiles: ''
     ~/.zshrc: 'zsh/.zshrc'
     ~/.zsh: 'zsh/config/'
+    ~/.zpreztorc: 'zsh/.zpreztorc'
+    ~/.zprofile: 'zsh/.zprofile'
     ~/.gitconfig: 'git/.gitconfig'
     ~/.gitignore_global: 'git/.gitignore_global'
     ~/.gitmessage: 'git/.gitmessage'
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]
+  - [touch ~/.hushlogin, Making hushlogin]
