@@ -9,7 +9,9 @@ git clone https://github.com/roginfarrer/dotfiles.git
 
 ## My Todo List
 
-- Installing fish, and setting it to default
+- Installing fish, oh-my-fish, plugins, and setting it to default
+  - https://bpinto.github.io/oh-my-fish/
+  - plugins: spacefish, pisces, z
 - Installing apps
   - Chrome, iTerm, VSCode, Station, TickTick, 1Password
 - Setting up iTerm correctly:

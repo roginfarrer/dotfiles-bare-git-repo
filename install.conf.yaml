@@ -13,15 +13,13 @@
     ~/.gitconfig: 'git/gitconfig'
     ~/.gitignore_global: 'git/gitignore_global'
     ~/.gitmessage: 'git/gitmessage'
-    ~/.config/fish/config.fish:
-        create: true
-        path: 'fish/config.fish'
     ~/.config/omf/init.fish:
         create: true
         path: 'fish/init.fish'
     ~/.config/fish/functions/fish_user_key_bindings.fish:
         create: true
         path: 'fish/fish_user_key_bindings.fish'
+    ~/.config/karabiner: 'karabiner/'
 
 
 - shell:

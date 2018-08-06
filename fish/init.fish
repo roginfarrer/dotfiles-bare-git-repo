@@ -7,7 +7,6 @@ set WORKLOCATION /Users/$USER/Wayfair
 
 set fish_prompt_pwd_dir_length 0
 
-
 ## Functions
 function getBranch
   git symbolic-ref --short -q HEAD; or echo "default_value";
@@ -63,4 +62,3 @@ alias sshbox="ssh $DEVBOX"
 
 ## Spacefish settings
 set -g SPACEFISH_PROMPT_ORDER user dir git exec_time line_sep battery char
-set -g SPACEFISH_PACKAGE_SHOW false
