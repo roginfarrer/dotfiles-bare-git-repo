@@ -2,27 +2,25 @@
     link:
       relink: true
 
-- clean: ['~']
+- clean: ["~"]
 
 - link:
     # ~/dotfiles: ''
-    ~/.zshrc: 'zsh/.zshrc'
-    ~/.zsh: 'zsh/config/'
-    ~/.zpreztorc: 'zsh/.zpreztorc'
-    ~/.zprofile: 'zsh/.zprofile'
-    ~/.gitconfig: 'git/gitconfig'
-    ~/.gitignore_global: 'git/gitignore_global'
-    ~/.gitmessage: 'git/gitmessage'
+    ~/.zshrc: "zsh/.zshrc"
+    ~/.zsh: "zsh/config/"
+    ~/.zprofile: "zsh/.zprofile"
+    ~/.gitconfig: "git/gitconfig"
+    ~/.gitignore_global: "git/gitignore_global"
+    ~/.gitmessage: "git/gitmessage"
     ~/.config/omf/init.fish:
-        create: true
-        path: 'fish/init.fish'
+      create: true
+      path: "fish/init.fish"
     ~/.config/fish/functions/fish_user_key_bindings.fish:
-        create: true
-        path: 'fish/fish_user_key_bindings.fish'
-    ~/.config/karabiner: 'karabiner/'
-
+      create: true
+      path: "fish/fish_user_key_bindings.fish"
+    ~/.config/karabiner: "karabiner/"
 
 - shell:
-# this came from default config, not sure if needed
-#   - [git submodule update --init --recursive, Installing submodules]
-  - [touch ~/.hushlogin, Making hushlogin]
+    # this came from default config, not sure if needed
+    #   - [git submodule update --init --recursive, Installing submodules]
+    - [touch ~/.hushlogin, Making hushlogin]
