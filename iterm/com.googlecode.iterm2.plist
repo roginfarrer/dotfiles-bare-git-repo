@@ -5931,7 +5931,7 @@
 	<key>MaxVertically</key>
 	<false/>
 	<key>NSNavLastRootDirectory</key>
-	<string>~/dotfiles</string>
+	<string>~/dotfiles/iterm</string>
 	<key>NSNavPanelExpandedSizeForOpenMode</key>
 	<string>{712, 459}</string>
 	<key>NSNavPanelExpandedSizeForSaveMode</key>
@@ -5944,6 +5944,11 @@
 	<false/>
 	<key>NSScrollViewShouldScrollUnderTitlebar</key>
 	<false/>
+	<key>NSSplitView Subview Frames NSColorPanelSplitView</key>
+	<array>
+		<string>0.000000, 0.000000, 224.000000, 263.000000, NO, NO</string>
+		<string>0.000000, 264.000000, 224.000000, 43.000000, NO, NO</string>
+	</array>
 	<key>NSTableView Columns v2 KeyBingingTable</key>
 	<data>
 	YnBsaXN0MDDUAQIDBAUGNjdYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3AS
@@ -5977,13 +5982,13 @@
 	<key>NSWindow Frame Preferences</key>
 	<string>-1549 569 606 456 -1680 0 1680 1027 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>530 476 620 392 0 0 1680 1027 </string>
+	<string>-1150 326 620 392 -1680 -150 1680 1027 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>489 21 606 469 0 0 2560 1417 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>1120 387 796 473 0 0 2560 1417 </string>
+	<string>657 511 918 514 0 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>1086 168 680 487 0 0 2560 1417 </string>
+	<string>2560 -122 1080 1897 2560 -122 1080 1897 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>161 550 665 452 0 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -6700,9 +6705,9 @@
 			<key>Semantic History</key>
 			<dict>
 				<key>action</key>
-				<string>best editor</string>
+				<string>editor</string>
 				<key>editor</key>
-				<string>com.sublimetext.3</string>
+				<string>com.microsoft.VSCode</string>
 				<key>text</key>
 				<string></string>
 			</dict>
@@ -6862,7 +6867,7 @@ end tell"</string>
 					<key>parameter</key>
 					<string>TURBINE: Compilation DONE</string>
 					<key>partial</key>
-					<true/>
+					<false/>
 					<key>regex</key>
 					<string>Compilation finished</string>
 				</dict>
@@ -7745,7 +7750,7 @@ repeat with aWindow in windowList
 end repeat
 end tell"</string>
 					<key>partial</key>
-					<true/>
+					<false/>
 					<key>regex</key>
 					<string>Compilation finished</string>
 				</dict>
@@ -7874,7 +7879,7 @@ end tell"</string>
 		</dict>
 	</dict>
 	<key>PrefsCustomFolder</key>
-	<string>/Users/rfarrer/dotfiles</string>
+	<string>/Users/rfarrer/dotfiles/iterm</string>
 	<key>Print In Black And White</key>
 	<true/>
 	<key>PromptOnQuit</key>
@@ -7896,7 +7901,7 @@ end tell"</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2018-08-03T13:27:53Z</date>
+	<date>2018-11-27T20:33:27Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>ShowBookmarkName</key>
@@ -47391,7 +47396,7 @@ end tell"</string>
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.1.7</string>
+	<string>3.2.5</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>

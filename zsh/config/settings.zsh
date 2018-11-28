@@ -35,6 +35,9 @@ setopt interactive_comments # allow comments in interactive shells
 ### Colors
 autoload colors; colors
 
+# Da fuck?
+eval $(thefuck --alias)
+
 # http://stackoverflow.com/a/844299
 expand-or-complete-with-dots() {
   echo -n "\e[31m...\e[0m"
