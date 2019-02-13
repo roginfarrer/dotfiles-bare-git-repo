@@ -14,7 +14,6 @@ if [ $(date +'%j') != $updated_at ]; then
 else
   compinit -C -i
 fi
-zmodload -i zsh/complist
 # Save history so we get auto suggestions
 HISTFILE=$HOME/.zsh_history
 HISTSIZE=100000
@@ -32,8 +31,13 @@ setopt share_history # share history between different instances
 # setopt correct_all # autocorrect commands
 setopt interactive_comments # allow comments in interactive shells
 
-### Colors
+zmodload -i zsh/complist
+
+# Colors
 autoload colors; colors
+
+# Da fuck?
+eval $(thefuck --alias)
 
 # http://stackoverflow.com/a/844299
 expand-or-complete-with-dots() {
@@ -44,18 +48,24 @@ expand-or-complete-with-dots() {
 zle -N expand-or-complete-with-dots
 bindkey "^I" expand-or-complete-with-dots
 
-### Exports
-export EDITOR="${EDITOR}"
-export GIT_EDITOR="${GIT_EDITOR}"
-export DEFAULT_USER="${USER}"
-export PATH="$HOME/.yarn/bin:$PATH"
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-export PATH=$PATH:$HOME/bin
-export PATH=/usr/local/bin:$PATH
-export PATH=/usr/local/share/npm/bin:$PATH
-export PATH=/usr/local/php5/bin:$PATH
-export PATH="$HOME/.rbenv/bin:$PATH"
-export PATH="$PATH:`yarn global bin`"
-export PATH=”$HOME/platform-tools/bin:$PATH”
-export PATH="${WORKLOCATION}wf:$PATH"
-export PATH="$HOME/.composer/vendor/bin:$PATH"
+# Autojump!
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+
+## Path
+
+PATH="$HOME/.yarn/bin:$PATH"
+PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+PATH=$PATH:$HOME/bin
+PATH=/usr/local/bin:$PATH
+PATH=/usr/local/share/npm/bin:$PATH
+PATH=/usr/local/php5/bin:$PATH
+PATH="$HOME/.rbenv/bin:$PATH"
+PATH="$PATH:`yarn global bin`"
+PATH="${WORKLOCATION}wf:$PATH"
+PATH="$HOME/.composer/vendor/bin:$PATH"
+
+# Android Dev Tools
+PATH=”$HOME/platform-tools/bin:$PATH”
+# Python at Wayfair
+PATH=$HOME/.local/bin:$PATH:$HOME/bin
+export PATH

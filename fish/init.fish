@@ -7,6 +7,12 @@ set WORKLOCATION /Users/$USER/Wayfair
 
 set fish_prompt_pwd_dir_length 0
 
+## Fuck!
+thefuck --alias | source
+
+## Autojump!
+[ -f /usr/local/share/autojump/autojump.fish ]; and source /usr/local/share/autojump/autojump.fish
+
 ## Functions
 function getBranch
   git symbolic-ref --short -q HEAD; or echo "default_value";

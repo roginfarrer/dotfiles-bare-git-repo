@@ -19,3 +19,27 @@ alias temps="cd ${WORKLOCATION}templates && git status"
 alias rbreviews="node ./node_scripts/review.js open --team=frontend"
 alias reviews-mine="node ./node_scripts/review.js open --team=css,html,mustache,js,sf:${USER}"
 alias reviews-js="node ./node_scripts/review.js open --team=js"
+
+### HB Builds
+rebuild () {
+  npm run hb-build -- --c=$1
+}
+rebuildBoth () {
+  files=""
+  for i in $(echo $1 | sed "s/,/ /g")
+  do
+    if [ ${#files} -ne 0 ]
+    then
+      files="$files,"
+    fi
+    files="${files}admin_$i,extranet_$i"
+  done
+  echo $files
+  rebuild $files
+}
+wftest () {
+  npm run test "$1"
+}
+wftest-w () {
+  npm run test-watch $1
+}
