@@ -26,3 +26,7 @@ defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
 # will download night owl theme
 curl 'https://raw.githubusercontent.com/nickcernis/iterm2-night-owl/master/Night%20Owl.itermcolors' > iterm/night_owl.itermcolors
 ```
+
+Casks I can download:
+
+chrome, vanilla, iterm2, karabiner-elements, visual-studio-code, notion, alfred
