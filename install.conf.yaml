@@ -19,6 +19,8 @@
       create: true
       path: "fish/fish_user_key_bindings.fish"
     ~/.config/karabiner: "karabiner/"
+    ~/.vimrc: "vim/vimrc.vim"
+    # ~/.vim/plugins: "vim/plugins"
 
 - shell:
     # this came from default config, not sure if needed
