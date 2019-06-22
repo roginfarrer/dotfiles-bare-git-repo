@@ -7,6 +7,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 Plug 'jiangmiao/auto-pairs'
 Plug 'mattn/emmet-vim'
 Plug 'airblade/vim-gitgutter'
@@ -14,11 +15,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 call plug#end()
 
-source ~/dotfiles/vim/nerdtree.vim
+" source ~/dotfiles/vim/nerdtree.vim
 source ~/dotfiles/vim/ultimate-basic-vim.vim
-
-" Initialize NERDtree
-:autocmd VimEnter * NERDTree
 
 " Keybindings
 nnoremap <C-p> :Files<CR>
@@ -59,7 +57,7 @@ autocmd VimEnter * silent !echo -ne "\e[2 q"
 augroup END
 
 " Set Gutentags to write its tag files to a directory outside any git repositories to avoid accidentally committing them
-let g:gutentags_cache_dir = '~/.vim/gutentags'
+" let g:gutentags_cache_dir = '~/.vim/gutentags'
 " Jump Into a tag from a tag under the cursor to its implementation in a new window
 noremap <Leader>ji <C-w>]
 " Jump Out into the original working ontext
@@ -68,9 +66,12 @@ noremap <Leader>jo <C-t>
 set shiftwidth=2                " Use indents of 4 spaces
 set tabstop=2                   " An indentation every four columns
 set softtabstop=2               " Let backspace delete indent
-set laststatus=2
+set laststatus=0
 set autoread
+" Enable mouse support
 set mouse=n
+" Only show tabline if there are multiple tabs
+set showtabline=1
 
 " Copy visual selection to clipboard
 map <C-c> "+y
@@ -87,3 +88,16 @@ let g:user_emmet_leader_key="<tab>"
 
 " ---------- VIM AIRLINE CONFIG ----------
 let g:airline_theme="wombat"
+
+" ---------- NERDTree Config ----------
+map <leader>r :NERDTreeFind<cr>
+map <Leader>t :NERDTreeToggle<CR>
+" Initialize NERDtree
+:autocmd VimEnter * NERDTree
+
+
+" -------------------------------------
+"           Git Rhubarb               
+" --------------------------------------
+let g:github_enterprise_urls = ['https://git.csnzoo.com']
+map <leader>go :Gbrowse<CR>

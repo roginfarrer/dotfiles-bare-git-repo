@@ -6,7 +6,7 @@
 "       Get this config, nice color schemes and lots of plugins!
 "
 "       Install the awesome version from:
-"
+
 "           https://github.com/amix/vimrc
 "
 " Sections:
@@ -123,9 +123,6 @@ if has("gui_macvim")
 endif
 
 
-" Add a bit extra margin to the left
-set foldcolumn=1
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
@@ -138,7 +135,7 @@ if $COLORTERM == 'gnome-terminal'
     set t_Co=256
 endif
 
-" set background=dark
+set background=dark
 
 " Set extra options when running in GUI mode
 if has("gui_running")
@@ -255,7 +252,7 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 " => Status line
 """"""""""""""""""""""""""""""
 " Always show the status line
-set laststatus=2
+" set laststatus=2
 
 " Format the status line
 set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
