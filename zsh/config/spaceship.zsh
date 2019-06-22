@@ -13,4 +13,7 @@ SPACESHIP_PROMPT_ORDER=(
   char          # Prompt character
 )
 
+# Required for insert/normal mode indicator to change properly
+# spaceship_vi_mode_enable
+
 antibody bundle denysdovhan/spaceship-prompt

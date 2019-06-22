@@ -8,7 +8,8 @@ export NVM_AUTO_USE=true # use .nvmrc if it exists
 # Plugins
 antibody bundle lukechilds/zsh-nvm
 antibody bundle marzocchi/zsh-notify
-antibody bundle zsh-users/zsh-completions
+# Disabled to test if perf is better
+# antibody bundle zsh-users/zsh-completions
 antibody bundle zsh-users/zsh-autosuggestions
 antibody bundle djui/alias-tips
 antibody bundle peterhurford/git-it-on.zsh

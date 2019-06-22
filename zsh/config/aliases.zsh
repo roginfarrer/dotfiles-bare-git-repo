@@ -34,7 +34,12 @@ confirm() {
 deleteOldBranchesLoop() {
   for k in $(git branch | sed /\*/d); do
     if [[ ! $(git log -1 --since='2 weeks ago' -s $k) ]]; then
-      git branch -D $k
+      if [ -n "$1" ]
+        then
+          git branch -D $k
+        else
+          echo $k
+      fi
     fi
   done
 }
@@ -50,7 +55,7 @@ alias g="git"
 alias gs="git status"
 alias commit="git commit"
 alias mycommits="git log --author=${USER}"
-alias branch="git for-each-ref --sort=committerdate refs/heads --color --format='%(HEAD)%(color:bold green)%(committerdate)|%(color:yellow)%(refname:short)|%(color:blue)%(subject)%(color:reset)'|column -ts'|'"
+alias branch="git for-each-ref --sort=committerdate refs/heads --color --format='%(HEAD)%(color:bold green)%(committerdate:short)|%(color:yellow)%(refname:short)%(color:reset)'|column -ts'|'"
 alias staged="git diff --staged"
 alias amend="git commit --amend --no-edit"
 alias unamend="git reset --soft HEAD@{1}"

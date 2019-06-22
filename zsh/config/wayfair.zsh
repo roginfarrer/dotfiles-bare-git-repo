@@ -12,7 +12,7 @@ alias rs="perl /usr/local/bin/realsync/realsync ${WORKLOCATION}"
 
 ### cd into repos
 alias res="cd ${WORKLOCATION}resources && git status"
-alias php="cd ${WORKLOCATION}php && git status"
+alias cdphp="cd ${WORKLOCATION}php && git status"
 alias temps="cd ${WORKLOCATION}templates && git status"
 
 ### Reviews
@@ -41,5 +41,5 @@ wftest () {
   npm run test "$1"
 }
 wftest-w () {
-  npm run test-watch $1
+  npm run test -- --watch --verbose=false $1
 }

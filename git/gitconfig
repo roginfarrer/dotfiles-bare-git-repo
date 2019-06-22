@@ -35,3 +35,5 @@
   cmd = code --wait --diff $LOCAL $REMOTE
 [commit]
   template = ~/.gitmessage
+[pack]
+	useSparse = true

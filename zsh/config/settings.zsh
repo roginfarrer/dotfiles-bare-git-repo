@@ -36,9 +36,6 @@ zmodload -i zsh/complist
 # Colors
 autoload colors; colors
 
-# Da fuck?
-eval $(thefuck --alias)
-
 # http://stackoverflow.com/a/844299
 expand-or-complete-with-dots() {
   echo -n "\e[31m...\e[0m"
@@ -58,12 +55,14 @@ PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 PATH=$PATH:$HOME/bin
 PATH=/usr/local/bin:$PATH
 PATH=/usr/local/share/npm/bin:$PATH
-PATH=/usr/local/php5/bin:$PATH
 PATH="$HOME/.rbenv/bin:$PATH"
 PATH="$PATH:`yarn global bin`"
 PATH="${WORKLOCATION}wf:$PATH"
 PATH="$HOME/.composer/vendor/bin:$PATH"
 
+# PHP at Wayfair
+export PATH="/usr/local/opt/php@7.2/bin:$PATH"
+export PATH="/usr/local/opt/php@7.2/sbin:$PATH"
 # Android Dev Tools
 PATH=”$HOME/platform-tools/bin:$PATH”
 # Python at Wayfair
