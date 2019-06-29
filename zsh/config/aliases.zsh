@@ -1,3 +1,7 @@
+if type nvim > /dev/null 2>&1; then
+  alias vim='nvim'
+fi
+
 ### Functions
 # Quickly restart zsh
 restartzsh () { echo "$fg_bold[yellow]Sourcing...$reset_color"; . ~/.zshrc; }

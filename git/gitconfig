@@ -15,7 +15,7 @@
 	preloadindex = true
 	fscache = true
 	excludesfile = /Users/rfarrer/.gitignore_global
-	editor = code --wait
+	editor = vim
 	symlinks = true
 [log]
 	decorate = short
