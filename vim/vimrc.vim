@@ -7,12 +7,14 @@ call plug#begin()
 " Syntax highlighting for pretty much everything
 Plug 'sheerun/vim-polyglot'
 " Linting!
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 " FZF...
 set rtp+=/usr/local/opt/fzf
 " ...and the fzf vim plugin
 Plug 'junegunn/fzf.vim'
 " Autocompletion, and some basic linting
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+" Disabling due to performance...
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 " Tree pane that can open
 Plug 'scrooloose/nerdtree'
@@ -22,11 +24,15 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'airblade/vim-gitgutter'
 Plug 'itchyny/lightline.vim'
+" Plug 'maximbaz/lightline-ale'
 Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
 " Use the below two for flashing on yank
 Plug 'kana/vim-operator-user'
 Plug 'haya14busa/vim-operator-flashy'
+" Fancy start screen
+Plug 'mhinz/vim-startify'
 call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -34,6 +40,9 @@ call plug#end()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Sets how many lines of history VIM has to remember
 set history=500
+
+" Should help with performance? Will hide buffers instead of closing them
+set hidden
 
 " Enable filetype plugins
 filetype plugin on
@@ -179,6 +188,9 @@ set encoding=utf8
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
 
+" Set syntax highlighting for config files
+autocmd BufNewFile,BufRead *stylelintrc,*eslintrc,*babelrc,*jshintrc setlocal syntax=json
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
@@ -187,6 +199,8 @@ set ffs=unix,dos,mac
 set nobackup
 set nowb
 set noswapfile
+setlocal nobackup
+setlocal nowritebackup
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -214,6 +228,11 @@ set tabstop=2
 " Let backspace delete indent
 set softtabstop=2               
 
+" always set autoindenting on
+set autoindent    
+" copy the previous indentation on autoindenting
+set copyindent    
+
 """"""""""""""""""""""""""""""
 " => Visual mode related
 """"""""""""""""""""""""""""""
@@ -240,10 +259,6 @@ nmap <leader>c :Commands<cr>
 " fuzzy find text in the working directory
 nmap <leader>f :Rg  
 
-" Ale linting shortcuts
-nmap <silent> [c <Plug>(ale_previous_wrap)
-nmap <silent> ]c <Plug>(ale_next_wrap)
-
 " Toggle NERDTree
 map <C-n> :NERDTreeToggle<CR>
 map <leader>r :NERDTreeFind<cr>
@@ -258,7 +273,7 @@ nmap <CR> o<Esc>
 
 " Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
 map <space> /
-map <c-space> ?
+" map <c-space> ?
 
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
@@ -269,14 +284,15 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
+" If you like long lines with line wrapping enabled, this solves the problem that pressing down jumpes your cursor “over” the current line to the next line. It changes behaviour so that it jumps to the next row in the editor (much more natural)
+nnoremap j gj
+nnoremap k gk
+
 " Close the current buffer
 map <leader>bd :Bclose<cr>:tabclose<cr>gT
 
 " Close all the buffers
 map <leader>ba :bufdo bd<cr>
-
-map <leader>l :bnext<cr>
-map <leader>h :bprevious<cr>
 
 " Useful mappings for managing tabs
 map <leader>tn :tabnew<cr>
@@ -322,23 +338,31 @@ noremap <Leader>jo <C-t>
 " ALways show the statusbar
 set laststatus=2
 
-function! CocCurrentFunction()
-    return get(b:, 'coc_current_function', '')
-endfunction
+" function! CocCurrentFunction()
+"     return get(b:, 'coc_current_function', '')
+" endfunction
 
-let g:lightline = {
-      \ 'colorscheme': 'challenger_deep',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'cocstatus', 'currentfunction', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'cocstatus': 'coc#status',
-      \   'currentfunction': 'CocCurrentFunction'
-      \ },
+let g:lightline = {}
+let g:lightline.colorscheme = 'challenger_deep'
+let g:lightline.component_expand = {
+      \  'linter_checking': 'lightline#ale#checking',
+      \  'linter_warnings': 'lightline#ale#warnings',
+      \  'linter_errors': 'lightline#ale#errors',
+      \  'linter_ok': 'lightline#ale#ok',
       \ }
+let g:lightline.component_type = {
+      \     'linter_checking': 'left',
+      \     'linter_warnings': 'warning',
+      \     'linter_errors': 'error',
+      \     'linter_ok': 'left',
+      \ }
+let g:lightline.active = { 'right': [[ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ]] }
 
-
+" FontAwesome needs to be installed for this to work
+" let g:lightline#ale#indicator_checking = "\uf110"
+" let g:lightline#ale#indicator_warnings = "\uf071"
+" let g:lightline#ale#indicator_errors = "\uf05e"
+" let g:lightline#ale#indicator_ok = "\uf00c"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
@@ -490,21 +514,29 @@ endfunction
 " => ALE Settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Change eslint error icons
-let g:ale_sign_error = '❌'
-let g:ale_sign_warning = '⚠️'
+" let g:ale_sign_error = '❌'
+" let g:ale_sign_warning = '⚠️'
 let g:ale_fixers = {
 \   'javascript': ['eslint'],
 \   'css': ['prettier'],
 \   'scss': ['prettier'],
 \}
+let g:ale_linters = { 
+\   'javascript': ['flow', 'eslint'],
+\}
 " Fix files automatically on save
 let g:ale_fix_on_save = 1
 " Disabling highlighting
-let g:ale_set_highlights = 0
+" let g:ale_set_highlights = 0
 
 " Only run linting when saving the file
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 0
+
+" Ale linting shortcuts
+nmap <silent> [c <Plug>(ale_previous_wrap)
+nmap <silent> ]c <Plug>(ale_next_wrap)
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Git
@@ -553,9 +585,23 @@ function! s:show_documentation()
   if &filetype == 'vim'
     execute 'h '.expand('<cword>')
   else
-    call CocAction('doHover')
+    call CocActionAysnc('doHover')
   endif
 endfunction
 
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Terminal
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" To map <Esc> to exit terminal-mode: >
+tnoremap <Leader><Esc> <C-\><C-n>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => FZF
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" [Buffers] Jump to the existing window if possible
+let g:fzf_buffers_jump = 1

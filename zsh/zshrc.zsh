@@ -1,8 +1,8 @@
 USER="rfarrer"
 
 PARTIALS="/Users/${USER}/.zsh/"
-EDITOR="vim"
-GIT_EDITOR="code --wait"
+EDITOR="nvim"
+GIT_EDITOR="nvim"
 WORKLOCATION="/Users/${USER}/Wayfair/"
 
 export EDITOR="${EDITOR}"

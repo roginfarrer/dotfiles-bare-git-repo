@@ -6,7 +6,7 @@
 
 - link:
     # ~/dotfiles: ''
-    ~/.zshrc: "zsh/.zshrc"
+    ~/.zshrc: "zsh/zshrc.zsh"
     ~/.zsh: "zsh/config/"
     ~/.zprofile: "zsh/.zprofile"
     ~/.gitconfig: "git/gitconfig"

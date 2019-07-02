@@ -21,3 +21,5 @@ antibody bundle zsh-users/zsh-history-substring-search
 # Keybindings
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
+
+plugins=(vi-mode)
