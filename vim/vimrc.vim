@@ -1,36 +1,46 @@
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Install Plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-call plug#begin()
+call plug#begin('~/.vim/plugged')
+
 " Syntax highlighting for pretty much everything
 Plug 'sheerun/vim-polyglot'
+
 " Linting!
 " Plug 'w0rp/ale'
+"
 " FZF...
 set rtp+=/usr/local/opt/fzf
 " ...and the fzf vim plugin
 Plug 'junegunn/fzf.vim'
+
 " Autocompletion, and some basic linting
 " Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
-" Disabling due to performance...
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+
 " Tree pane that can open
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+
 " Git integration
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'airblade/vim-gitgutter'
+
 Plug 'itchyny/lightline.vim'
 " Plug 'maximbaz/lightline-ale'
+
 Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
-" Use the below two for flashing on yank
-Plug 'kana/vim-operator-user'
-Plug 'haya14busa/vim-operator-flashy'
+Plug 'machakann/vim-highlightedyank'
 " Fancy start screen
 Plug 'mhinz/vim-startify'
 call plug#end()
@@ -53,7 +63,7 @@ set autoread
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
-let mapleader = ","
+let mapleader = "\<Space>"
 
 " Fast saving
 nmap <leader>w :w!<cr>
@@ -65,6 +75,9 @@ set mouse=n
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set number
+set relativenumber
+
 " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
 
@@ -189,7 +202,7 @@ set encoding=utf8
 set ffs=unix,dos,mac
 
 " Set syntax highlighting for config files
-autocmd BufNewFile,BufRead *stylelintrc,*eslintrc,*babelrc,*jshintrc setlocal syntax=json
+autocmd BufNewFile,BufRead *stylelintrc,*eslintrc,*babelrc,*jshintrc,*prettierrc setlocal syntax=json
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -268,12 +281,8 @@ map <Leader>t :NERDTreeToggle<CR>
 map <C-b> :e#<CR>
 
 " newline without insert
-nmap <S-Enter> O<Esc>
+nmap <S-CR> O<Esc>
 nmap <CR> o<Esc>
-
-" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
-map <space> /
-" map <c-space> ?
 
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
@@ -548,6 +557,7 @@ map <leader>go :Gbrowse<CR>
 " => Coc.nvim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:coc_node_path="/Users/rfarrer/.nvm/versions/node/v12.4.0/bin/node"
+let g:coc_global_extensions = ['coc-css', 'coc-pairs', 'coc-eslint', 'coc-prettier', 'coc-html']
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.

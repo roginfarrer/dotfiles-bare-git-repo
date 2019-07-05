@@ -20,6 +20,7 @@
       path: "fish/fish_user_key_bindings.fish"
     ~/.config/karabiner: "karabiner/"
     ~/.vimrc: "vim/vimrc.vim"
+    ~/.config/nvim/init.vim: "vim/vimrc.vim"
     # ~/.vim/plugins: "vim/plugins"
 
 - shell:
