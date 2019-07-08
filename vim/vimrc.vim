@@ -15,7 +15,7 @@ Plug 'sheerun/vim-polyglot'
 
 " Linting!
 " Plug 'w0rp/ale'
-"
+
 " FZF...
 set rtp+=/usr/local/opt/fzf
 " ...and the fzf vim plugin
@@ -23,6 +23,7 @@ Plug 'junegunn/fzf.vim'
 
 " Autocompletion, and some basic linting
 " Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+" Plug 'maximbaz/lightline-ale'
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 
 " Tree pane that can open
@@ -35,9 +36,9 @@ Plug 'tpope/vim-rhubarb'
 Plug 'airblade/vim-gitgutter'
 
 Plug 'itchyny/lightline.vim'
-" Plug 'maximbaz/lightline-ale'
 
 Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+Plug 'haishanh/night-owl.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'machakann/vim-highlightedyank'
@@ -71,6 +72,8 @@ nmap <leader>w :w!<cr>
 " Enable mouse support
 set mouse=n
 
+" Open all splits to the right
+set splitright
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -180,12 +183,17 @@ if $COLORTERM == 'gnome-terminal'
     set t_Co=256
 endif
 
-colorscheme challenger_deep
 if has('nvim') || has('termguicolors')
   set termguicolors
 endif
 
+" For Neovim 0.1.3 and 0.1.4
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+
 set background=dark
+
+" colorscheme challenger_deep
+colorscheme night-owl
 
 " Set extra options when running in GUI mode
 if has("gui_running")
@@ -353,12 +361,12 @@ set laststatus=2
 
 let g:lightline = {}
 let g:lightline.colorscheme = 'challenger_deep'
-let g:lightline.component_expand = {
-      \  'linter_checking': 'lightline#ale#checking',
-      \  'linter_warnings': 'lightline#ale#warnings',
-      \  'linter_errors': 'lightline#ale#errors',
-      \  'linter_ok': 'lightline#ale#ok',
-      \ }
+" let g:lightline.component_expand = {
+"       \  'linter_checking': 'lightline#ale#checking',
+"       \  'linter_warnings': 'lightline#ale#warnings',
+"       \  'linter_errors': 'lightline#ale#errors',
+"       \  'linter_ok': 'lightline#ale#ok',
+"       \ }
 let g:lightline.component_type = {
       \     'linter_checking': 'left',
       \     'linter_warnings': 'warning',
@@ -453,10 +461,6 @@ map <leader>x :e ~/buffer.md<cr>
 
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
-
-" Makes flash on yank
-map y <Plug>(operator-flashy)
-nmap Y <Plug>(operator-flashy)$
 
 " Copy visual selection to clipboard
 map <C-c> "+y
@@ -557,20 +561,20 @@ map <leader>go :Gbrowse<CR>
 " => Coc.nvim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:coc_node_path="/Users/rfarrer/.nvm/versions/node/v12.4.0/bin/node"
-let g:coc_global_extensions = ['coc-css', 'coc-pairs', 'coc-eslint', 'coc-prettier', 'coc-html']
+let g:coc_global_extensions = ['coc-css', 'coc-pairs', 'coc-eslint', 'coc-prettier', 'coc-html', 'coc-tsserver', 'coc-json']
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" 
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction
 
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
@@ -589,18 +593,18 @@ nmap <silent> <leader>lf <Plug>(coc-references)
 nmap <leader>lr <Plug>(coc-rename)
 
 " Use K for show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if &filetype == 'vim'
-    execute 'h '.expand('<cword>')
-  else
-    call CocActionAysnc('doHover')
-  endif
-endfunction
-
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
+" nnoremap <silent> K :call <SID>show_documentation()<CR>
+" 
+" function! s:show_documentation()
+"   if &filetype == 'vim'
+"     execute 'h '.expand('<cword>')
+"   else
+"     call CocActionAysnc('doHover')
+"   endif
+" endfunction
+" 
+" " Highlight symbol under cursor on CursorHold
+" autocmd CursorHold * silent call CocActionAsync('highlight')
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
