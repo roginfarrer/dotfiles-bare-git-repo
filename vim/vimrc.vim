@@ -39,7 +39,12 @@ Plug 'itchyny/lightline.vim'
 
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-sleuth'
 Plug 'machakann/vim-highlightedyank'
+
+" For better autocomplete of brackets
+Plug 'rstacruz/vim-closer'
+
 " Fancy start screen
 Plug 'mhinz/vim-startify'
 
@@ -162,6 +167,11 @@ set signcolumn=yes
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Allow color schemes to do bright colors without forcing bold.
+if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
+  set t_Co=16
+endif
+
 " Enable syntax highlighting
 syntax enable 
 
@@ -174,8 +184,8 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 set background=dark
 
-" colorscheme challenger_deep
-colorscheme night-owl
+colorscheme challenger_deep
+" colorscheme night-owl
 
 " Set extra options when running in GUI mode
 if has("gui_running")
