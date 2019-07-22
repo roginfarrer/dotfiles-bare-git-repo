@@ -49,6 +49,9 @@ Plug 'rstacruz/vim-closer'
 " Fancy start screen
 Plug 'mhinz/vim-startify'
 
+" Colorize hex colors
+Plug 'chrisbra/Colorizer'
+
 " Themes
 Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 Plug 'haishanh/night-owl.vim'

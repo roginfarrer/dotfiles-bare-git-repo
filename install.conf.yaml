@@ -21,7 +21,7 @@
     ~/.config/karabiner: "karabiner/"
     ~/.vimrc: "vim/vimrc.vim"
     ~/.config/nvim/init.vim: "vim/vimrc.vim"
-    # ~/.vim/plugins: "vim/plugins"
+    ~/.config/kitty: "kitty/"
 
 - shell:
     # this came from default config, not sure if needed

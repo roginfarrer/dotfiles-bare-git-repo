@@ -23,3 +23,6 @@ bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
 plugins=(vi-mode)
+
+# Make it actually readable in terminals
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=3"
