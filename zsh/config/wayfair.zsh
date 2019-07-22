@@ -1,4 +1,4 @@
-DEVBOX="webphp0466.dev.bo1.csnzoo.com"
+DEVBOX="webphp-146zzq1.dev.bo1.csnzoo.com"
 
 alias sshbox="ssh ${DEVBOX}"
 

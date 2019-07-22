@@ -29,6 +29,7 @@ Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 " Tree pane that can open
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tpope/vim-vinegar'
 
 " Git integration
 Plug 'tpope/vim-fugitive'
@@ -51,6 +52,14 @@ Plug 'mhinz/vim-startify'
 " Themes
 Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 Plug 'haishanh/night-owl.vim'
+Plug 'chriskempson/base16-vim'
+Plug 'sonph/onehalf', {'rtp': 'vim/'}
+Plug 'tyrannicaltoucan/vim-deep-space'
+Plug 'maksimr/Lucius2'
+Plug 'desmap/slick'
+Plug 'zacanger/angr.vim'
+Plug 'jacoborus/tender.vim'
+Plug 'nanotech/jellybeans.vim'
 
 call plug#end()
 
@@ -167,33 +176,32 @@ set signcolumn=yes
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Allow color schemes to do bright colors without forcing bold.
-if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
-  set t_Co=16
-endif
-
 " Enable syntax highlighting
 syntax enable 
+set background=dark
 
 if has('nvim') || has('termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   set termguicolors
 endif
 
-" For Neovim 0.1.3 and 0.1.4
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-
-set background=dark
-
-colorscheme challenger_deep
-" colorscheme night-owl
-
 " Set extra options when running in GUI mode
 if has("gui_running")
-    set guioptions-=T
-    set guioptions-=e
-    set t_Co=256
-    set guitablabel=%M\ %t
+  set guioptions-=T
+  set guioptions-=e
+  set t_Co=256
+  set guitablabel=%M\ %t
 endif
+
+" colorscheme base16-circus
+" colorscheme base16-chalk
+" colorscheme base16-seti
+colorscheme deep-space
+colorscheme tender
+colorscheme jellybeans
+colorscheme night-owl
+colorscheme challenger_deep
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
@@ -203,6 +211,8 @@ set ffs=unix,dos,mac
 
 " Set syntax highlighting for config files
 autocmd BufNewFile,BufRead *stylelintrc,*eslintrc,*babelrc,*jshintrc,*prettierrc setlocal syntax=json
+
+" let g:polyglot_disabled = ['scss', 'css']
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -268,9 +278,6 @@ nmap <leader>f :Rg
 map <C-n> :NERDTreeToggle<CR>
 map <leader>r :NERDTreeFind<cr>
 map <Leader>t :NERDTreeToggle<CR>
-
-" switch between the current and previous file
-map <C-b> :e#<CR>
 
 " newline without insert
 nmap <S-CR> O<Esc>
@@ -344,20 +351,20 @@ set laststatus=2
 " endfunction
 
 let g:lightline = {}
-let g:lightline.colorscheme = 'challenger_deep'
+let g:lightline.colorscheme = 'wombat'
 " let g:lightline.component_expand = {
 "       \  'linter_checking': 'lightline#ale#checking',
 "       \  'linter_warnings': 'lightline#ale#warnings',
 "       \  'linter_errors': 'lightline#ale#errors',
 "       \  'linter_ok': 'lightline#ale#ok',
 "       \ }
-let g:lightline.component_type = {
-      \     'linter_checking': 'left',
-      \     'linter_warnings': 'warning',
-      \     'linter_errors': 'error',
-      \     'linter_ok': 'left',
-      \ }
-let g:lightline.active = { 'right': [[ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ]] }
+" let g:lightline.component_type = {
+"       \     'linter_checking': 'left',
+"       \     'linter_warnings': 'warning',
+"       \     'linter_errors': 'error',
+"       \     'linter_ok': 'left',
+"       \ }
+" let g:lightline.active = { 'right': [[ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ]] }
 
 " FontAwesome needs to be installed for this to work
 " let g:lightline#ale#indicator_checking = "\uf110"
@@ -374,6 +381,8 @@ map 0 ^
 " Move a line of text using ALT+[jk] 
 nnoremap <A-k> :m .-2<CR>==
 nnoremap <A-j> :m .+1<CR>==
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
 
 " Zoom / Restore window.
 " Maximize a buffer, then toggle it back
@@ -407,12 +416,18 @@ map <leader>s? z=
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Misc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Enable yanking to the clipboard
+set clipboard=unnamed
 
 " Copy visual selection to clipboard
 map <C-c> "+y
 
 " Copy relative file path to clipboard
 noremap <Leader>yf :let @*=expand("%")<cr>:echo "Copied file to clipboard"<cr>
+
+" Automatically indent pasted lines
+nnoremap p p=`]
+nnoremap P P=`]
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -455,21 +470,20 @@ map <leader>go :Gbrowse<CR>
 let g:coc_node_path="/Users/rfarrer/.nvm/versions/node/v12.4.0/bin/node"
 let g:coc_global_extensions = ['coc-css', 'coc-pairs', 'coc-eslint', 'coc-prettier', 'coc-html', 'coc-tsserver', 'coc-json']
 
+" => Set up Tab key for autocompletion
+
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-" inoremap <silent><expr> <TAB>
-"       \ pumvisible() ? "\<C-n>" :
-"       \ <SID>check_back_space() ? "\<TAB>" :
-"       \ coc#refresh()
-" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-" 
-" function! s:check_back_space() abort
-"   let col = col('.') - 1
-"   return !col || getline('.')[col - 1]  =~# '\s'
-" endfunction
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
 " Use `lp` and `ln` for navigate diagnostics
 nmap <silent> <leader>lp <Plug>(coc-diagnostic-prev)
@@ -483,20 +497,6 @@ nmap <silent> <leader>lf <Plug>(coc-references)
 
 " Remap for rename current word
 nmap <leader>lr <Plug>(coc-rename)
-
-" Use K for show documentation in preview window
-" nnoremap <silent> K :call <SID>show_documentation()<CR>
-" 
-" function! s:show_documentation()
-"   if &filetype == 'vim'
-"     execute 'h '.expand('<cword>')
-"   else
-"     call CocActionAysnc('doHover')
-"   endif
-" endfunction
-" 
-" " Highlight symbol under cursor on CursorHold
-" autocmd CursorHold * silent call CocActionAsync('highlight')
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
