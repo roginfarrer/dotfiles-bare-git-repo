@@ -268,6 +268,7 @@ nnoremap <C-p> :Files<CR>
 nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>h :History<CR>
 nnoremap <Leader>g :GFiles<CR>
+nnoremap <Leader>p :GFiles<CR>
 " Map ; to fuzzy search through open buffers
 nmap ; :Buffers<CR>
 
@@ -464,7 +465,7 @@ nnoremap P P=`]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Git
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:github_enterprise_urls = ['https://git.csnzoo.com']
+let g:github_enterprise_urls = ['https://github.csnzoo.com']
 map <leader>go :Gbrowse<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -514,3 +515,9 @@ tnoremap <Leader><Esc> <C-\><C-n>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Startify
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:startify_bookmarks = [ {'v': '~/dotfiles/vim/vimrc.vim'}, {'d': '~/dotfiles'}]
