@@ -1,10 +1,11 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Plugins
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" VIMRC
+
+" Plugins {{{
+
 " Install Plug
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
@@ -13,17 +14,12 @@ call plug#begin('~/.vim/plugged')
 " Syntax highlighting for pretty much everything
 Plug 'sheerun/vim-polyglot'
 
-" Linting!
-" Plug 'w0rp/ale'
-
 " FZF...
 set rtp+=/usr/local/opt/fzf
 " ...and the fzf vim plugin
 Plug 'junegunn/fzf.vim'
 
 " Autocompletion, and some basic linting
-" Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
-" Plug 'maximbaz/lightline-ale'
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 
 " Tree pane that can open
@@ -54,23 +50,21 @@ Plug 'chrisbra/Colorizer'
 
 " Themes
 Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
-Plug 'haishanh/night-owl.vim'
-Plug 'chriskempson/base16-vim'
-Plug 'sonph/onehalf', {'rtp': 'vim/'}
-Plug 'tyrannicaltoucan/vim-deep-space'
-Plug 'maksimr/Lucius2'
-Plug 'desmap/slick'
-Plug 'zacanger/angr.vim'
-Plug 'jacoborus/tender.vim'
-Plug 'nanotech/jellybeans.vim'
 
 call plug#end()
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => General
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Sets how many lines of history VIM has to remember
-set history=500
+" }}}
+
+" Section Folding {{{
+
+set foldenable
+set foldlevelstart=10
+set foldnestmax=10
+set foldmethod=syntax
+
+" }}}
+
+" General {{{
 
 " Should help with performance? Will hide buffers instead of closing them
 set hidden
@@ -95,20 +89,16 @@ set mouse=n
 " Open all splits to the right
 set splitright
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => VIM user interface
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
+
+" VIM user interface {{{
+
 set number
 set relativenumber
+nnoremap <leader><CR> :nohlsearch<CR>
 
 " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
-
-" Avoid garbled characters in Chinese language windows OS
-let $LANG='en' 
-set langmenu=en
-source $VIMRUNTIME/delmenu.vim
-source $VIMRUNTIME/menu.vim
 
 " Turn on the Wild menu
 set wildmenu
@@ -116,9 +106,9 @@ set wildmenu
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc
 if has("win16") || has("win32")
-    set wildignore+=.git\*,.hg\*,.svn\*
+  set wildignore+=.git\*,.hg\*,.svn\*
 else
-    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+  set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 endif
 
 " Height of the command bar
@@ -176,9 +166,10 @@ set signcolumn=yes
 :autocmd InsertEnter * set cul
 :autocmd InsertLeave * set nocul
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Colors and Fonts
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
+
+" Colors and Fonts {{{
+
 " Enable syntax highlighting
 syntax enable 
 set background=dark
@@ -197,13 +188,6 @@ if has("gui_running")
   set guitablabel=%M\ %t
 endif
 
-" colorscheme base16-circus
-" colorscheme base16-chalk
-" colorscheme base16-seti
-colorscheme deep-space
-colorscheme tender
-colorscheme jellybeans
-colorscheme night-owl
 colorscheme challenger_deep
 
 " Set utf8 as standard encoding and en_US as the standard language
@@ -215,12 +199,10 @@ set ffs=unix,dos,mac
 " Set syntax highlighting for config files
 autocmd BufNewFile,BufRead *stylelintrc,*eslintrc,*babelrc,*jshintrc,*prettierrc setlocal syntax=json
 
-" let g:polyglot_disabled = ['scss', 'css']
+" }}}
 
+" Files, backups and undo {{{
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Files, backups and undo
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Turn backup off, since most stuff is in SVN, git et.c anyway...
 set nobackup
 set nowb
@@ -228,12 +210,9 @@ set noswapfile
 setlocal nobackup
 setlocal nowritebackup
 
+" }}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Text, tab and indent related
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Use spaces instead of tabs
-set expandtab
+" Text, tab and indent related {{{
 
 " Be smart when using tabs ;)
 set smarttab
@@ -246,23 +225,15 @@ set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
 
-" Use indents of 4 spaces
-set shiftwidth=2                
-" An indentation every four columns
-set tabstop=2                   
-
-" Let backspace delete indent
-set softtabstop=2               
-
 " always set autoindenting on
 set autoindent    
 " copy the previous indentation on autoindenting
 set copyindent    
 
+" }}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Moving around, tabs, windows and buffers
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Moving around, tabs, windows and buffers {{{
+
 " File searching
 nnoremap <C-p> :Files<CR>
 nnoremap <Leader>b :Buffers<CR>
@@ -342,11 +313,10 @@ noremap <Leader>ji <C-w>]
 " Jump Out into the original working ontext
 noremap <Leader>jo <C-t>
 
+" }}}
 
+" Status line {{{
 
-""""""""""""""""""""""""""""""
-" => Status line
-""""""""""""""""""""""""""""""
 " ALways show the statusbar
 set laststatus=2
 
@@ -376,9 +346,10 @@ let g:lightline.colorscheme = 'wombat'
 " let g:lightline#ale#indicator_errors = "\uf05e"
 " let g:lightline#ale#indicator_ok = "\uf00c"
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Editing mappings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"}}} 
+
+" Editing mappings {{{
+
 " Remap VIM 0 to first non-blank character
 map 0 ^
 
@@ -404,22 +375,10 @@ endfunction
 command! ZoomToggle call s:ZoomToggle()
 nnoremap <silent> <C-W>o :ZoomToggle<CR>
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Spell checking
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Pressing ,ss will toggle and untoggle spell checking
-map <leader>ss :setlocal spell!<cr>
+"}}}
 
-" Shortcuts using <leader>
-map <leader>sn ]s
-map <leader>sp [s
-map <leader>sa zg
-map <leader>s? z=
+" Misc {{{ 
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Misc
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable yanking to the clipboard
 set clipboard=unnamed
 
@@ -433,44 +392,17 @@ noremap <Leader>yf :let @*=expand("%")<cr>:echo "Copied file to clipboard"<cr>
 nnoremap p p=`]
 nnoremap P P=`]
 
+" }}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => ALE Settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Change eslint error icons
-" let g:ale_sign_error = '❌'
-" let g:ale_sign_warning = '⚠️'
-" let g:ale_fixers = {
-" \   'javascript': ['eslint'],
-" \   'css': ['prettier'],
-" \   'scss': ['prettier'],
-" \}
-" let g:ale_linters = { 
-" \   'javascript': ['flow', 'eslint'],
-" \}
-" " Fix files automatically on save
-" let g:ale_fix_on_save = 1
-" " Disabling highlighting
-" " let g:ale_set_highlights = 0
-" 
-" " Only run linting when saving the file
-" let g:ale_lint_on_text_changed = 'never'
-" let g:ale_lint_on_enter = 0
-" 
-" " Ale linting shortcuts
-" nmap <silent> [c <Plug>(ale_previous_wrap)
-" nmap <silent> ]c <Plug>(ale_next_wrap)
+" Git {{{
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Git
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:github_enterprise_urls = ['https://github.csnzoo.com']
 map <leader>go :Gbrowse<CR>
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Coc.nvim
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
+
+" Coc.nvim {{{
+
 let g:coc_node_path="/Users/rfarrer/.nvm/versions/node/v12.4.0/bin/node"
 let g:coc_global_extensions = ['coc-css', 'coc-pairs', 'coc-eslint', 'coc-prettier', 'coc-html', 'coc-tsserver', 'coc-json']
 
@@ -502,22 +434,33 @@ nmap <silent> <leader>lf <Plug>(coc-references)
 " Remap for rename current word
 nmap <leader>lr <Plug>(coc-rename)
 
+" }}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Terminal
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Terminal {{{ 
+
 " To map <Esc> to exit terminal-mode: >
 tnoremap <Leader><Esc> <C-\><C-n>
 
+" }}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => FZF
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" FZF {{{
+
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
 
+" }}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Startify
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Startify {{{
+
 let g:startify_bookmarks = [ {'v': '~/dotfiles/vim/vimrc.vim'}, {'d': '~/dotfiles'}]
+
+" }}}
+
+" VIMRC {{{
+
+nnoremap <leader>ev :vsp $MYVIMRC<CR>
+nnoremap <leader>sv :source $MYVIMRC<CR>
+
+" }}}
+
+" vim:foldmethod=marker:foldlevel=0
