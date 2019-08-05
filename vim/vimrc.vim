@@ -27,8 +27,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 
 " Tree pane that can open
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
+" Plug 'scrooloose/nerdtree'
+" Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tpope/vim-vinegar'
 
 " Git integration
@@ -279,9 +279,9 @@ nmap <leader>c :Commands<cr>
 nmap <leader>f :Rg  
 
 " Toggle NERDTree
-map <C-n> :NERDTreeToggle<CR>
-map <leader>r :NERDTreeFind<cr>
-map <Leader>t :NERDTreeToggle<CR>
+" map <C-n> :NERDTreeToggle<CR>
+" map <leader>r :NERDTreeFind<cr>
+" map <Leader>t :NERDTreeToggle<CR>
 
 " newline without insert
 nmap <S-CR> O<Esc>
@@ -432,34 +432,6 @@ noremap <Leader>yf :let @*=expand("%")<cr>:echo "Copied file to clipboard"<cr>
 " Automatically indent pasted lines
 nnoremap p p=`]
 nnoremap P P=`]
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => ALE Settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Change eslint error icons
-" let g:ale_sign_error = '❌'
-" let g:ale_sign_warning = '⚠️'
-" let g:ale_fixers = {
-" \   'javascript': ['eslint'],
-" \   'css': ['prettier'],
-" \   'scss': ['prettier'],
-" \}
-" let g:ale_linters = { 
-" \   'javascript': ['flow', 'eslint'],
-" \}
-" " Fix files automatically on save
-" let g:ale_fix_on_save = 1
-" " Disabling highlighting
-" " let g:ale_set_highlights = 0
-" 
-" " Only run linting when saving the file
-" let g:ale_lint_on_text_changed = 'never'
-" let g:ale_lint_on_enter = 0
-" 
-" " Ale linting shortcuts
-" nmap <silent> [c <Plug>(ale_previous_wrap)
-" nmap <silent> ]c <Plug>(ale_next_wrap)
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

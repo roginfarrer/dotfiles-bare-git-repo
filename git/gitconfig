@@ -37,3 +37,5 @@
   template = ~/.gitmessage
 [pack]
 	useSparse = true
+[hub]
+	host = github.csnzoo.com
