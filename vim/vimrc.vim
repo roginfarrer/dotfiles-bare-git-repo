@@ -19,24 +19,26 @@ set rtp+=/usr/local/opt/fzf
 " ...and the fzf vim plugin
 Plug 'junegunn/fzf.vim'
 
-" Autocompletion, and some basic linting
+" Autocompletion, and linting
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 
 " Tree pane that can open
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'airblade/vim-gitgutter'
 " Plug 'tpope/vim-vinegar'
 
-" Git integration
+" Praise tpope
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
-Plug 'airblade/vim-gitgutter'
-
-Plug 'itchyny/lightline.vim'
-
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-sleuth'
+
+" Statusline
+Plug 'itchyny/lightline.vim'
+
+" highlights text when yanked
 Plug 'machakann/vim-highlightedyank'
 
 " For better autocomplete of brackets
@@ -261,6 +263,13 @@ nnoremap <silent> <C-W>o :ZoomToggle<CR>
 
 " Copy relative file path to clipboard
 noremap <Leader>yf :let @*=expand("%")<cr>:echo "Copied file to clipboard"<cr>
+
+" Toggle folds
+noremap <Tab> za
+
+" Copy file in netrw
+nnoremap <silent> <Leader>c :silent exec "!cp '%:p' '%:p:h/%:t:r-copy.%:e'"<cr>
+
 " }}}
 
 " Lightline {{{
@@ -283,25 +292,27 @@ map <leader>go :Gbrowse<CR>
 " NERDTree {{{
 
 let NERDTreeQuitOnOpen=1
+" Single-click to toggle directory nodes, double-click to open non-directory
+" nodes.
+let g:NERDTreeMouseMode=2
+let g:NERDTreeWinSize=50
 
-if exists("g:NERDTree") 
+function! NerdTreeToggleFind()
+  if g:NERDTree.IsOpen()
+      NERDTreeClose
+  elseif filereadable(expand('%'))
+      NERDTreeFind
+  else
+      NERDTree
+  endif
+endfunction
 
-  function! NerdTreeToggleFind()
-    if g:NERDTree.IsOpen()
-        NERDTreeClose
-    elseif filereadable(expand('%'))
-        NERDTreeFind
-    else
-        NERDTree
-    endif
-  endfunction
+nnoremap - :call NerdTreeToggleFind()<CR>
 
-  nnoremap - :call NerdTreeToggleFind()<CR>
+" Toggle NERDTree
+map <C-n> :NERDTreeToggle<CR>
+map <leader>r :NERDTreeFind<cr>
 
-  " Toggle NERDTree
-  map <C-n> :NERDTreeToggle<CR>
-  map <leader>r :NERDTreeFind<cr>
-endif
 
 
 " }}}
