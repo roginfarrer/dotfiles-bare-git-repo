@@ -181,6 +181,11 @@ endif
 colorscheme challenger_deep
 colorscheme rigel
 
+if g:colors_name == 'rigel'
+  " slightly easier to read and discern where the cursor is
+  hi MatchParen ctermfg=yellow ctermbg=none guifg=yellow guibg=none term=underline gui=underline
+endif
+
 " Set syntax highlighting for config files
 autocmd BufNewFile,BufRead *stylelintrc,*eslintrc,*babelrc,*jshintrc,*prettierrc setlocal syntax=json
 
