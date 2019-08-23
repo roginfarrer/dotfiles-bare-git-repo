@@ -58,15 +58,6 @@ call plug#end()
 
 " }}}
 
-" Section Folding {{{
-
-set foldenable
-set foldlevelstart=10
-set foldnestmax=10
-set foldmethod=syntax
-
-" }}}
-
 " General {{{
 "
 " With a map leader it's possible to do extra key combinations
@@ -106,21 +97,26 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 " Be smart when using tabs ;)
 set smarttab
 
-" Linebreak on 500 characters
-" set lbr
-" set tw=500
-
-set ai "Auto indent
-set si "Smart indent
-set wrap "Wrap lines
-
-" always set autoindenting on
-set autoindent
-" copy the previous indentation on autoindenting
-set copyindent
+" set ai "Auto indent
+" set si "Smart indent
+" set wrap "Wrap lines
+" 
+" " always set autoindenting on
+" set autoindent
+" " copy the previous indentation on autoindenting
+" set copyindent
 
 " }}}
 
+" Section Folding {{{
+
+set foldenable
+set foldlevelstart=10
+set foldnestmax=10
+set foldmethod=syntax
+
+" }}}
+"
 " VIM user interface {{{
 
 set number
@@ -205,14 +201,13 @@ nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>h :History<CR>
 nnoremap <Leader>g :GFiles<CR>
 nnoremap <Leader>p :GFiles<CR>
+" fuzzy find text in the working directory
+nmap <leader>f :Rg
 " Map ; to fuzzy search through open buffers
 nmap ; :Buffers<CR>
 
 " fuzzy find Vim commands (like Ctrl-Shift-P in Sublime/Atom/VSC)
 nmap <leader>c :Commands<cr>
-
-" fuzzy find text in the working directory
-nmap <leader>f :Rg
 
 " newline without insert
 nmap <CR> o<Esc>
