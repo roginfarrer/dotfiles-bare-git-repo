@@ -356,12 +356,14 @@ nmap <silent> <leader>lf <Plug>(coc-references)
 " Remap for rename current word
 nmap <leader>lr <Plug>(coc-rename)
 
+nmap <leader>es :CocCommand snippets.editSnippets<CR>
+
 " }}}
 
 " Terminal {{{
 
 " To map <Esc> to exit terminal-mode: >
-tnoremap <Leader><Esc> <C-\><C-n>
+tnoremap <S-Esc> <C-\><C-n>
 
 " }}}
 
@@ -381,7 +383,7 @@ let g:startify_bookmarks = [ {'v': '~/dotfiles/vim/vimrc.vim'}, {'d': '~/dotfile
 " VIMRC {{{
 
 nnoremap <leader>ev :vsp $MYVIMRC<CR>
-nnoremap <leader>sv :source $MYVIMRC<CR>
+nnoremap <leader>sv :source $MYVIMRC<CR> :nohlsearch<CR>
 
 " }}}
 

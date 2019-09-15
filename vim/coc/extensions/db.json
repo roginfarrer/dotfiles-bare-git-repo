@@ -1,0 +1,20 @@
+{
+  "lastUpdate": 1568582265350,
+  "extension": {
+    "coc-prettier": {
+      "disabled": false
+    },
+    "coc-eslint": {
+      "disabled": false
+    },
+    "coc-git": {
+      "disabled": true
+    },
+    "coc-pairs": {
+      "disabled": true
+    },
+    "coc-ultisnips": {
+      "disabled": true
+    }
+  }
+}

@@ -22,6 +22,7 @@
     ~/.vimrc: "vim/vimrc.vim"
     ~/.config/nvim/init.vim: "vim/vimrc.vim"
     ~/.config/kitty: "kitty/"
+    ~/.config/coc: "vim/coc/"
 
 - shell:
     # this came from default config, not sure if needed
