@@ -24,10 +24,9 @@ Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 
 " Tree pane that can open
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
-" Plug 'tpope/vim-vinegar'
+Plug 'justinmk/vim-dirvish'
+Plug 'tpope/vim-eunuch'
 
 " Praise tpope
 Plug 'tpope/vim-fugitive'
@@ -55,6 +54,9 @@ Plug 'chrisbra/Colorizer'
 Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 Plug 'Rigellute/rigel'
 
+Plug 'jreybert/vimagit'
+Plug 'mattn/emmet-vim'
+
 call plug#end()
 
 " }}}
@@ -70,11 +72,20 @@ filetype plugin on
 filetype indent on
 
 " Enable yanking to the clipboard
-set clipboard=unnamed
+" set clipboard=unnamed
+
+" Copy visual selection to clipboard
+map <C-c> "+y
+nnoremap <Leader>y "+y
+xnoremap <Leader>y "+y
+nnoremap <Leader>p "+p
+xnoremap <Leader>p "+p
+nnoremap <Leader>P "+P
+xnoremap <Leader>P "+P
 
 " Automatically indent pasted lines
-nnoremap p p=`]
-nnoremap P P=`]
+" nnoremap p p=`]
+" nnoremap P P=`]
 
 " Set to auto read when a file is changed from the outside
 set autoread
@@ -97,15 +108,20 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 
 " Be smart when using tabs ;)
 set smarttab
+set ai "Auto indent
+set si "Smart indent
+set wrap "Wrap lines
 
-" set ai "Auto indent
-" set si "Smart indent
-" set wrap "Wrap lines
-" 
-" " always set autoindenting on
-" set autoindent
-" " copy the previous indentation on autoindenting
-" set copyindent
+set hidden
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Turn persistent undo on 
+"    means that you can undo even when you close a buffer/VIM
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+try
+    set undodir=~/.vim_runtime/temp_dirs/undodir
+    set undofile
+catch
+endtry
 
 " }}}
 
@@ -200,20 +216,19 @@ nmap <leader>w :w!<cr>
 
 " File searching
 nnoremap <C-p> :Files<CR>
+" nnoremap <Leader>p :GFiles<CR>
 nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>h :History<CR>
-nnoremap <Leader>g :GFiles<CR>
-nnoremap <Leader>p :GFiles<CR>
 " fuzzy find text in the working directory
-nmap <leader>f :Rg
+nmap <leader>f :Rg<CR>
 " Map ; to fuzzy search through open buffers
 nmap ; :Buffers<CR>
 
 " fuzzy find Vim commands (like Ctrl-Shift-P in Sublime/Atom/VSC)
-nmap <leader>c :Commands<cr>
+nmap <leader>c :Commands<CR>
 
 " newline without insert
-nmap <CR> o<Esc>
+nmap <CR> o<Esc>"_cc<Esc>
 
 " Smart way to move between windows
 map <C-j> <C-W>j
@@ -225,19 +240,9 @@ map <C-l> <C-W>l
 nnoremap j gj
 nnoremap k gk
 
-" Close the current buffer
-map <leader>bd :Bclose<cr>:tabclose<cr>gT
-
-" Close all the buffers
-map <leader>ba :bufdo bd<cr>
-
-" Switch CWD to the directory of the open buffer
-map <leader>cd :cd %:p:h<cr>:pwd<cr>
-
-" Jump Into a tag from a tag under the cursor to its implementation in a new window
-noremap <Leader>ji <C-w>]
-" Jump Out into the original working ontext
-noremap <Leader>jo <C-t>
+" Tab shortcuts
+noremap <Leader>tp :tabprevious<CR>
+noremap <Leader>tn :tabnext<CR>
 
 " Remap VIM 0 to first non-blank character
 map 0 ^
@@ -270,11 +275,9 @@ noremap <Leader>yf :let @*=expand("%")<cr>:echo "Copied file to clipboard"<cr>
 " Toggle folds
 noremap <Tab> za
 
-" Copy file in netrw
-nnoremap <silent> <Leader>c :silent exec "!cp '%:p' '%:p:h/%:t:r-copy.%:e'"<cr>
-
-" Quickly exit insert mode
-inoremap jj <Esc>
+" Diff windows
+nnoremap <leader>wd :windo difft<CR>
+nnoremap <leader>wdd :windo diffo<CR>
 
 " }}}
 
@@ -291,7 +294,9 @@ let g:lightline = { 'colorscheme': 'rigel' }
 " Git {{{
 
 let g:github_enterprise_urls = ['https://github.csnzoo.com']
-map <leader>go :Gbrowse<CR>
+nnoremap <leader>go :Gbrowse<CR>
+vnoremap <leader>go :'<,'>Gbrowse<CR>
+nnoremap <leader>gc :Gbrowse!<CR>
 
 " }}}
 
@@ -313,11 +318,11 @@ function! NerdTreeToggleFind()
   endif
 endfunction
 
-nnoremap - :call NerdTreeToggleFind()<CR>
-
-" Toggle NERDTree
-map <C-n> :NERDTreeToggle<CR>
-map <leader>r :NERDTreeFind<cr>
+" nnoremap - :call NerdTreeToggleFind()<CR>
+" 
+" " Toggle NERDTree
+" map <C-n> :NERDTreeToggle<CR>
+" map <leader>r :NERDTreeFind<cr>
 
 
 
@@ -363,7 +368,8 @@ nmap <leader>es :CocCommand snippets.editSnippets<CR>
 " Terminal {{{
 
 " To map <Esc> to exit terminal-mode: >
-tnoremap <S-Esc> <C-\><C-n>
+tnoremap <leader><Esc> <C-\><C-n>
+nnoremap <leader>te :vs<CR>:terminal<CR>i
 
 " }}}
 
@@ -384,6 +390,13 @@ let g:startify_bookmarks = [ {'v': '~/dotfiles/vim/vimrc.vim'}, {'d': '~/dotfile
 
 nnoremap <leader>ev :vsp $MYVIMRC<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR> :nohlsearch<CR>
+
+" }}}
+
+" Dirvish {{{
+
+" Group directories first
+let dirvish_mode = ':sort ,^.*/,' 
 
 " }}}
 

@@ -7906,7 +7906,7 @@
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>230 833 592 584 0 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 0 1680 1027 0 0 1680 1027 </string>
+	<string>0 0 2560 1417 0 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>734 -44 1674 1025 0 0 2560 1417 </string>
 	<key>New Bookmarks</key>
@@ -8535,7 +8535,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>DankMono-Regular 16</string>
+			<string>FiraCode-Regular 15</string>
 			<key>Only The Default BG Color Uses Transparency</key>
 			<true/>
 			<key>Option Key Sends</key>
@@ -8741,14 +8741,14 @@
 	</array>
 	<key>NoSyncBFPRecents</key>
 	<array>
-		<string>Dank Mono</string>
+		<string>Fira Code</string>
 	</array>
 	<key>NoSyncCommandHistoryHasEverBeenUsed</key>
 	<true/>
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
 		<key>screenFrame</key>
-		<string>{{0, 0}, {1680, 1050}}</string>
+		<string>{{0, 0}, {2560, 1440}}</string>
 		<key>topLeft</key>
 		<string>{269, 595}</string>
 	</dict>
@@ -8759,7 +8759,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>9FF1C804-64FC-4DA5-BFDA-78D182A33674</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>10</integer>
+	<integer>11</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -9454,6 +9454,8 @@
 	</dict>
 	<key>NoSyncSearchHistory2</key>
 	<array>
+		<string>enzyme</string>
+		<string>enzume</string>
 		<string>Validation</string>
 		<string>Tooltip</string>
 		<string>forward-mapping</string>
@@ -9534,7 +9536,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2019-09-14T14:11:32Z</date>
+	<date>2019-09-15T21:17:35Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateRelaunchingMarker</key>
