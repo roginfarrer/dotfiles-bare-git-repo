@@ -39,7 +39,7 @@ Plug 'tpope/vim-sleuth'
 Plug 'itchyny/lightline.vim'
 
 " highlights text when yanked
-Plug 'machakann/vim-highlightedyank'
+" Plug 'machakann/vim-highlightedyank'
 
 " For better autocomplete of brackets
 Plug 'rstacruz/vim-closer'
@@ -331,7 +331,6 @@ endfunction
 " Coc.nvim {{{
 
 let g:coc_node_path="/Users/rfarrer/.nvm/versions/node/v12.4.0/bin/node"
-let g:coc_global_extensions = ['coc-css', 'coc-pairs', 'coc-eslint', 'coc-prettier', 'coc-html', 'coc-tsserver', 'coc-json']
 
 " => Set up Tab key for autocompletion
 
