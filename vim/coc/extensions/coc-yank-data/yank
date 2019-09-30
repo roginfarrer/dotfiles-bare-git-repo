@@ -18,3 +18,132 @@ e0f9b788ed70a2543ebf8aaccf366931|file:///Users/rfarrer/Wayfair/homebase/packages
 	      innerRef={innerRef}
 	      testIds={testIds}
 	      openInNewWindow={o
+aba22f5f181b788a81d02ec1f69899a6|file:///Users/rfarrer/Wayfair/homebase/packages/admin-components/src/dismiss-button/dismiss-button.js|26|1|V|javascript
+	console.log(nice);
+cb40f7bdc9ecd4053a2da4ac402e07ab|file:///Users/rfarrer/Wayfair/homebase/packages/admin-components/src/dismiss-button/dismiss-button.js|27|1|V|javascript
+	console.log('Lnrs', Lnrs);
+29fbe483211644a0cae07a5a40144d90|file:///Users/rfarrer/.config/alacritty/alacritty.yml|111|13|v|yaml
+	IBM Plex Mono
+d2203cb1237cb6460cbad94564e39345|file:///Users/rfarrer/.config/alacritty/alacritty.yml|111|23|v|yaml
+	Regular
+c12289c5f3cf59f1cc7252a8a4cd2b13|file:///Users/rfarrer/dotfiles/vim/vimrc.vim|41|1|V|vim
+	" highlights text when yanked
+	" Plug 'machakann/vim-highlightedyank'
+	
+8ee517a3fad201920110b1300933899a|file:///Users/rfarrer/dotfiles/vim/vimrc.vim|27|1|V|vim
+	Plug 'airblade/vim-gitgutter'
+1824033bc5daa42c76b4489d5945b1a7|file:///Users/rfarrer/dotfiles/vim/vimrc.vim|43|1|V|vim
+	" Fancy start screen
+	Plug 'mhinz/vim-startify'
+cda50d72df06652b83c7230326743d2b|file:///Users/rfarrer/dotfiles/vim/vimrc.vim|29|3|v|vim
+	Tree pane that can open
+e3198d7e4fd0dc242591eb0cc29874eb|file:///Users/rfarrer/dotfiles/vim/vimrc.vim|34|26|V|vim
+	Plug 'tpope/vim-fugitive'
+	Plug 'tpope/vim-rhubarb'
+0572a09150886a9db299b4e568c1b553|file:///Users/rfarrer/dotfiles/vim/vimrc.vim|58|1|V|vim
+	Plug 'mattn/emmet-vim'
+c2064b93f11deeadab21eeb96c404ed2|file:///Users/rfarrer/dotfiles/vim/vimrc.vim|74|1|V|vim
+	" Enable yanking to the clipboard
+	" set clipboard=unnamed
+	
+347fc7496200968c4b2914c46f7a269a|file:///Users/rfarrer/dotfiles/vim/vimrc.vim|83|1|V|vim
+	" Automatically indent pasted lines
+	" nnoremap p p=`]
+	" nnoremap P P=`]
+	
+91239235e172e511d225c8c7190af983|file:///Users/rfarrer/dotfiles/vim/vimrc.vim|188|1|V|vim
+	colorscheme challenger_deep
+49880228eb00987f2fd97419e79018f4|file:///Users/rfarrer/dotfiles/vim/vimrc.vim|212|1|V|vim
+	" nnoremap <Leader>p :GFiles<CR>
+10fa575e8e22c8cd32ce5bdba1daef38|file:///Users/rfarrer/dotfiles/vim/vimrc.vim|276|1|V|vim
+	" Lightline {{{
+	
+	" ALways show the statusbar
+	set laststatus=2
+	
+	let g:rigel_lightline = 1
+	let g:lightline = { 'colorscheme': 'rigel' }
+	
+	"}}}
+33963269535345e0c224c6672a00026c|file:///Users/rfarrer/dotfiles/vim/vimrc.vim|295|1|V|vim
+	" NERDTree {{{
+	
+	let NERDTreeQuitOnOpen=1
+	" Single-click to toggle directory nodes, double-click to open non-directory
+	" nodes.
+	let g:NERDTreeMouseMode=2
+	let g:NERDTreeWinSize=50
+	
+	function! NerdTreeToggleFind()
+	  if g:NERDTree.IsOpen()
+	      NERDTreeClose
+	  elseif filereadable(expand('%'))
+	      NERDTreeFind
+	  else
+	      NERDTree
+	  endif
+	endfunction
+	
+	" nnoremap - :call NerdTreeToggleFind()<CR>
+	" 
+	" " Toggle NERDTree
+	" map <C-n> :NERDTreeToggle<CR>
+	" map <leader>r :NERDTreeFind<cr>
+	
+	
+	
+	" }}}
+	
+9e22aac2443dfc6d59242dcccff50919|file:///Users/rfarrer/dotfiles/vim/vimrc.vim|366|1|V|vim
+	" Veonim {{{
+	if exists('veonim')
+	
+	  " extensions for web dev
+	  let g:vscode_extensions = [
+	        \'vscode.typescript-language-features',
+	        \'vscode.css-language-features',
+	        \'vscode.html-language-features',
+	        \]
+	
+	  " multiple nvim instances
+	  nno <silent> <c-t>c :Veonim vim-create<cr>
+	  nno <silent> <c-g> :Veonim vim-switch<cr>
+	  nno <silent> <c-t>, :Veonim vim-rename<cr>
+	
+	  " workspace functions
+	  nno <silent> ,f :Veonim files<cr>
+	  nno <silent> ,e :Veonim explorer<cr>
+	  nno <silent> ,b :Veonim buffers<cr>
+	  nno <silent> ,d :Veonim change-dir<cr>
+	  "or with a starting dir: nno <silent> ,d :Veonim change-dir ~/proj<cr>
+	
+	  " searching text
+	  nno <silent> <space>fw :Veonim grep-word<cr>
+	  vno <silent> <space>fw :Veonim grep-selection<cr>
+	  nno <silent> <space>fa :Veonim grep<cr>
+	  nno <silent> <space>ff :Veonim grep-resume<cr>
+	  nno <silent> <space>fb :Veonim buffer-search<cr>
+	
+	  " language features
+	  nno <silent> sr :Veonim rename<cr>
+	  nno <silent> sd :Veonim definition<cr>
+	  nno <silent> si :Veonim implementation<cr>
+	  nno <silent> st :Veonim type-definition<cr>
+	  nno <silent> sf :Veonim references<cr>
+	  nno <silent> sh :Veonim hover<cr>
+	  nno <silent> sl :Veonim symbols<cr>
+	  nno <silent> so :Veonim workspace-symbols<cr>
+	  nno <silent> sq :Veonim code-action<cr>
+	  nno <silent> sk :Veonim highlight<cr>
+	  nno <silent> sK :Veonim highlight-clear<cr>
+	  nno <silent> ,n :Veonim next-usage<cr>
+	  nno <silent> ,p :Veonim prev-usage<cr>
+	  nno <silent> sp :Veonim show-problem<cr>
+	  nno <silent> <c-n> :Veonim next-problem<cr>
+	  nno <silent> <c-p> :Veonim prev-problem<cr>
+	
+	endif
+	
+	" }}}
+d8b8a8cad4f923c94cfb2c65dd5c3a27|file:///Users/rfarrer/.vim/plugged/vim-startify/doc/startify.txt|367|1|V|help
+	    let g:startify_change_to_dir = 1

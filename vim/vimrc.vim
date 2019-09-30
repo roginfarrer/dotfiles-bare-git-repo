@@ -11,6 +11,9 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
+" Fancy start screen
+Plug 'mhinz/vim-startify'
+
 " Syntax highlighting for pretty much everything
 Plug 'sheerun/vim-polyglot'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
@@ -20,32 +23,25 @@ set rtp+=/usr/local/opt/fzf
 " ...and the fzf vim plugin
 Plug 'junegunn/fzf.vim'
 
-" Autocompletion, and linting
+" Autocompletion, and linting, and pretty much eveything
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 
-" Tree pane that can open
-Plug 'airblade/vim-gitgutter'
+" Helpful for file navigation
 Plug 'justinmk/vim-dirvish'
 Plug 'tpope/vim-eunuch'
 
 " Praise tpope
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-sleuth'
 
+Plug 'mattn/emmet-vim'
+
 " Statusline
 Plug 'itchyny/lightline.vim'
 
-" highlights text when yanked
-" Plug 'machakann/vim-highlightedyank'
-
 " For better autocomplete of brackets
 Plug 'rstacruz/vim-closer'
-
-" Fancy start screen
-Plug 'mhinz/vim-startify'
 
 " Colorize hex colors
 Plug 'chrisbra/Colorizer'
@@ -54,8 +50,12 @@ Plug 'chrisbra/Colorizer'
 Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 Plug 'Rigellute/rigel'
 
+" Git
 Plug 'jreybert/vimagit'
-Plug 'mattn/emmet-vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
+
 
 call plug#end()
 
@@ -71,9 +71,6 @@ let mapleader = "\<Space>"
 filetype plugin on
 filetype indent on
 
-" Enable yanking to the clipboard
-" set clipboard=unnamed
-
 " Copy visual selection to clipboard
 map <C-c> "+y
 nnoremap <Leader>y "+y
@@ -82,10 +79,6 @@ nnoremap <Leader>p "+p
 xnoremap <Leader>p "+p
 nnoremap <Leader>P "+P
 xnoremap <Leader>P "+P
-
-" Automatically indent pasted lines
-" nnoremap p p=`]
-" nnoremap P P=`]
 
 " Set to auto read when a file is changed from the outside
 set autoread
@@ -113,6 +106,7 @@ set si "Smart indent
 set wrap "Wrap lines
 
 set hidden
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Turn persistent undo on 
 "    means that you can undo even when you close a buffer/VIM
@@ -191,7 +185,6 @@ if has("gui_running")
   set guitablabel=%M\ %t
 endif
 
-colorscheme challenger_deep
 colorscheme rigel
 
 if g:colors_name == 'rigel'
@@ -216,7 +209,6 @@ nmap <leader>w :w!<cr>
 
 " File searching
 nnoremap <C-p> :Files<CR>
-" nnoremap <Leader>p :GFiles<CR>
 nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>h :History<CR>
 " fuzzy find text in the working directory
@@ -279,8 +271,6 @@ noremap <Tab> za
 nnoremap <leader>wd :windo difft<CR>
 nnoremap <leader>wdd :windo diffo<CR>
 
-" }}}
-
 " Lightline {{{
 
 " ALways show the statusbar
@@ -291,40 +281,14 @@ let g:lightline = { 'colorscheme': 'rigel' }
 
 "}}}
 
+" }}}
+
 " Git {{{
 
 let g:github_enterprise_urls = ['https://github.csnzoo.com']
 nnoremap <leader>go :Gbrowse<CR>
 vnoremap <leader>go :'<,'>Gbrowse<CR>
 nnoremap <leader>gc :Gbrowse!<CR>
-
-" }}}
-
-" NERDTree {{{
-
-let NERDTreeQuitOnOpen=1
-" Single-click to toggle directory nodes, double-click to open non-directory
-" nodes.
-let g:NERDTreeMouseMode=2
-let g:NERDTreeWinSize=50
-
-function! NerdTreeToggleFind()
-  if g:NERDTree.IsOpen()
-      NERDTreeClose
-  elseif filereadable(expand('%'))
-      NERDTreeFind
-  else
-      NERDTree
-  endif
-endfunction
-
-" nnoremap - :call NerdTreeToggleFind()<CR>
-" 
-" " Toggle NERDTree
-" map <C-n> :NERDTreeToggle<CR>
-" map <leader>r :NERDTreeFind<cr>
-
-
 
 " }}}
 
@@ -382,6 +346,7 @@ let g:fzf_buffers_jump = 1
 " Startify {{{
 
 let g:startify_bookmarks = [ {'v': '~/dotfiles/vim/vimrc.vim'}, {'d': '~/dotfiles'}]
+let g:startify_change_to_dir = 0
 
 " }}}
 
@@ -399,54 +364,4 @@ let dirvish_mode = ':sort ,^.*/,'
 
 " }}}
 
-" Veonim {{{
-if exists('veonim')
-
-  " extensions for web dev
-  let g:vscode_extensions = [
-        \'vscode.typescript-language-features',
-        \'vscode.css-language-features',
-        \'vscode.html-language-features',
-        \]
-
-  " multiple nvim instances
-  nno <silent> <c-t>c :Veonim vim-create<cr>
-  nno <silent> <c-g> :Veonim vim-switch<cr>
-  nno <silent> <c-t>, :Veonim vim-rename<cr>
-
-  " workspace functions
-  nno <silent> ,f :Veonim files<cr>
-  nno <silent> ,e :Veonim explorer<cr>
-  nno <silent> ,b :Veonim buffers<cr>
-  nno <silent> ,d :Veonim change-dir<cr>
-  "or with a starting dir: nno <silent> ,d :Veonim change-dir ~/proj<cr>
-
-  " searching text
-  nno <silent> <space>fw :Veonim grep-word<cr>
-  vno <silent> <space>fw :Veonim grep-selection<cr>
-  nno <silent> <space>fa :Veonim grep<cr>
-  nno <silent> <space>ff :Veonim grep-resume<cr>
-  nno <silent> <space>fb :Veonim buffer-search<cr>
-
-  " language features
-  nno <silent> sr :Veonim rename<cr>
-  nno <silent> sd :Veonim definition<cr>
-  nno <silent> si :Veonim implementation<cr>
-  nno <silent> st :Veonim type-definition<cr>
-  nno <silent> sf :Veonim references<cr>
-  nno <silent> sh :Veonim hover<cr>
-  nno <silent> sl :Veonim symbols<cr>
-  nno <silent> so :Veonim workspace-symbols<cr>
-  nno <silent> sq :Veonim code-action<cr>
-  nno <silent> sk :Veonim highlight<cr>
-  nno <silent> sK :Veonim highlight-clear<cr>
-  nno <silent> ,n :Veonim next-usage<cr>
-  nno <silent> ,p :Veonim prev-usage<cr>
-  nno <silent> sp :Veonim show-problem<cr>
-  nno <silent> <c-n> :Veonim next-problem<cr>
-  nno <silent> <c-p> :Veonim prev-problem<cr>
-
-endif
-
-" }}}
 " vim:foldmethod=marker:foldlevel=0
