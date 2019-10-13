@@ -47,22 +47,22 @@ Plug 'rstacruz/vim-closer'
 Plug 'chrisbra/Colorizer'
 
 " Themes
-Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
 Plug 'Rigellute/rigel'
 
 " Git
 Plug 'jreybert/vimagit'
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 
+Plug 'voldikss/vim-floaterm'
 
 call plug#end()
 
 " }}}
 
 " General {{{
-"
+
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
 let mapleader = "\<Space>"
@@ -127,7 +127,7 @@ set foldnestmax=10
 set foldmethod=syntax
 
 " }}}
-"
+
 " VIM user interface {{{
 
 set number
@@ -172,17 +172,9 @@ syntax enable
 set background=dark
 
 if has('nvim') || has('termguicolors')
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  " let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  " let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   set termguicolors
-endif
-
-" Set extra options when running in GUI mode
-if has("gui_running")
-  set guioptions-=T
-  set guioptions-=e
-  set t_Co=256
-  set guitablabel=%M\ %t
 endif
 
 colorscheme rigel
@@ -235,6 +227,8 @@ nnoremap k gk
 " Tab shortcuts
 noremap <Leader>tp :tabprevious<CR>
 noremap <Leader>tn :tabnext<CR>
+noremap <Tab> :tabprevious<CR>
+noremap <S-Tab> :tabnext<CR>
 
 " Remap VIM 0 to first non-blank character
 map 0 ^
@@ -265,7 +259,7 @@ nnoremap <silent> <C-W>o :ZoomToggle<CR>
 noremap <Leader>yf :let @*=expand("%")<cr>:echo "Copied file to clipboard"<cr>
 
 " Toggle folds
-noremap <Tab> za
+noremap <Space><Space> za
 
 " Diff windows
 nnoremap <leader>wd :windo difft<CR>
@@ -277,7 +271,31 @@ nnoremap <leader>wdd :windo diffo<CR>
 set laststatus=2
 
 let g:rigel_lightline = 1
-let g:lightline = { 'colorscheme': 'rigel' }
+" let g:lightline = { 'colorscheme': 'rigel' }
+let g:lightline = {
+  \ 'colorscheme': 'rigel',
+  \ 'active': {
+  \   'left': [
+  \     [ 'mode', 'paste' ],
+  \     [ 'ctrlpmark', 'git', 'diagnostic', 'cocstatus', 'filename', 'method' ]
+  \   ],
+  \   'right':[
+  \     [ 'filetype', 'fileencoding', 'lineinfo', 'percent' ],
+  \     [ 'blame' ]
+  \   ],
+  \ },
+  \ 'component_function': {
+  \   'blame': 'LightlineGitBlame',
+  \ }
+\ }
+
+function! LightlineGitBlame() abort
+  let blame = get(b:, 'coc_git_blame', '')
+  " return blame
+  return winwidth(0) > 120 ? blame : ''
+endfunction
+
+" autocmd User CocGitStatusChange {command}
 
 "}}}
 
@@ -332,6 +350,7 @@ nmap <leader>es :CocCommand snippets.editSnippets<CR>
 
 " To map <Esc> to exit terminal-mode: >
 tnoremap <leader><Esc> <C-\><C-n>
+tnoremap jj <C-\><C-n>
 nnoremap <leader>te :vs<CR>:terminal<CR>i
 
 " }}}
@@ -361,6 +380,24 @@ nnoremap <leader>sv :source $MYVIMRC<CR> :nohlsearch<CR>
 
 " Group directories first
 let dirvish_mode = ':sort ,^.*/,' 
+
+" }}}
+
+" Emmet {{{
+
+let g:user_emmet_settings = {
+\  'javascript' : {
+\      'extends' : 'jsx',
+\  },
+\}
+
+" }}}
+
+" Floatterm {{{
+
+noremap <silent> <C-t> :FloatermToggle<CR>i
+noremap! <silent> <C-t> <Esc>:FloatermToggle<CR>i
+tnoremap <silent> <C-t> <C-\><C-n>:FloatermToggle<CR>
 
 " }}}
 
