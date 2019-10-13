@@ -391,6 +391,8 @@ let g:user_emmet_settings = {
 " }}}
 
 " Floatterm {{{
+let g:floaterm_width = 125
+let g:floaterm_position = 'center'
 
 noremap <silent> <C-t> :FloatermToggle<CR>i
 noremap! <silent> <C-t> <Esc>:FloatermToggle<CR>i

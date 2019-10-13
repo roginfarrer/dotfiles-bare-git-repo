@@ -5745,3 +5745,5 @@ e54bb96cf474201d3c37b3c9183382c2|file:///Users/rfarrer/.config/nvim/init.vim|298
 	" autocmd User CocGitStatusChange {command}
 7734386ba67c8e51bd9da773e06dcb6c|file:///Users/rfarrer/.config/nvim/init.vim|274|1|V|vim
 	" let g:lightline = { 'colorscheme': 'rigel' }
+4cd9d7e58984a83be298842cca07ea74|file:///Users/rfarrer/.config/nvim/init.vim|394|5|v|vim
+	g:floaterm_width
