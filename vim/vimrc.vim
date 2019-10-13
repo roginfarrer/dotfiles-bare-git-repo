@@ -271,7 +271,6 @@ nnoremap <leader>wdd :windo diffo<CR>
 set laststatus=2
 
 let g:rigel_lightline = 1
-" let g:lightline = { 'colorscheme': 'rigel' }
 let g:lightline = {
   \ 'colorscheme': 'rigel',
   \ 'active': {
@@ -294,8 +293,6 @@ function! LightlineGitBlame() abort
   " return blame
   return winwidth(0) > 120 ? blame : ''
 endfunction
-
-" autocmd User CocGitStatusChange {command}
 
 "}}}
 

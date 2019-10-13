@@ -5733,3 +5733,15 @@ ddd8c385fa063cce0ec5b75c8d2f2e93|file:///Users/rfarrer/.config/nvim/init.vim|182
 	<Space><Space>
 ce1af0b5b341566604e88637d1cc4658|file:///Users/rfarrer/dotfiles/vim/vimrc.vim|263|1|V|vim
 	noremap <Tab> za
+aee8792ed196bde42f5b7f996af06aea|file:///Users/rfarrer/dotfiles/kitty/kitty.conf|43|1|V|conf
+	# adjust_column_width 0
+ceaf4c6037d2172e987fe44c40ffb7bc|file:///Users/rfarrer/dotfiles/kitty/kitty.conf|40|1|V|conf
+	#: Font size (in pts)
+25516d45e1ced7f18bb0cb6d33236fe1|file:///Users/rfarrer/dotfiles/kitty/kitty.conf|36|18|v|conf
+	Victor Mono
+2b3e7699a0c1a5f4c5e30c7a04bba713|file:///Users/rfarrer/dotfiles/kitty/kitty.conf|36|18|v|conf
+	Hasklig
+e54bb96cf474201d3c37b3c9183382c2|file:///Users/rfarrer/.config/nvim/init.vim|298|1|V|vim
+	" autocmd User CocGitStatusChange {command}
+7734386ba67c8e51bd9da773e06dcb6c|file:///Users/rfarrer/.config/nvim/init.vim|274|1|V|vim
+	" let g:lightline = { 'colorscheme': 'rigel' }
