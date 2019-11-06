@@ -2,6 +2,9 @@
   "extensions": {
     "%2FUsers%2Frfarrer%2Fdotfiles": [
       "esl;"
+    ],
+    "%2FUsers%2Frfarrer%2FWayfair%2Fhomebase": [
+      ":q"
     ]
   }
 }

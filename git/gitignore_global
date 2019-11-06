@@ -43,3 +43,4 @@ Thumbs.db
 .nvmrc
 .huskyrc
 jsconfig.json
+.vim/

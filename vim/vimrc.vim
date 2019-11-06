@@ -18,23 +18,24 @@ Plug 'mhinz/vim-startify'
 Plug 'sheerun/vim-polyglot'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 
-" FZF...
-set rtp+=/usr/local/opt/fzf
-" ...and the fzf vim plugin
-Plug 'junegunn/fzf.vim'
+if isdirectory('/usr/local/opt/fzf')
+  Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
+else
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+  Plug 'junegunn/fzf.vim'
+endif
 
 " Autocompletion, and linting, and pretty much eveything
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 
-" Helpful for file navigation
+" Project navigation
 Plug 'justinmk/vim-dirvish'
 Plug 'tpope/vim-eunuch'
 
-" Praise tpope
+" File Navigation
+Plug 'machakann/vim-sandwich'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-surround'
 Plug 'tpope/vim-sleuth'
-
 Plug 'mattn/emmet-vim'
 
 " Statusline
@@ -43,18 +44,17 @@ Plug 'itchyny/lightline.vim'
 " For better autocomplete of brackets
 Plug 'rstacruz/vim-closer'
 
-" Colorize hex colors
-Plug 'chrisbra/Colorizer'
-
-" Themes
+" Colors & Themes
 Plug 'Rigellute/rigel'
+Plug 'chrisbra/Colorizer'
 
 " Git
 Plug 'jreybert/vimagit'
-" Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
+Plug 'christoomey/vim-conflicted'
 
+" Terminal
 Plug 'voldikss/vim-floaterm'
 
 call plug#end()
@@ -86,8 +86,9 @@ set autoread
 " Enable mouse support
 set mouse=n
 
-" Open all splits to the right
+" Open all splits in the CORRECT direction
 set splitright
+set splitbelow
 
 " Turn backup off, since most stuff is in SVN, git et.c anyway...
 set nobackup
@@ -107,10 +108,8 @@ set wrap "Wrap lines
 
 set hidden
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Turn persistent undo on 
-"    means that you can undo even when you close a buffer/VIM
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Turn persistent undo on 
+" means that you can undo even when you close a buffer/VIM
 try
     set undodir=~/.vim_runtime/temp_dirs/undodir
     set undofile
@@ -144,17 +143,20 @@ set wildmenu
 set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
 
+"" Search
 " Ignore case when searching
 set ignorecase
-
 " When searching try to be smart about cases
 set smartcase
-
 " Highlight search results
 set hlsearch
-
 " Makes search act like search in modern browsers
 set incsearch
+
+" NeoVim only
+if has('nvim')
+  set inccommand="split"
+endif
 
 " Don't redraw while executing macros (good performance config)
 set lazyredraw
@@ -172,9 +174,13 @@ syntax enable
 set background=dark
 
 if has('nvim') || has('termguicolors')
-  " let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  " let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   set termguicolors
+endif
+
+if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
+  set t_Co=16
 endif
 
 colorscheme rigel
@@ -182,6 +188,8 @@ colorscheme rigel
 if g:colors_name == 'rigel'
   " slightly easier to read and discern where the cursor is
   hi MatchParen ctermfg=yellow ctermbg=none guifg=yellow guibg=none term=underline gui=underline
+
+  hi! TermCursorNC ctermfg=15 guifg=#fdf6e3 ctermbg=14 guibg=#93a1a1 cterm=NONE gui=NONE
 endif
 
 " Set syntax highlighting for config files
@@ -194,20 +202,16 @@ let g:javascript_plugin_flow = 1
 
 " Keybindings and moving around {{{
 
-nnoremap <leader>d "_d
-
 " Fast saving
 nmap <leader>w :w!<cr>
 
 " File searching
-nnoremap <C-p> :Files<CR>
+" nnoremap <C-p> :Files<CR>
 nnoremap <Leader>b :Buffers<CR>
+nmap <leader>; :Buffers<CR>
 nnoremap <Leader>h :History<CR>
 " fuzzy find text in the working directory
 nmap <leader>f :Rg<CR>
-" Map ; to fuzzy search through open buffers
-nmap ; :Buffers<CR>
-
 " fuzzy find Vim commands (like Ctrl-Shift-P in Sublime/Atom/VSC)
 nmap <leader>c :Commands<CR>
 
@@ -265,7 +269,10 @@ noremap <Space><Space> za
 nnoremap <leader>wd :windo difft<CR>
 nnoremap <leader>wdd :windo diffo<CR>
 
-" Lightline {{{
+" Statusline (Lightline) {{{
+
+" don't display mode, e.g. '-- INSERT --'
+set noshowmode              
 
 " ALways show the statusbar
 set laststatus=2
@@ -304,6 +311,7 @@ let g:github_enterprise_urls = ['https://github.csnzoo.com']
 nnoremap <leader>go :Gbrowse<CR>
 vnoremap <leader>go :'<,'>Gbrowse<CR>
 nnoremap <leader>gc :Gbrowse!<CR>
+vnoremap <leader>gc :'<,'>Gbrowse!<CR>
 
 " }}}
 
@@ -345,10 +353,19 @@ nmap <leader>es :CocCommand snippets.editSnippets<CR>
 
 " Terminal {{{
 
-" To map <Esc> to exit terminal-mode: >
-tnoremap <leader><Esc> <C-\><C-n>
-tnoremap jj <C-\><C-n>
-nnoremap <leader>te :vs<CR>:terminal<CR>i
+if has('nvim')
+  " Allow moving split focus while in terminal mode
+  " tnoremap <C-h> <c-\><c-n><c-w>h
+  " tnoremap <C-j> <c-\><c-n><c-w>j
+  " tnoremap <C-k> <c-\><c-n><c-w>k
+  " tnoremap <C-l> <c-\><c-n><c-w>l
+
+  " To map <Esc> to exit terminal-mode: >
+  tnoremap <leader><Esc> <C-\><C-n>
+  nnoremap <leader>te :vs<CR>:terminal<CR>i
+
+  tnoremap <expr> <A-p> '<C-\><C-n>"'.nr2char(getchar()).'pi'
+endif
 
 " }}}
 
@@ -356,6 +373,31 @@ nnoremap <leader>te :vs<CR>:terminal<CR>i
 
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
+let $FZF_DEFAULT_OPTS = ' --color=dark --color=fg:15,bg:-1,hl:14,fg+:#ffffff,bg+:-1,hl+:1 --color=info:15,prompt:11,pointer:14,marker:4,spinner:11,header:-1 --layout=reverse  --margin=1,4'
+let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+
+function! FloatingFZF()
+  let buf = nvim_create_buf(v:false, v:true)
+  call setbufvar(buf, '&signcolumn', 'no')
+
+  let height = float2nr(15)
+  let width = float2nr(110)
+  let horizontal = float2nr((&columns - width) / 2)
+  let vertical = 8
+
+  let opts = {
+        \ 'relative': 'editor',
+        \ 'row': vertical,
+        \ 'col': horizontal,
+        \ 'width': width,
+        \ 'height': height,
+        \ 'style': 'minimal'
+        \ }
+
+  call nvim_open_win(buf, v:true, opts)
+endfunction
+
+nnoremap <silent> <C-p> :call fzf#vim#files('.', {'options': '--prompt ""'})<CR>
 
 " }}}
 
@@ -369,7 +411,7 @@ let g:startify_change_to_dir = 0
 " VIMRC {{{
 
 nnoremap <leader>ev :vsp $MYVIMRC<CR>
-nnoremap <leader>sv :source $MYVIMRC<CR> :nohlsearch<CR>
+nnoremap <leader>sv :source $MYVIMRC<CR> 
 
 " }}}
 
@@ -394,9 +436,10 @@ let g:user_emmet_settings = {
 let g:floaterm_width = 125
 let g:floaterm_position = 'center'
 
-noremap <silent> <C-t> :FloatermToggle<CR>i
-noremap! <silent> <C-t> <Esc>:FloatermToggle<CR>i
-tnoremap <silent> <C-t> <C-\><C-n>:FloatermToggle<CR>
+" noremap <silent> <C-t> :FloatermToggle<CR>i
+" noremap! <silent> <C-t> <Esc>:FloatermToggle<CR>i
+" tnoremap <silent> <C-t> <C-\><C-n>:FloatermToggle<CR>
+let g:floaterm_keymap_toggle = '<C-t>'
 
 " }}}
 
