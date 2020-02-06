@@ -1,0 +1,9 @@
+{
+  "javascript.suggest.enabled": false,
+  "coc.preferences.formatOnSaveFiletypes": ["javascript", "typescript", "typescriptreact", "json", "javascriptreact", "css", "scss", "markdown", "mdx", "md"],
+  "eslint.run": "onSave",
+  "coc.preferences.colorSupport": true,
+  "typescript.suggestionActions.enabled": false,
+  "typescript.validate.enable": false,
+  "javascript.validate.enable": false
+}

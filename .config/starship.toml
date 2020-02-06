@@ -1,0 +1,9 @@
+# Replace the "❯" symbol in the prompt with "➜"
+# [character]      # The name of the module we are configuring is "character"
+# symbol = "➜"     # The "symbol" segment is being set to "➜"
+
+[username]
+disabled = true
+
+[cmd_duration]
+disabled = true
