@@ -1,11 +1,15 @@
-# Bootstrap, only runs if fisher isn't installed
+# Install Fisher if it's not installed
 if not functions -q fisher
   set -q XDG_CONFIG_HOME; or set XDG_CONFIG_HOME ~/.config
   curl https://git.io/fisher --create-dirs -sLo $XDG_CONFIG_HOME/fish/functions/fisher.fish
   fish -c fisher
 end
 
+# Initialize starship prompt
 starship init fish | source
+
+# fnm
+fnm env --multi | source
 
 set USER = rfarrer
 

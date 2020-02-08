@@ -24,6 +24,9 @@ else
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
   Plug 'junegunn/fzf.vim'
 endif
+" Pretty file previews
+" Read required dependencies! (ripgrep, ccat/bat)
+Plug 'yuki-ycino/fzf-preview.vim'
 
 " Autocompletion, and linting, and pretty much eveything
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
@@ -76,9 +79,8 @@ call plug#end()
 " like <leader>w saves the current file
 let mapleader = "\<Space>"
 
-" Enable filetype plugins
-filetype plugin on
-filetype indent on
+" Turns on detection for fyletypes, indentation files and plugin files
+filetype plugin indent on
 
 " Copy visual selection to clipboard
 map <C-c> "+y
@@ -125,8 +127,9 @@ try
 catch
 endtry
 
-" Better display for messages
-set cmdheight=2
+" Statusline Config
+set statusline+=%F
+set cmdheight=1
 
 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=300
@@ -252,13 +255,25 @@ nmap <leader>w :w!<cr>
 
 " File searching
 " nnoremap <C-p> :Files<CR>
-nnoremap <Leader>b :Buffers<CR>
-nmap <leader>; :Buffers<CR>
+" nnoremap <Leader>b :Buffers<CR>
+" nmap <leader>; :Buffers<CR>
+" nnoremap <Leader>h :History<CR>
+" " fuzzy find text in the working directory
+" nmap <leader>f :Rg<CR>
+" " fuzzy find Vim commands (like Ctrl-Shift-P in Sublime/Atom/VSC)
+" nmap <leader>c :Commands<CR>
+nnoremap <C-p> :FzfPreviewProjectFiles<CR>
+nnoremap <Leader>b :FzfPreviewBuffers<CR>
+nmap <leader>; :FzfPreviewBuffers<CR>
 nnoremap <Leader>h :History<CR>
+nnoremap <leader>. :FzfPreviewDirectoryFiles<CR>
 " fuzzy find text in the working directory
-nmap <leader>f :Rg<CR>
+nnoremap <leader>f :FzfPreviewDirectoryFiles<CR>
 " fuzzy find Vim commands (like Ctrl-Shift-P in Sublime/Atom/VSC)
 nmap <leader>c :Commands<CR>
+
+" Lazygit
+nnoremap <silent> <Leader>lg :call ToggleLazyGit()<CR>
 
 " newline without insert
 nmap <CR> o<Esc>"_cc<Esc>
@@ -328,7 +343,9 @@ vnoremap <leader>gc :'<,'>Gbrowse!<CR>
 
 " Coc.nvim {{{
 
-let g:coc_node_path="/Users/rfarrer/.nvm/versions/node/v12.4.0/bin/node"
+" let g:coc_node_path="/Users/rfarrer/.nvm/versions/node/v12.4.0/bin/node
+
+let g:coc_node_path="/var/folders/26/x7p4tmjs6bvgqdh12ytmmtcc0000gn/T/fnm-shell-1810389/bin/node"
 
 let g:coc_global_extensions = [
     \ 'coc-css',
@@ -414,74 +431,6 @@ autocmd TermOpen * startinsert
 
 " Turn off line numbers etc
 autocmd TermOpen * setlocal listchars= nonumber norelativenumber
-
-" Creates a floating window with a most recent buffer to be used
-function! CreateCenteredFloatingWindow()
-  let width = float2nr(&columns * 0.6)
-  let height = float2nr(&lines * 0.6)
-  let top = ((&lines - height) / 2) - 1
-  let left = (&columns - width) / 2
-  let opts = {'relative': 'editor', 'row': top, 'col': left, 'width': width, 'height': height, 'style': 'minimal'}
-
-  let top = "╭" . repeat("─", width - 2) . "╮"
-  let mid = "│" . repeat(" ", width - 2) . "│"
-  let bot = "╰" . repeat("─", width - 2) . "╯"
-  let lines = [top] + repeat([mid], height - 2) + [bot]
-  let s:buf = nvim_create_buf(v:false, v:true)
-  call nvim_buf_set_lines(s:buf, 0, -1, v:true, lines)
-  call nvim_open_win(s:buf, v:true, opts)
-  set winhl=Normal:Floating
-  let opts.row += 1
-  let opts.height -= 2
-  let opts.col += 2
-  let opts.width -= 4
-  call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
-  autocmd BufWipeout <buffer> call CleanupBuffer(s:buf)
-  " tnoremap <buffer> <silent> <Esc> <C-\><C-n><CR>:call DeleteUnlistedBuffers()<CR>
-endfunction
-
-function! OnTermExit(job_id, code, event) dict
-  if a:code == 0
-    call DeleteUnlistedBuffers()
-  endif
-endfunction
-
-function! ToggleTerm(cmd)
-  if empty(bufname(a:cmd))
-    call CreateCenteredFloatingWindow()
-    call termopen(a:cmd, { 'on_exit': function('OnTermExit') })
-  else
-    call DeleteUnlistedBuffers()
-  endif
-endfunction
-
-function! DeleteUnlistedBuffers()
-  for n in nvim_list_bufs()
-    if ! buflisted(n)
-      let name = bufname(n)
-      if name == '[Scratch]' ||
-            \ matchend(name, ":bash") ||
-            \ matchend(name, ":lazygit") ||
-            \ matchend(name, ":tmuxinator-fzf-start.sh") ||
-            \ matchend(name, ":hstarti")
-        call CleanupBuffer(n)
-      endif
-    endif
-  endfor
-endfunction
-
-function! CleanupBuffer(buf)
-  if bufexists(a:buf)
-    silent execute 'bwipeout! '.a:buf
-  endif
-endfunction
-
-" Opens lazygit
-function! ToggleLazyGit()
-  call ToggleTerm('lazygit')
-endfunction
-
-nnoremap <silent> <Leader>' :call ToggleLazyGit()<CR>
  
 " }}}
 
@@ -513,13 +462,25 @@ function! FloatingFZF()
   call nvim_open_win(buf, v:true, opts)
 endfunction
 
-nnoremap <silent> <C-p> :call fzf#vim#files('.', {'options': '--prompt ""'})<CR>
+" nnoremap <silent> <C-p> :call fzf#vim#files('.', {'options': '--prompt ""'})<CR>
+
+" {{{ FZF Preview
+
+" Use vim-devicons
+" let g:fzf_preview_use_dev_icons = 1
+
+let g:fzf_preview_fzf_color_option = 'fg:15,bg:-1,hl:14,fg+:#ffffff,bg+:-1,hl+:1,info:15,prompt:11,pointer:14,marker:4,spinner:11,header:-1'
+
+let g:fzf_preview_filelist_command = 'rg --files --follow --hidden -g "!node_modules" -g "!.git"'
+let g:fzf_preview_directory_files_command = 'rg --files --follow --hidden -g "!node_modules" -g "!.git"'
+
+" }}}
 
 " }}}
 
 " Startify {{{
 
-let g:startify_bookmarks = [ {'v': '~/dotfiles/vim/vimrc.vim'}, {'d': '~/dotfiles'}]
+let g:startify_bookmarks = [ {'v': '~/.config/nvim/init.vim'} ]
 let g:startify_change_to_dir = 0
 
 " }}}
@@ -579,5 +540,7 @@ let g:session_autoload="no"
 " When changing, don't save to register
 nnoremap c "_c
 vnoremap c "_c
+
+source $HOME/.config/nvim/configs/functions.vim
 
 " vim:foldmethod=marker:foldlevel=0
