@@ -254,23 +254,24 @@ let g:lightline = {
 nmap <leader>w :w!<cr>
 
 " File searching
-" nnoremap <C-p> :Files<CR>
-" nnoremap <Leader>b :Buffers<CR>
-" nmap <leader>; :Buffers<CR>
-" nnoremap <Leader>h :History<CR>
-" " fuzzy find text in the working directory
-" nmap <leader>f :Rg<CR>
-" " fuzzy find Vim commands (like Ctrl-Shift-P in Sublime/Atom/VSC)
-" nmap <leader>c :Commands<CR>
-nnoremap <C-p> :FzfPreviewProjectFiles<CR>
-nnoremap <Leader>b :FzfPreviewBuffers<CR>
-nmap <leader>; :FzfPreviewBuffers<CR>
+nnoremap <C-p> :Files<CR>
+nnoremap <Leader>b :Buffers<CR>
+nmap <leader>; :Buffers<CR>
 nnoremap <Leader>h :History<CR>
-nnoremap <leader>. :FzfPreviewDirectoryFiles<CR>
 " fuzzy find text in the working directory
-nnoremap <leader>f :FzfPreviewDirectoryFiles<CR>
+nmap <leader>f :Rg<CR>
 " fuzzy find Vim commands (like Ctrl-Shift-P in Sublime/Atom/VSC)
 nmap <leader>c :Commands<CR>
+
+" nnoremap <C-p> :FzfPreviewProjectFiles<CR>
+" nnoremap <Leader>b :FzfPreviewBuffers<CR>
+" nmap <leader>; :FzfPreviewBuffers<CR>
+" nnoremap <Leader>h :History<CR>
+" nnoremap <leader>. :FzfPreviewDirectoryFiles<CR>
+" " fuzzy find text in the working directory
+" nnoremap <leader>f :FzfPreviewDirectoryFiles<CR>
+" " fuzzy find Vim commands (like Ctrl-Shift-P in Sublime/Atom/VSC)
+" nmap <leader>c :Commands<CR>
 
 " Lazygit
 nnoremap <silent> <Leader>lg :call ToggleLazyGit()<CR>
@@ -345,7 +346,7 @@ vnoremap <leader>gc :'<,'>Gbrowse!<CR>
 
 " let g:coc_node_path="/Users/rfarrer/.nvm/versions/node/v12.4.0/bin/node
 
-let g:coc_node_path="/var/folders/26/x7p4tmjs6bvgqdh12ytmmtcc0000gn/T/fnm-shell-1810389/bin/node"
+let g:coc_node_path="/Users/rfarrer/.config/nvm/13.8.0/bin/node"
 
 let g:coc_global_extensions = [
     \ 'coc-css',
@@ -462,7 +463,7 @@ function! FloatingFZF()
   call nvim_open_win(buf, v:true, opts)
 endfunction
 
-" nnoremap <silent> <C-p> :call fzf#vim#files('.', {'options': '--prompt ""'})<CR>
+nnoremap <silent> <C-p> :call fzf#vim#files('.', {'options': '--prompt ""'})<CR>
 
 " {{{ FZF Preview
 
