@@ -13,6 +13,8 @@ call plug#begin('~/.vim/plugged')
 
 " Fancy start screen
 Plug 'mhinz/vim-startify'
+  let g:startify_bookmarks = [ {'v': '~/.config/nvim/init.vim'} ]
+  let g:startify_change_to_dir = 0
 
 " Syntax highlighting for pretty much everything
 Plug 'sheerun/vim-polyglot'
@@ -33,6 +35,19 @@ Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 
 " Project navigation
 Plug 'justinmk/vim-dirvish'
+  " Group directories first
+  let dirvish_mode = ':sort ,^.*/,' 
+  
+  
+  augroup dirvish_config
+    autocmd!
+  
+    autocmd FileType dirvish
+      \ nmap <silent><buffer> q <Plug>(dirvish_quit)
+      \|nnoremap <silent><buffer> <C-n> <nop>
+      \|nnoremap <silent><buffer> <C-p> :call fzf#vim#files('.', {'options': '--prompt ""'})<CR>
+  augroup END
+
 Plug 'tpope/vim-eunuch'
 
 " File Navigation
@@ -41,39 +56,61 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sleuth'
 Plug 'mattn/emmet-vim'
 Plug 'dhruvasagar/vim-open-url'
+  nmap gx <Plug>(open-url-browser)
 
 " Statusline
 Plug 'itchyny/lightline.vim'
-" Plug 'vim-airline/vim-airline'
 
 " For better autocomplete of brackets
-Plug 'rstacruz/vim-closer'
+" Plug 'rstacruz/vim-closer'
 
 " Colors & Themes
 Plug 'Rigellute/rigel'
 Plug 'joshdick/onedark.vim'
 
 " Git
-Plug 'jreybert/vimagit'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
-Plug 'christoomey/vim-conflicted'
+  let g:github_enterprise_urls = ['https://github.csnzoo.com']
+  nnoremap <leader>go :Gbrowse<CR>
+  vnoremap <leader>go :'<,'>Gbrowse<CR>
+  nnoremap <leader>gc :Gbrowse!<CR>
+  vnoremap <leader>gc :'<,'>Gbrowse!<CR>
 
 " Terminal
 Plug 'voldikss/vim-floaterm'
+  let g:floaterm_width = 125
+  let g:floaterm_position = 'center'
+  let g:floaterm_keymap_toggle = '<C-t>'
 Plug 'skywind3000/vim-terminal-help'
 
 " Misc
-" Plug 'psliwka/vim-smoothie'
 Plug 'junegunn/goyo.vim'
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-session'
+
+" vim-like file manager, or paired-down NERDTree
+" Requires the fff utility to be installed on the system
+Plug 'dylanaraps/fff.vim'
+  let g:fff#split = "40vnew"
+  let g:fff#split_direction = "nosplitbelow nosplitright"
+  nnoremap f :F<CR>
+
+Plug 'mvolkmann/vim-js-arrow-function'
+  nmap <silent> <leader>tb :call JsArrowFnBraceToggle()<CR>
+
+" Improved search highlighting
+Plug 'haya14busa/incsearch.vim'
+  set hlsearch
+  let g:incsearch#auto_nohlsearch = 1
+  map n  <Plug>(incsearch-nohl-n)
+  map N  <Plug>(incsearch-nohl-N)
+  map *  <Plug>(incsearch-nohl-*)
+  map #  <Plug>(incsearch-nohl-#)
+  map g* <Plug>(incsearch-nohl-g*)
+  map g# <Plug>(incsearch-nohl-g#)
 
 call plug#end()
 
 " }}}
-
-" General {{{
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
@@ -90,6 +127,10 @@ nnoremap <Leader>p "+p
 xnoremap <Leader>p "+p
 nnoremap <Leader>P "+P
 xnoremap <Leader>P "+P
+
+" When changing, don't save to register
+nnoremap c "_c
+vnoremap c "_c
 
 " Set to auto read when a file is changed from the outside
 set autoread
@@ -117,6 +158,7 @@ set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
 
+" Allows you to change buffers even if the current on has unsaved changes
 set hidden
 
 " Turn persistent undo on 
@@ -134,22 +176,14 @@ set cmdheight=1
 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=300
 
-" }}}
-
-" Section Folding {{{
-
 set foldenable
 set foldlevelstart=10
 set foldnestmax=10
 set foldmethod=syntax
 
-" }}}
-
-" VIM user interface {{{
-
 set number
 set relativenumber
-nnoremap <leader><CR> :nohlsearch<CR>
+" nnoremap <leader><CR> :nohlsearch<CR>
 
 " Always show the sign column
 set signcolumn=yes
@@ -164,7 +198,7 @@ set wildmenu
 set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
 
-"" Search
+" Search
 " Ignore case when searching
 set ignorecase
 " When searching try to be smart about cases
@@ -174,10 +208,7 @@ set hlsearch
 " Makes search act like search in modern browsers
 set incsearch
 
-" NeoVim only
-if has('nvim')
-  set inccommand="nosplit"
-endif
+set inccommand="nosplit"
 
 " Don't redraw while executing macros (good performance config)
 set lazyredraw
@@ -186,18 +217,14 @@ set lazyredraw
 :autocmd InsertEnter * set cul
 :autocmd InsertLeave * set nocul
 
-" }}}
-
 " Colors and Fonts {{{
 
 " Enable syntax highlighting
 set background=dark
 
-if has('nvim') || has('termguicolors')
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
-endif
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+set termguicolors
 
 if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
   set t_Co=16
@@ -221,11 +248,6 @@ set noshowmode
 " ALways show the statusbar
 set laststatus=2
 
-" let g:rigel_airline = 1
-" let g:airline_theme = 'rigel'
-" let g:airline#extensions#coc#enabled = 1
-" let g:airline_powerline_fonts = 1
-
 let g:rigel_lightline = 1
 function! CocCurrentFunction()
     return get(b:, 'coc_current_function', '')
@@ -245,33 +267,34 @@ let g:lightline = {
 
 "}}}
 
-
 " }}}
 
 " Keybindings and moving around {{{
 
 " Fast saving
 nmap <leader>w :w!<cr>
+" Fast closing
+nmap <leader>q :q<cr>
 
-" File searching
-nnoremap <C-p> :Files<CR>
-nnoremap <Leader>b :Buffers<CR>
-nmap <leader>; :Buffers<CR>
-nnoremap <Leader>h :History<CR>
-" fuzzy find text in the working directory
-nmap <leader>f :Rg<CR>
-" fuzzy find Vim commands (like Ctrl-Shift-P in Sublime/Atom/VSC)
-nmap <leader>c :Commands<CR>
-
-" nnoremap <C-p> :FzfPreviewProjectFiles<CR>
-" nnoremap <Leader>b :FzfPreviewBuffers<CR>
-" nmap <leader>; :FzfPreviewBuffers<CR>
+" " File searching
+" nnoremap <C-p> :Files<CR>
+" nnoremap <Leader>b :Buffers<CR>
+" nmap <leader>; :Buffers<CR>
 " nnoremap <Leader>h :History<CR>
-" nnoremap <leader>. :FzfPreviewDirectoryFiles<CR>
 " " fuzzy find text in the working directory
-" nnoremap <leader>f :FzfPreviewDirectoryFiles<CR>
+" nmap <leader>f :Rg<CR>
 " " fuzzy find Vim commands (like Ctrl-Shift-P in Sublime/Atom/VSC)
 " nmap <leader>c :Commands<CR>
+
+nnoremap <C-p> :FzfPreviewProjectFiles<CR>
+nnoremap <Leader>b :FzfPreviewBuffers<CR>
+nmap <leader>; :FzfPreviewBuffers<CR>
+nnoremap <Leader>h :History<CR>
+nnoremap <leader>. :FzfPreviewDirectoryFiles<CR>
+" fuzzy find text in the working directory
+nnoremap <leader>f :FzfPreviewDirectoryFiles<CR>
+" fuzzy find Vim commands (like Ctrl-Shift-P in Sublime/Atom/VSC)
+nmap <leader>c :Commands<CR>
 
 " Lazygit
 nnoremap <silent> <Leader>lg :call ToggleLazyGit()<CR>
@@ -288,6 +311,10 @@ map <C-l> <C-W>l
 " If you like long lines with line wrapping enabled, this solves the problem that pressing down jumpes your cursor “over” the current line to the next line. It changes behaviour so that it jumps to the next row in the editor (much more natural)
 nnoremap j gj
 nnoremap k gk
+
+" Number of lines that offset buffer scrolling movement, so cursor doesn't get
+" to the top/bottom 10 lines of buffer
+set scrolloff=10
 
 " Tab shortcuts
 noremap <Leader>tp :tabprevious<CR>
@@ -332,94 +359,9 @@ nnoremap <leader>wdd :windo diffo<CR>
 
 " }}}
 
-" Git {{{
-
-let g:github_enterprise_urls = ['https://github.csnzoo.com']
-nnoremap <leader>go :Gbrowse<CR>
-vnoremap <leader>go :'<,'>Gbrowse<CR>
-nnoremap <leader>gc :Gbrowse!<CR>
-vnoremap <leader>gc :'<,'>Gbrowse!<CR>
-
-" }}}
-
-" Coc.nvim {{{
-
-" let g:coc_node_path="/Users/rfarrer/.nvm/versions/node/v12.4.0/bin/node
-
-let g:coc_node_path="/Users/rfarrer/.config/nvm/13.8.0/bin/node"
-
-let g:coc_global_extensions = [
-    \ 'coc-css',
-    \ 'coc-emmet',
-    \ 'coc-emoji',
-    \ 'coc-eslint',
-    \ 'coc-git',
-    \ 'coc-html',
-    \ 'coc-json',
-    \ 'coc-prettier',
-    \ 'coc-tsserver',
-    \ 'coc-yaml',
-    \ 'coc-stylelint',
-    \ 'coc-snippets',
-    \ 'coc-flow',
-    \ 'coc-yank',
-    \ 'coc-highlight',
-    \ 'coc-lists' ]
-
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gt <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Remap for rename current word
-nmap <leader>lr <Plug>(coc-rename)
-
-" gh - get hint on whatever's under the cursor
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-nnoremap <silent> gh :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if &filetype == 'vim'
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-nmap <leader>es :CocCommand snippets.editSnippets<CR>
-
-" Sets up :Prettier command
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
-
-" }}}
-
 " Terminal {{{
 
 if has('nvim')
-  " Allow moving split focus while in terminal mode
-  " tnoremap <C-h> <c-\><c-n><c-w>h
-  " tnoremap <C-j> <c-\><c-n><c-w>j
-  " tnoremap <C-k> <c-\><c-n><c-w>k
-  " tnoremap <C-l> <c-\><c-n><c-w>l
-
   " To map <Esc> to exit terminal-mode: >
   tnoremap <leader><Esc> <C-\><C-n>
   nnoremap <leader>te :vs<CR>:terminal<CR>
@@ -436,6 +378,8 @@ autocmd TermOpen * setlocal listchars= nonumber norelativenumber
 " }}}
 
 " FZF {{{
+
+" FZF (basic, no preview) {{{
 
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
@@ -463,12 +407,11 @@ function! FloatingFZF()
   call nvim_open_win(buf, v:true, opts)
 endfunction
 
-nnoremap <silent> <C-p> :call fzf#vim#files('.', {'options': '--prompt ""'})<CR>
+" nnoremap <silent> <C-p> :call fzf#vim#files('.', {'options': '--prompt ""'})<CR>
+
+" }}}
 
 " {{{ FZF Preview
-
-" Use vim-devicons
-" let g:fzf_preview_use_dev_icons = 1
 
 let g:fzf_preview_fzf_color_option = 'fg:15,bg:-1,hl:14,fg+:#ffffff,bg+:-1,hl+:1,info:15,prompt:11,pointer:14,marker:4,spinner:11,header:-1'
 
@@ -479,13 +422,6 @@ let g:fzf_preview_directory_files_command = 'rg --files --follow --hidden -g "!n
 
 " }}}
 
-" Startify {{{
-
-let g:startify_bookmarks = [ {'v': '~/.config/nvim/init.vim'} ]
-let g:startify_change_to_dir = 0
-
-" }}}
-
 " VIMRC {{{
 
 nnoremap <leader>ev :vsp $MYVIMRC<CR>
@@ -493,55 +429,9 @@ nnoremap <leader>sv :source $MYVIMRC<CR>
 
 " }}}
 
-" Dirvish {{{
-
-" Group directories first
-let dirvish_mode = ':sort ,^.*/,' 
-
-
-augroup dirvish_config
-  autocmd!
-
-  autocmd FileType dirvish
-    \ nmap <silent><buffer> q <Plug>(dirvish_quit)
-    \|nnoremap <silent><buffer> <C-n> <nop>
-    \|nnoremap <silent><buffer> <C-p> :call fzf#vim#files('.', {'options': '--prompt ""'})<CR>
-augroup END
-
-" }}}
-
-" Emmet {{{
-
-let g:user_emmet_settings = {
-\  'javascript' : {
-\      'extends' : 'jsx',
-\  },
-\}
-
-" }}}
-
-" Floatterm {{{
-
-let g:floaterm_width = 125
-let g:floaterm_position = 'center'
-let g:floaterm_keymap_toggle = '<C-t>'
-
-" }}}
-
-" Open Url {{{
-
-nmap gx <Plug>(open-url-browser)
-
-" }}}
-
 nmap <C-q> :tabe<CR>:lcd ~/Wayfair/homebase<CR>:tabe<CR>:lcd ~/Wayfair/monolith/resources<CR>:tabprevious<CR>
 
-let g:session_autoload="no"
-
-" When changing, don't save to register
-nnoremap c "_c
-vnoremap c "_c
-
 source $HOME/.config/nvim/configs/functions.vim
+source $HOME/.config/nvim/configs/coc.vim
 
 " vim:foldmethod=marker:foldlevel=0
