@@ -1,5 +1,11 @@
 " VIMRC
 
+set shell=/bin/bash
+
+" With a map leader it's possible to do extra key combinations
+" like <leader>w saves the current file
+let mapleader = "\<Space>"
+
 " Plugins {{{
 
 " Install Plug
@@ -11,34 +17,40 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-" Fancy start screen
-Plug 'mhinz/vim-startify'
-  let g:startify_bookmarks = [ {'v': '~/.config/nvim/init.vim'} ]
-  let g:startify_change_to_dir = 0
-
-" Syntax highlighting for pretty much everything
-Plug 'sheerun/vim-polyglot'
-Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
-
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 else
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
   Plug 'junegunn/fzf.vim'
 endif
-" Pretty file previews
-" Read required dependencies! (ripgrep, ccat/bat)
 Plug 'yuki-ycino/fzf-preview.vim'
 
-" Autocompletion, and linting, and pretty much eveything
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}} " Autocompletion, and linting, and pretty much eveything
+Plug 'sheerun/vim-polyglot'             " Syntax highlighting for pretty much everything
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+Plug 'tpope/vim-eunuch'                 " Run common Unix commands inside Vim
+Plug 'machakann/vim-sandwich'           " Adds commands for adding/deleting/replacing surrounding text
+Plug 'tpope/vim-commentary'             " Adds commands for commenting lines
+Plug 'tpope/vim-sleuth'                 " Smart detection of line indenting, tab spaces, etc
+Plug 'mattn/emmet-vim'                  " You know, emmet
+Plug 'junegunn/goyo.vim'                " Zen mode
+Plug 'alvan/vim-closetag'               " Auto close html tags
+Plug 'itchyny/lightline.vim'            " Custom statusline
+Plug 'Rigellute/rigel'                  " Colorscheme
+Plug 'joshdick/onedark.vim'             " Colorscheme
+Plug 'dhruvasagar/vim-open-url'         " Open URLs in a way that actually works
+  nmap gx <Plug>(open-url-browser)
+Plug 'tpope/vim-fugitive'               " Classic Git integration
+Plug 'tpope/vim-rhubarb'                " Utilities on top of fugitive
+  let g:github_enterprise_urls = ['https://github.csnzoo.com']
+  nnoremap <leader>go :Gbrowse<CR>
+  vnoremap <leader>go :'<,'>Gbrowse<CR>
+  nnoremap <leader>gc :Gbrowse!<CR>
+  vnoremap <leader>gc :'<,'>Gbrowse!<CR>
 
-" Project navigation
-Plug 'justinmk/vim-dirvish'
+Plug 'justinmk/vim-dirvish'             " Directory navigation, replaces netrw
   " Group directories first
   let dirvish_mode = ':sort ,^.*/,' 
-  
-  
   augroup dirvish_config
     autocmd!
   
@@ -48,57 +60,25 @@ Plug 'justinmk/vim-dirvish'
       \|nnoremap <silent><buffer> <C-p> :call fzf#vim#files('.', {'options': '--prompt ""'})<CR>
   augroup END
 
-Plug 'tpope/vim-eunuch'
+Plug 'mhinz/vim-startify'               " Fancy Start Screen
+  let g:startify_bookmarks = [ {'v': '~/.config/nvim/init.vim'} ]
+  let g:startify_change_to_dir = 0
 
-" File Navigation
-Plug 'machakann/vim-sandwich'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-sleuth'
-Plug 'mattn/emmet-vim'
-Plug 'dhruvasagar/vim-open-url'
-  nmap gx <Plug>(open-url-browser)
-
-" Statusline
-Plug 'itchyny/lightline.vim'
-
-" For better autocomplete of brackets
-" Plug 'rstacruz/vim-closer'
-
-" Colors & Themes
-Plug 'Rigellute/rigel'
-Plug 'joshdick/onedark.vim'
-
-" Git
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
-  let g:github_enterprise_urls = ['https://github.csnzoo.com']
-  nnoremap <leader>go :Gbrowse<CR>
-  vnoremap <leader>go :'<,'>Gbrowse<CR>
-  nnoremap <leader>gc :Gbrowse!<CR>
-  vnoremap <leader>gc :'<,'>Gbrowse!<CR>
-
-" Terminal
-Plug 'voldikss/vim-floaterm'
+Plug 'voldikss/vim-floaterm'            " Functionality for centering a terminal window
   let g:floaterm_width = 125
   let g:floaterm_position = 'center'
   let g:floaterm_keymap_toggle = '<C-t>'
-Plug 'skywind3000/vim-terminal-help'
-
-" Misc
-Plug 'junegunn/goyo.vim'
-
-" vim-like file manager, or paired-down NERDTree
-" Requires the fff utility to be installed on the system
-Plug 'dylanaraps/fff.vim'
+Plug 'skywind3000/vim-terminal-help'    " Quick access to a terminal buffer
+Plug 'dylanaraps/fff.vim'               " vim-like file manager, or paired-down NERDTree
+  " Requires the fff utility to be installed on the system
   let g:fff#split = "40vnew"
   let g:fff#split_direction = "nosplitbelow nosplitright"
   nnoremap f :F<CR>
 
-Plug 'mvolkmann/vim-js-arrow-function'
+Plug 'mvolkmann/vim-js-arrow-function'  " GOAT. Toggle between expression and statements
   nmap <silent> <leader>tb :call JsArrowFnBraceToggle()<CR>
 
-" Improved search highlighting
-Plug 'haya14busa/incsearch.vim'
+Plug 'haya14busa/incsearch.vim'         " Improved search highlighting
   set hlsearch
   let g:incsearch#auto_nohlsearch = 1
   map n  <Plug>(incsearch-nohl-n)
@@ -111,10 +91,6 @@ Plug 'haya14busa/incsearch.vim'
 call plug#end()
 
 " }}}
-
-" With a map leader it's possible to do extra key combinations
-" like <leader>w saves the current file
-let mapleader = "\<Space>"
 
 " Turns on detection for fyletypes, indentation files and plugin files
 filetype plugin indent on
@@ -276,26 +252,6 @@ nmap <leader>w :w!<cr>
 " Fast closing
 nmap <leader>q :q<cr>
 
-" " File searching
-" nnoremap <C-p> :Files<CR>
-" nnoremap <Leader>b :Buffers<CR>
-" nmap <leader>; :Buffers<CR>
-" nnoremap <Leader>h :History<CR>
-" " fuzzy find text in the working directory
-" nmap <leader>f :Rg<CR>
-" " fuzzy find Vim commands (like Ctrl-Shift-P in Sublime/Atom/VSC)
-" nmap <leader>c :Commands<CR>
-
-nnoremap <C-p> :FzfPreviewProjectFiles<CR>
-nnoremap <Leader>b :FzfPreviewBuffers<CR>
-nmap <leader>; :FzfPreviewBuffers<CR>
-nnoremap <Leader>h :History<CR>
-nnoremap <leader>. :FzfPreviewDirectoryFiles<CR>
-" fuzzy find text in the working directory
-nnoremap <leader>f :FzfPreviewDirectoryFiles<CR>
-" fuzzy find Vim commands (like Ctrl-Shift-P in Sublime/Atom/VSC)
-nmap <leader>c :Commands<CR>
-
 " Lazygit
 nnoremap <silent> <Leader>lg :call ToggleLazyGit()<CR>
 
@@ -361,13 +317,11 @@ nnoremap <leader>wdd :windo diffo<CR>
 
 " Terminal {{{
 
-if has('nvim')
-  " To map <Esc> to exit terminal-mode: >
-  tnoremap <leader><Esc> <C-\><C-n>
-  nnoremap <leader>te :vs<CR>:terminal<CR>
+" To map <Esc> to exit terminal-mode: >
+tnoremap <leader><Esc> <C-\><C-n>
+nnoremap <leader>te :vs<CR>:terminal fish<CR>
 
-  tnoremap <expr> <A-p> '<C-\><C-n>"'.nr2char(getchar()).'pi'
-endif
+tnoremap <expr> <A-p> '<C-\><C-n>"'.nr2char(getchar()).'pi'
 
 " When term starts, auto go into insert mode
 autocmd TermOpen * startinsert
@@ -378,6 +332,22 @@ autocmd TermOpen * setlocal listchars= nonumber norelativenumber
 " }}}
 
 " FZF {{{
+
+" {{{ FZF Preview
+
+let g:fzf_preview_fzf_color_option = 'fg:15,bg:-1,hl:14,fg+:#ffffff,bg+:-1,hl+:1,info:15,prompt:11,pointer:14,marker:4,spinner:11,header:-1'
+
+let g:fzf_preview_filelist_command = 'rg --files --follow --hidden -g "!node_modules" -g "!.git"'
+let g:fzf_preview_directory_files_command = 'rg --files --follow --hidden -g "!node_modules" -g "!.git"'
+
+nnoremap <C-p> :FzfPreviewProjectFiles<CR>
+" nnoremap <Leader>b :FzfPreviewBuffers<CR>
+" nmap <leader>; :FzfPreviewBuffers<CR>
+nnoremap <leader>. :FzfPreviewDirectoryFiles<CR>
+" fuzzy find text in the working directory
+" nnoremap <leader>f :FzfPreviewDirectoryFiles<CR>
+
+" }}}
 
 " FZF (basic, no preview) {{{
 
@@ -407,31 +377,27 @@ function! FloatingFZF()
   call nvim_open_win(buf, v:true, opts)
 endfunction
 
+" fuzzy find Vim commands (like Ctrl-Shift-P in Sublime/Atom/VSC)
+nmap <leader>c :Commands<CR>
+nnoremap <Leader>h :History<CR>
+nnoremap <Leader>b :Buffers<CR>
+nmap <leader>; :Buffers<CR>
+nmap <leader>f :Rg<CR>
+
 " nnoremap <silent> <C-p> :call fzf#vim#files('.', {'options': '--prompt ""'})<CR>
-
-" }}}
-
-" {{{ FZF Preview
-
-let g:fzf_preview_fzf_color_option = 'fg:15,bg:-1,hl:14,fg+:#ffffff,bg+:-1,hl+:1,info:15,prompt:11,pointer:14,marker:4,spinner:11,header:-1'
-
-let g:fzf_preview_filelist_command = 'rg --files --follow --hidden -g "!node_modules" -g "!.git"'
-let g:fzf_preview_directory_files_command = 'rg --files --follow --hidden -g "!node_modules" -g "!.git"'
+" nmap <leader>c :Commands<CR>
 
 " }}}
 
 " }}}
-
-" VIMRC {{{
 
 nnoremap <leader>ev :vsp $MYVIMRC<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR> 
-
-" }}}
 
 nmap <C-q> :tabe<CR>:lcd ~/Wayfair/homebase<CR>:tabe<CR>:lcd ~/Wayfair/monolith/resources<CR>:tabprevious<CR>
 
 source $HOME/.config/nvim/configs/functions.vim
 source $HOME/.config/nvim/configs/coc.vim
 
+" Load with folds collapsed
 " vim:foldmethod=marker:foldlevel=0
