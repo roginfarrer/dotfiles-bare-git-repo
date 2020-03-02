@@ -38,6 +38,8 @@ Plug 'alvan/vim-closetag'               " Auto close html tags
 Plug 'itchyny/lightline.vim'            " Custom statusline
 Plug 'Rigellute/rigel'                  " Colorscheme
 Plug 'joshdick/onedark.vim'             " Colorscheme
+Plug 'mhartington/oceanic-next'         " Colorscheme
+Plug 'arzg/vim-colors-xcode'            " Colorscheme
 Plug 'dhruvasagar/vim-open-url'         " Open URLs in a way that actually works
   nmap gx <Plug>(open-url-browser)
 Plug 'tpope/vim-fugitive'               " Classic Git integration
@@ -73,7 +75,7 @@ Plug 'dylanaraps/fff.vim'               " vim-like file manager, or paired-down 
   " Requires the fff utility to be installed on the system
   let g:fff#split = "40vnew"
   let g:fff#split_direction = "nosplitbelow nosplitright"
-  nnoremap f :F<CR>
+  " nnoremap f :F<CR>
 
 Plug 'mvolkmann/vim-js-arrow-function'  " GOAT. Toggle between expression and statements
   nmap <silent> <leader>tb :call JsArrowFnBraceToggle()<CR>
@@ -398,6 +400,8 @@ nmap <C-q> :tabe<CR>:lcd ~/Wayfair/homebase<CR>:tabe<CR>:lcd ~/Wayfair/monolith/
 
 source $HOME/.config/nvim/configs/functions.vim
 source $HOME/.config/nvim/configs/coc.vim
+
+nnoremap f :CocCommand explorer --position floating<CR>
 
 " Load with folds collapsed
 " vim:foldmethod=marker:foldlevel=0
