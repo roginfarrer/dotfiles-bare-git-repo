@@ -11,11 +11,12 @@
   "diagnostic.virtualText": true,
   "diagnostic.virtualTextPrefix": " ❯❯❯ ",
   "prettier.statusItemText": "★ ",
-  "javascript.suggest.enabled": false,
   "coc.preferences.formatOnSaveFiletypes": ["javascript", "typescript", "typescriptreact", "json", "javascriptreact", "css", "scss", "markdown", "mdx", "md"],
   "eslint.run": "onSave",
-  "typescript.suggestionActions.enabled": false,
+  "typescript.suggestionActions.enabled": true,
   "javascript.validate.enable": false,
+  "javascript.suggest.enabled": true,
+  "tsserver.formatOnType": false,
 
   "suggest.completionItemKindLabels": {
     "function": "\uf794",

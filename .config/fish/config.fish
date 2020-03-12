@@ -49,3 +49,11 @@ alias gitloggraph="git log --oneline --graph" # graph view of branches
 alias gcp="git cherry-pick"
 
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
+function fgb
+  git for-each-ref --sort=-committerdate refs/heads --format='%(refname:short)' | fzf
+end
+
+alias fcb="fgb | xargs git checkout"
+
+bind \cg\cb fgb

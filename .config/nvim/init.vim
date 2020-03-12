@@ -44,7 +44,6 @@ Plug 'dhruvasagar/vim-open-url'         " Open URLs in a way that actually works
   nmap gx <Plug>(open-url-browser)
 Plug 'tpope/vim-fugitive'               " Classic Git integration
 Plug 'tpope/vim-rhubarb'                " Utilities on top of fugitive
-  let g:github_enterprise_urls = ['https://github.csnzoo.com']
   nnoremap <leader>go :Gbrowse<CR>
   vnoremap <leader>go :'<,'>Gbrowse<CR>
   nnoremap <leader>gc :Gbrowse!<CR>
@@ -63,7 +62,7 @@ Plug 'justinmk/vim-dirvish'             " Directory navigation, replaces netrw
   augroup END
 
 Plug 'mhinz/vim-startify'               " Fancy Start Screen
-  let g:startify_bookmarks = [ {'v': '~/.config/nvim/init.vim'} ]
+  let g:startify_bookmarks = [ {'v': '~/.config/nvim/init.vim'}, {'f': '~/.config/fish/config.fish'} ]
   let g:startify_change_to_dir = 0
 
 Plug 'voldikss/vim-floaterm'            " Functionality for centering a terminal window
@@ -208,7 +207,8 @@ if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
   set t_Co=16
 endif
 
-colorscheme rigel
+" colorscheme rigel
+colorscheme xcodedarkhc
 
 " Set syntax highlighting for config files
 autocmd BufNewFile,BufRead *stylelintrc,*eslintrc,*babelrc,*jshintrc,*prettierrc setlocal syntax=json
@@ -342,10 +342,10 @@ let g:fzf_preview_fzf_color_option = 'fg:15,bg:-1,hl:14,fg+:#ffffff,bg+:-1,hl+:1
 let g:fzf_preview_filelist_command = 'rg --files --follow --hidden -g "!node_modules" -g "!.git"'
 let g:fzf_preview_directory_files_command = 'rg --files --follow --hidden -g "!node_modules" -g "!.git"'
 
-nnoremap <C-p> :FzfPreviewProjectFiles<CR>
+" nnoremap <C-p> :FzfPreviewProjectFiles<CR>
 " nnoremap <Leader>b :FzfPreviewBuffers<CR>
 " nmap <leader>; :FzfPreviewBuffers<CR>
-nnoremap <leader>. :FzfPreviewDirectoryFiles<CR>
+" nnoremap <leader>. :FzfPreviewDirectoryFiles<CR>
 " fuzzy find text in the working directory
 " nnoremap <leader>f :FzfPreviewDirectoryFiles<CR>
 
@@ -380,13 +380,13 @@ function! FloatingFZF()
 endfunction
 
 " fuzzy find Vim commands (like Ctrl-Shift-P in Sublime/Atom/VSC)
+nnoremap <silent> <C-p> :call fzf#vim#files('.', {'options': '--prompt ""'})<CR>
 nmap <leader>c :Commands<CR>
 nnoremap <Leader>h :History<CR>
 nnoremap <Leader>b :Buffers<CR>
 nmap <leader>; :Buffers<CR>
 nmap <leader>f :Rg<CR>
 
-" nnoremap <silent> <C-p> :call fzf#vim#files('.', {'options': '--prompt ""'})<CR>
 " nmap <leader>c :Commands<CR>
 
 " }}}
@@ -400,8 +400,13 @@ nmap <C-q> :tabe<CR>:lcd ~/Wayfair/homebase<CR>:tabe<CR>:lcd ~/Wayfair/monolith/
 
 source $HOME/.config/nvim/configs/functions.vim
 source $HOME/.config/nvim/configs/coc.vim
+if !empty(glob('$HOME/.config/nvim/local-config.vim'))
+  source $HOME/.config/nvim/local-config.vim
+endif
 
 nnoremap f :CocCommand explorer --position floating<CR>
+
+autocmd bufnewfile,bufread *.js set filetype=javascriptreact
 
 " Load with folds collapsed
 " vim:foldmethod=marker:foldlevel=0
