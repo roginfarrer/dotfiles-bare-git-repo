@@ -25,6 +25,7 @@ else
 endif
 Plug 'yuki-ycino/fzf-preview.vim'
 
+Plug 'jesseleite/vim-agriculture'       " Support Rg with args
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}} " Autocompletion, and linting, and pretty much eveything
 Plug 'sheerun/vim-polyglot'             " Syntax highlighting for pretty much everything
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
@@ -231,8 +232,9 @@ function! CocCurrentFunction()
     return get(b:, 'coc_current_function', '')
 endfunction
 
+" \ 'colorscheme': 'rigel',
 let g:lightline = {
-      \ 'colorscheme': 'rigel',
+      \ 'colorscheme': 'one',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'cocstatus', 'currentfunction', 'readonly', 'filename', 'modified' ] ]
@@ -323,7 +325,7 @@ nnoremap <leader>wdd :windo diffo<CR>
 tnoremap <leader><Esc> <C-\><C-n>
 nnoremap <leader>te :vs<CR>:terminal fish<CR>
 
-tnoremap <expr> <A-p> '<C-\><C-n>"'.nr2char(getchar()).'pi'
+tnoremap <expr> <A-r> '<C-\><C-n>"'.nr2char(getchar()).'pi'
 
 " When term starts, auto go into insert mode
 autocmd TermOpen * startinsert
@@ -396,7 +398,20 @@ nmap <leader>f :Rg<CR>
 nnoremap <leader>ev :vsp $MYVIMRC<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR> 
 
-nmap <C-q> :tabe<CR>:lcd ~/Wayfair/homebase<CR>:tabe<CR>:lcd ~/Wayfair/monolith/resources<CR>:tabprevious<CR>
+function! HomebaseTab()
+  execute 'tabe'
+  execute 'tcd ~/Wayfair/homebase'
+  execute 'Startify'
+endfunction
+function! ResourcesTab()
+  execute 'tabe'
+  execute 'tcd ~/Wayfair/monolith/resources'
+  execute 'Startify'
+endfunction
+
+nmap <C-q><C-h> :call HomebaseTab()<CR>
+nmap <C-q><C-r> :call ResourcesTab()<CR>
+nmap <silent> <C-q> :call HomebaseTab()<CR>:call ResourcesTab()<CR>:-2tabc<CR>
 
 source $HOME/.config/nvim/configs/functions.vim
 source $HOME/.config/nvim/configs/coc.vim
@@ -404,7 +419,7 @@ if !empty(glob('$HOME/.config/nvim/local-config.vim'))
   source $HOME/.config/nvim/local-config.vim
 endif
 
-nnoremap f :CocCommand explorer --position floating<CR>
+" nnoremap f :CocCommand explorer --position floating<CR>
 
 autocmd bufnewfile,bufread *.js set filetype=javascriptreact
 
