@@ -23,7 +23,6 @@ else
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
   Plug 'junegunn/fzf.vim'
 endif
-Plug 'yuki-ycino/fzf-preview.vim'
 
 Plug 'jesseleite/vim-agriculture'       " Support Rg with args
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}} " Autocompletion, and linting, and pretty much eveything
@@ -36,6 +35,7 @@ Plug 'tpope/vim-sleuth'                 " Smart detection of line indenting, tab
 Plug 'mattn/emmet-vim'                  " You know, emmet
 Plug 'junegunn/goyo.vim'                " Zen mode
 Plug 'alvan/vim-closetag'               " Auto close html tags
+Plug 'jiangmiao/auto-pairs'             " Autocomplete pairs
 Plug 'itchyny/lightline.vim'            " Custom statusline
 Plug 'Rigellute/rigel'                  " Colorscheme
 Plug 'joshdick/onedark.vim'             " Colorscheme
@@ -83,6 +83,9 @@ Plug 'mvolkmann/vim-js-arrow-function'  " GOAT. Toggle between expression and st
 Plug 'haya14busa/incsearch.vim'         " Improved search highlighting
   set hlsearch
   let g:incsearch#auto_nohlsearch = 1
+  map /  <Plug>(incsearch-forward)
+  map ?  <Plug>(incsearch-backward)
+  map g/ <Plug>(incsearch-stay)
   map n  <Plug>(incsearch-nohl-n)
   map N  <Plug>(incsearch-nohl-N)
   map *  <Plug>(incsearch-nohl-*)
@@ -323,8 +326,12 @@ nnoremap <leader>wdd :windo diffo<CR>
 
 " To map <Esc> to exit terminal-mode: >
 tnoremap <leader><Esc> <C-\><C-n>
+" To map <Esc> to exit terminal-mode: >
+tnoremap jj <C-\><C-n>
+" Open a new split with a terminal
 nnoremap <leader>te :vs<CR>:terminal fish<CR>
 
+" a paste from register chord
 tnoremap <expr> <A-r> '<C-\><C-n>"'.nr2char(getchar()).'pi'
 
 " When term starts, auto go into insert mode
@@ -337,37 +344,29 @@ autocmd TermOpen * setlocal listchars= nonumber norelativenumber
 
 " FZF {{{
 
-" {{{ FZF Preview
-
-let g:fzf_preview_fzf_color_option = 'fg:15,bg:-1,hl:14,fg+:#ffffff,bg+:-1,hl+:1,info:15,prompt:11,pointer:14,marker:4,spinner:11,header:-1'
-
-let g:fzf_preview_filelist_command = 'rg --files --follow --hidden -g "!node_modules" -g "!.git"'
-let g:fzf_preview_directory_files_command = 'rg --files --follow --hidden -g "!node_modules" -g "!.git"'
-
-" nnoremap <C-p> :FzfPreviewProjectFiles<CR>
-" nnoremap <Leader>b :FzfPreviewBuffers<CR>
-" nmap <leader>; :FzfPreviewBuffers<CR>
-" nnoremap <leader>. :FzfPreviewDirectoryFiles<CR>
-" fuzzy find text in the working directory
-" nnoremap <leader>f :FzfPreviewDirectoryFiles<CR>
-
-" }}}
-
-" FZF (basic, no preview) {{{
-
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
-let $FZF_DEFAULT_OPTS = ' --color=dark --color=fg:15,bg:-1,hl:14,fg+:#ffffff,bg+:-1,hl+:1 --color=info:15,prompt:11,pointer:14,marker:4,spinner:11,header:-1 --layout=reverse  --margin=1,4'
+" let $FZF_DEFAULT_OPTS=' --color=dark --color=fg:15,bg:-1,hl:1,fg+:#ffffff,bg+:0,hl+:1 --color=info:0,prompt:0,pointer:12,marker:4,spinner:11,header:-1 --layout=reverse  --margin=1,4'
+
+" Mine
+let $FZF_DEFAULT_OPTS = '
+\ --color=dark 
+\ --color=fg:15,bg:-1,hl:14,fg+:#ffffff,bg+:-1,hl+:1 
+\ --color=info:15,prompt:11,pointer:14,marker:4,spinner:11,header:-1 
+\ --layout=reverse 
+\ --margin=1,4 
+\ --bind="?:toggle-preview"
+\ '
 let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 
 function! FloatingFZF()
   let buf = nvim_create_buf(v:false, v:true)
   call setbufvar(buf, '&signcolumn', 'no')
 
-  let height = float2nr(15)
-  let width = float2nr(110)
+  let height = float2nr(&lines * 0.9)
+  let width = float2nr(&columns * 0.8)
   let horizontal = float2nr((&columns - width) / 2)
-  let vertical = 8
+  let vertical = 1
 
   let opts = {
         \ 'relative': 'editor',
@@ -382,16 +381,19 @@ function! FloatingFZF()
 endfunction
 
 " fuzzy find Vim commands (like Ctrl-Shift-P in Sublime/Atom/VSC)
-nnoremap <silent> <C-p> :call fzf#vim#files('.', {'options': '--prompt ""'})<CR>
+" nnoremap <silent> <C-p> :call fzf#vim#files('.', {'options': '--prompt ""'})<CR>
+nnoremap <silent> <C-p> :Files<CR>
 nmap <leader>c :Commands<CR>
 nnoremap <Leader>h :History<CR>
 nnoremap <Leader>b :Buffers<CR>
 nmap <leader>; :Buffers<CR>
 nmap <leader>f :Rg<CR>
 
-" nmap <leader>c :Commands<CR>
-
-" }}}
+nnoremap <silent> <leader>fp :Files<CR>
+nnoremap <silent> <leader>fb :Buffers<CR>
+nnoremap <silent> <leader>fh :History<CR>
+nnoremap <silent> <leader>fc :Commands<CR>
+nnoremap <silent> <Leader>f. :Files <C-R>=expand('%:h')<CR><CR>
 
 " }}}
 
@@ -418,8 +420,6 @@ source $HOME/.config/nvim/configs/coc.vim
 if !empty(glob('$HOME/.config/nvim/local-config.vim'))
   source $HOME/.config/nvim/local-config.vim
 endif
-
-" nnoremap f :CocCommand explorer --position floating<CR>
 
 autocmd bufnewfile,bufread *.js set filetype=javascriptreact
 
