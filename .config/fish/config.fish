@@ -57,3 +57,7 @@ end
 alias fcb="fgb | xargs git checkout"
 
 bind \cg\cb fgb
+
+if test -e ./local-config.fish
+  source ./local-config.fish
+end

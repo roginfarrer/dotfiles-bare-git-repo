@@ -93,6 +93,8 @@ Plug 'haya14busa/incsearch.vim'         " Improved search highlighting
   map g* <Plug>(incsearch-nohl-g*)
   map g# <Plug>(incsearch-nohl-g#)
 
+Plug 'tpope/vim-abolish'
+
 call plug#end()
 
 " }}}
