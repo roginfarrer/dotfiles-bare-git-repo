@@ -50,20 +50,20 @@ Plug 'tpope/vim-rhubarb'                " Utilities on top of fugitive
   nnoremap <leader>gc :Gbrowse!<CR>
   vnoremap <leader>gc :'<,'>Gbrowse!<CR>
 
-Plug 'justinmk/vim-dirvish'             " Directory navigation, replaces netrw
-  " Group directories first
-  let dirvish_mode = ':sort ,^.*/,' 
-  augroup dirvish_config
-    autocmd!
-  
-    autocmd FileType dirvish
-      \ nmap <silent><buffer> q <Plug>(dirvish_quit)
-      \|nnoremap <silent><buffer> <C-n> <nop>
-      \|nnoremap <silent><buffer> <C-p> :call fzf#vim#files('.', {'options': '--prompt ""'})<CR>
-  augroup END
+"Plug 'justinmk/vim-dirvish'             " Directory navigation, replaces netrw
+"  " Group directories first
+"  let dirvish_mode = ':sort ,^.*/,' 
+"  augroup dirvish_config
+"    autocmd!
+"  
+"    autocmd FileType dirvish
+"      \ nmap <silent><buffer> q <Plug>(dirvish_quit)
+"      \|nnoremap <silent><buffer> <C-n> <nop>
+"      \|nnoremap <silent><buffer> <C-p> :call fzf#vim#files('.', {'options': '--prompt ""'})<CR>
+"  augroup END
 
 Plug 'mhinz/vim-startify'               " Fancy Start Screen
-  let g:startify_bookmarks = [ {'v': '~/.config/nvim/init.vim'}, {'f': '~/.config/fish/config.fish'} ]
+  let g:startify_bookmarks = [ {'v': '~/.config/nvim/init.vim'}, {'f': '~/.config/fish/config.fish'}, {'k': '~/.config/kitty/kitty.conf'} ]
   let g:startify_change_to_dir = 0
 
 Plug 'voldikss/vim-floaterm'            " Functionality for centering a terminal window
@@ -94,6 +94,17 @@ Plug 'haya14busa/incsearch.vim'         " Improved search highlighting
   map g# <Plug>(incsearch-nohl-g#)
 
 Plug 'tpope/vim-abolish'
+Plug 'cocopon/iceberg.vim'
+" Plug 'Lokaltog/neoranger'
+" Plug 'francoiscabrol/ranger.vim'
+Plug 'mcchrish/nnn.vim'
+  " Disable default mappings
+  let g:nnn#set_default_mappings = 0
+  nnoremap <silent> - :NnnPicker '%:p:h'<CR>
+  let g:nnn#action = {
+      \ '<c-t>': 'tab split',
+      \ '<c-x>': 'split',
+      \ '<c-v>': 'vsplit' }
 
 call plug#end()
 
@@ -214,7 +225,8 @@ if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
 endif
 
 " colorscheme rigel
-colorscheme xcodedarkhc
+" colorscheme xcodedarkhc
+colorscheme iceberg
 
 " Set syntax highlighting for config files
 autocmd BufNewFile,BufRead *stylelintrc,*eslintrc,*babelrc,*jshintrc,*prettierrc setlocal syntax=json
@@ -239,7 +251,7 @@ endfunction
 
 " \ 'colorscheme': 'rigel',
 let g:lightline = {
-      \ 'colorscheme': 'one',
+      \ 'colorscheme': 'iceberg',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'cocstatus', 'currentfunction', 'readonly', 'filename', 'modified' ] ]
@@ -329,7 +341,7 @@ nnoremap <leader>wdd :windo diffo<CR>
 " To map <Esc> to exit terminal-mode: >
 tnoremap <leader><Esc> <C-\><C-n>
 " To map <Esc> to exit terminal-mode: >
-tnoremap jj <C-\><C-n>
+tnoremap <leader>j <C-\><C-n>
 " Open a new split with a terminal
 nnoremap <leader>te :vs<CR>:terminal fish<CR>
 
