@@ -5,13 +5,18 @@ if not functions -q fisher
   fish -c fisher
 end
 
+if not test -d $XDG_CONFIG_HOME/nnn/plugins
+  echo "Missing nnn plugins, installing..."
+  curl -Ls https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs | sh
+end
+
 # Initialize starship prompt
 starship init fish | source
 
 # fnm
 fnm env --multi | source
 
-set USER = rfarrer
+set USER rfarrer
 
 alias vim="nvim"
 
@@ -61,3 +66,8 @@ bind \cg\cb fgb
 if test -e ./local-config.fish
   source ./local-config.fish
 end
+
+# nnn Settings
+set -Ux NNN_PLUG 'f:fzcd;o:fzopen;'
+# Makes all text files open with EDITOR 
+alias nnn="nnn -e"
