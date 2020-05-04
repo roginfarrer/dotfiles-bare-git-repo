@@ -1,6 +1,5 @@
 [user]
 	name = Rogin Farrer
-	email = rfarrer@wayfair.com
 [color]
 	ui = true
 	status = always
@@ -40,3 +39,5 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[include]
+    path = ~/.gitconfig_local
