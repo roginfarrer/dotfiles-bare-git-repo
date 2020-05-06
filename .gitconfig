@@ -20,8 +20,6 @@
 	sslVerify = false
 [pack]
 	useSparse = true
-[hub]
-	host = github.csnzoo.com
 [merge]
        tool = vscode
 [mergetool "meld"]
