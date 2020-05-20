@@ -11,6 +11,7 @@
   //"diagnostic.virtualText": true,
   //"diagnostic.virtualTextPrefix": " ❯❯❯ ",
   "prettier.statusItemText": "★ ",
+  "prettier.requireConfig": true,
   "coc.preferences.formatOnSaveFiletypes": ["javascript", "typescript", "typescriptreact", "json", "javascriptreact", "css", "scss", "markdown", "mdx", "md"],
   "eslint.run": "onSave",
   "typescript.suggestionActions.enabled": true,

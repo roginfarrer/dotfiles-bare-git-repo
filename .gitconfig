@@ -14,6 +14,8 @@
 	excludesfile = /Users/rfarrer/.gitignore_global
 	editor = nvim
 	symlinks = true
+	pager = delta --plus-color="#012800" --minus-color="#340001" --theme='Monokai Extended'
+
 [log]
 	decorate = short
 [http]
@@ -39,3 +41,5 @@
 	required = true
 [include]
     path = ~/.gitconfig_local
+[interactive]
+    diffFilter = delta --color-only
