@@ -71,3 +71,6 @@ end
 set -Ux NNN_PLUG 'f:fzcd;o:fzopen;'
 # Makes all text files open with EDITOR 
 alias nnn="nnn -e"
+
+# set -g FZF_CTRL_T_OPTS '--preview'
+set -g FZF_CTRL_T_COMMAND 'rg --files'
