@@ -25,7 +25,7 @@ else
 endif
 
 Plug 'jesseleite/vim-agriculture'       " Support Rg with args
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}} " Autocompletion, and linting, and pretty much eveything
+Plug 'neoclide/coc.nvim', {'branch': 'release'} " Autocompletion, and linting, and pretty much eveything
 Plug 'sheerun/vim-polyglot'             " Syntax highlighting for pretty much everything
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'tpope/vim-eunuch'                 " Run common Unix commands inside Vim
@@ -50,17 +50,17 @@ Plug 'tpope/vim-rhubarb'                " Utilities on top of fugitive
   nnoremap <leader>gc :Gbrowse!<CR>
   vnoremap <leader>gc :'<,'>Gbrowse!<CR>
 
-"Plug 'justinmk/vim-dirvish'             " Directory navigation, replaces netrw
-"  " Group directories first
-"  let dirvish_mode = ':sort ,^.*/,' 
-"  augroup dirvish_config
-"    autocmd!
-"  
-"    autocmd FileType dirvish
-"      \ nmap <silent><buffer> q <Plug>(dirvish_quit)
-"      \|nnoremap <silent><buffer> <C-n> <nop>
-"      \|nnoremap <silent><buffer> <C-p> :call fzf#vim#files('.', {'options': '--prompt ""'})<CR>
-"  augroup END
+Plug 'justinmk/vim-dirvish'             " Directory navigation, replaces netrw
+  " Group directories first
+  let dirvish_mode = ':sort ,^.*/,' 
+  augroup dirvish_config
+    autocmd!
+  
+    autocmd FileType dirvish
+      \ nmap <silent><buffer> q <Plug>(dirvish_quit)
+      \|nnoremap <silent><buffer> <C-n> <nop>
+      \|nnoremap <silent><buffer> <C-p> :call fzf#vim#files('.', {'options': '--prompt ""'})<CR>
+  augroup END
 
 Plug 'mhinz/vim-startify'               " Fancy Start Screen
   let g:startify_bookmarks = [ {'v': '~/.config/nvim/init.vim'}, {'f': '~/.config/fish/config.fish'}, {'k': '~/.config/kitty/kitty.conf'} ]
@@ -71,10 +71,10 @@ Plug 'voldikss/vim-floaterm'            " Functionality for centering a terminal
   let g:floaterm_position = 'center'
   let g:floaterm_keymap_toggle = '<C-t>'
 Plug 'skywind3000/vim-terminal-help'    " Quick access to a terminal buffer
-Plug 'dylanaraps/fff.vim'               " vim-like file manager, or paired-down NERDTree
+" Plug 'dylanaraps/fff.vim'               " vim-like file manager, or paired-down NERDTree
   " Requires the fff utility to be installed on the system
-  let g:fff#split = "40vnew"
-  let g:fff#split_direction = "nosplitbelow nosplitright"
+  " let g:fff#split = "40vnew"
+  " let g:fff#split_direction = "nosplitbelow nosplitright"
   " nnoremap f :F<CR>
 
 Plug 'mvolkmann/vim-js-arrow-function'  " GOAT. Toggle between expression and statements
@@ -97,14 +97,14 @@ Plug 'tpope/vim-abolish'
 Plug 'cocopon/iceberg.vim'
 " Plug 'Lokaltog/neoranger'
 " Plug 'francoiscabrol/ranger.vim'
-Plug 'mcchrish/nnn.vim'
-  " Disable default mappings
-  let g:nnn#set_default_mappings = 0
-  nnoremap <silent> - :NnnPicker '%:p:h'<CR>
-  let g:nnn#action = {
-      \ '<c-t>': 'tab split',
-      \ '<c-x>': 'split',
-      \ '<c-v>': 'vsplit' }
+" Plug 'mcchrish/nnn.vim'
+"   " Disable default mappings
+"   let g:nnn#set_default_mappings = 0
+"   nnoremap <silent> - :NnnPicker '%:p:h'<CR>
+"   let g:nnn#action = {
+"       \ '<c-t>': 'tab split',
+"       \ '<c-x>': 'split',
+"       \ '<c-v>': 'vsplit' }
 
 call plug#end()
 
@@ -224,9 +224,9 @@ if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
   set t_Co=16
 endif
 
-" colorscheme rigel
+colorscheme rigel
 " colorscheme xcodedarkhc
-colorscheme iceberg
+" colorscheme iceberg
 
 " Set syntax highlighting for config files
 autocmd BufNewFile,BufRead *stylelintrc,*eslintrc,*babelrc,*jshintrc,*prettierrc setlocal syntax=json
