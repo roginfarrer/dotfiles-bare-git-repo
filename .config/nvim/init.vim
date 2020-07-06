@@ -35,12 +35,15 @@ Plug 'tpope/vim-sleuth'                 " Smart detection of line indenting, tab
 Plug 'mattn/emmet-vim'                  " You know, emmet
 Plug 'junegunn/goyo.vim'                " Zen mode
 Plug 'alvan/vim-closetag'               " Auto close html tags
-Plug 'jiangmiao/auto-pairs'             " Autocomplete pairs
+" Plug 'jiangmiao/auto-pairs'             " Autocomplete pairs
+Plug 'doums/coBra'                      " Autocomplete pairs
 Plug 'itchyny/lightline.vim'            " Custom statusline
 Plug 'Rigellute/rigel'                  " Colorscheme
 Plug 'joshdick/onedark.vim'             " Colorscheme
 Plug 'mhartington/oceanic-next'         " Colorscheme
 Plug 'arzg/vim-colors-xcode'            " Colorscheme
+Plug 'haishanh/night-owl.vim'           " Colorscheme
+Plug 'bluz71/vim-nightfly-guicolors'    " Colorscheme
 Plug 'dhruvasagar/vim-open-url'         " Open URLs in a way that actually works
   nmap gx <Plug>(open-url-browser)
 Plug 'tpope/vim-fugitive'               " Classic Git integration
@@ -224,9 +227,10 @@ if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
   set t_Co=16
 endif
 
-colorscheme rigel
+" colorscheme rigel
 " colorscheme xcodedarkhc
 " colorscheme iceberg
+colorscheme night-owl
 
 " Set syntax highlighting for config files
 autocmd BufNewFile,BufRead *stylelintrc,*eslintrc,*babelrc,*jshintrc,*prettierrc setlocal syntax=json
@@ -249,9 +253,8 @@ function! CocCurrentFunction()
     return get(b:, 'coc_current_function', '')
 endfunction
 
-" \ 'colorscheme': 'rigel',
 let g:lightline = {
-      \ 'colorscheme': 'iceberg',
+      \ 'colorscheme': 'nightowl',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'cocstatus', 'currentfunction', 'readonly', 'filename', 'modified' ] ]
