@@ -43,3 +43,5 @@ Thumbs.db
 .nvmrc
 jsconfig.json
 .vim/
+
+.gitconfig_local
