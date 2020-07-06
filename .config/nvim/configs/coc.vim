@@ -1,5 +1,3 @@
-let g:coc_node_path="/Users/rfarrer/.config/nvm/13.8.0/bin/node"
-
 let g:coc_global_extensions = [
     \ 'coc-pairs',
     \ 'coc-css',
