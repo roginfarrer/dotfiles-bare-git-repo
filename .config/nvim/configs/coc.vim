@@ -1,5 +1,4 @@
 let g:coc_global_extensions = [
-    \ 'coc-pairs',
     \ 'coc-css',
     \ 'coc-emmet',
     \ 'coc-emoji',

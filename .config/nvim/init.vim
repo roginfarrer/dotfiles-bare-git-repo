@@ -35,7 +35,6 @@ Plug 'tpope/vim-sleuth'                 " Smart detection of line indenting, tab
 Plug 'mattn/emmet-vim'                  " You know, emmet
 Plug 'junegunn/goyo.vim'                " Zen mode
 Plug 'alvan/vim-closetag'               " Auto close html tags
-" Plug 'jiangmiao/auto-pairs'             " Autocomplete pairs
 Plug 'doums/coBra'                      " Autocomplete pairs
 Plug 'itchyny/lightline.vim'            " Custom statusline
 Plug 'Rigellute/rigel'                  " Colorscheme
@@ -47,6 +46,7 @@ Plug 'bluz71/vim-nightfly-guicolors'    " Colorscheme
 Plug 'dhruvasagar/vim-open-url'         " Open URLs in a way that actually works
   nmap gx <Plug>(open-url-browser)
 Plug 'tpope/vim-fugitive'               " Classic Git integration
+  nmap <leader>gs :G<CR>
 Plug 'tpope/vim-rhubarb'                " Utilities on top of fugitive
   nnoremap <leader>go :Gbrowse<CR>
   vnoremap <leader>go :'<,'>Gbrowse<CR>
@@ -54,31 +54,26 @@ Plug 'tpope/vim-rhubarb'                " Utilities on top of fugitive
   vnoremap <leader>gc :'<,'>Gbrowse!<CR>
 
 Plug 'justinmk/vim-dirvish'             " Directory navigation, replaces netrw
+  source $HOME/.config/nvim/configs/dirvish.vim
   " Group directories first
-  let dirvish_mode = ':sort ,^.*/,' 
-  augroup dirvish_config
-    autocmd!
+  " let dirvish_mode = ':sort ,^.*/,' 
+  " augroup dirvish_config
+  "   autocmd!
   
-    autocmd FileType dirvish
-      \ nmap <silent><buffer> q <Plug>(dirvish_quit)
-      \|nnoremap <silent><buffer> <C-n> <nop>
-      \|nnoremap <silent><buffer> <C-p> :call fzf#vim#files('.', {'options': '--prompt ""'})<CR>
-  augroup END
+  "   autocmd FileType dirvish
+  "     \ nmap <silent><buffer> q <Plug>(dirvish_quit)
+  "     \|nnoremap <silent><buffer> <C-n> <nop>
+  "     \|nnoremap <silent><buffer> <C-p> :call fzf#vim#files('.', {'options': '--prompt ""'})<CR>
+  " augroup END
 
 Plug 'mhinz/vim-startify'               " Fancy Start Screen
   let g:startify_bookmarks = [ {'v': '~/.config/nvim/init.vim'}, {'f': '~/.config/fish/config.fish'}, {'k': '~/.config/kitty/kitty.conf'} ]
   let g:startify_change_to_dir = 0
 
-Plug 'voldikss/vim-floaterm'            " Functionality for centering a terminal window
-  let g:floaterm_width = 125
-  let g:floaterm_position = 'center'
-  let g:floaterm_keymap_toggle = '<C-t>'
 Plug 'skywind3000/vim-terminal-help'    " Quick access to a terminal buffer
-" Plug 'dylanaraps/fff.vim'               " vim-like file manager, or paired-down NERDTree
-  " Requires the fff utility to be installed on the system
-  " let g:fff#split = "40vnew"
-  " let g:fff#split_direction = "nosplitbelow nosplitright"
-  " nnoremap f :F<CR>
+  let g:terminal_shell = '/usr/local/bin/fish'
+  let g:terminal_list = 0
+  let g:terminal_height = '20%'
 
 Plug 'mvolkmann/vim-js-arrow-function'  " GOAT. Toggle between expression and statements
   nmap <silent> <leader>tb :call JsArrowFnBraceToggle()<CR>
@@ -98,16 +93,41 @@ Plug 'haya14busa/incsearch.vim'         " Improved search highlighting
 
 Plug 'tpope/vim-abolish'
 Plug 'cocopon/iceberg.vim'
-" Plug 'Lokaltog/neoranger'
-" Plug 'francoiscabrol/ranger.vim'
-" Plug 'mcchrish/nnn.vim'
-"   " Disable default mappings
-"   let g:nnn#set_default_mappings = 0
-"   nnoremap <silent> - :NnnPicker '%:p:h'<CR>
-"   let g:nnn#action = {
-"       \ '<c-t>': 'tab split',
-"       \ '<c-x>': 'split',
-"       \ '<c-v>': 'vsplit' }
+Plug 'duggiefresh/vim-easydir'
+
+" Plug 'lambdalisue/fern.vim'
+" Plug 'hrsh7th/fern-mapping-collapse-or-leave.vim'
+"   " Disable netrw
+"   let g:loaded_netrw             = 1
+"   let g:loaded_netrwPlugin       = 1
+"   let g:loaded_netrwSettings     = 1
+"   let g:loaded_netrwFileHandlers = 1
+  
+"   " Save the current filepath to a variable,
+"   " then open Fern to the current file
+"   nnoremap <silent> - :let g:fern_prev_file = @%<CR>:Fern %:h -reveal=%<CR>
+
+"   function! QuitToPrevFile()
+"     execute "edit " . fern_prev_file
+"   endfunction
+
+"   augroup my-fern-hijack
+"     autocmd!
+"     autocmd FileType fern call s:init_fern()
+"   augroup END
+
+"   function! s:init_fern() abort
+"     nmap <buffer><silent> q :call QuitToPrevFile()<CR>
+"     let path = expand('%:p')
+"     if !isdirectory(path)
+"       return
+"     endif
+"     bwipeout %
+"     execute printf('Fern %s', fnameescape(path))
+"   endfunction
+
+" Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
+"   nnoremap - :CHADopen<cr>
 
 call plug#end()
 
@@ -153,7 +173,7 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 set smarttab
 set ai "Auto indent
 set si "Smart indent
-set wrap "Wrap lines
+" set wrap "Wrap lines
 
 " Allows you to change buffers even if the current on has unsaved changes
 set hidden
@@ -275,6 +295,8 @@ let g:lightline = {
 nmap <leader>w :w!<cr>
 " Fast closing
 nmap <leader>q :q<cr>
+" Fast saving AND closing
+nmap <leader>x :wq<CR>
 
 " Lazygit
 nnoremap <silent> <Leader>lg :call ToggleLazyGit()<CR>
@@ -363,16 +385,16 @@ autocmd TermOpen * setlocal listchars= nonumber norelativenumber
 
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
-" let $FZF_DEFAULT_OPTS=' --color=dark --color=fg:15,bg:-1,hl:1,fg+:#ffffff,bg+:0,hl+:1 --color=info:0,prompt:0,pointer:12,marker:4,spinner:11,header:-1 --layout=reverse  --margin=1,4'
+let $FZF_DEFAULT_OPTS=' --color=dark --color=fg:15,bg:-1,hl:1,fg+:#ffffff,bg+:0,hl+:1 --color=info:0,prompt:0,pointer:12,marker:4,spinner:11,header:-1 --layout=reverse  --margin=1,4'
 
 " Mine
 let $FZF_DEFAULT_OPTS = '
 \ --color=dark 
+\ --bind="?:toggle-preview"
+\ --margin=1,4 
+\ --layout=reverse 
 \ --color=fg:15,bg:-1,hl:14,fg+:#ffffff,bg+:-1,hl+:1 
 \ --color=info:15,prompt:11,pointer:14,marker:4,spinner:11,header:-1 
-\ --layout=reverse 
-\ --margin=1,4 
-\ --bind="?:toggle-preview"
 \ '
 let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 
@@ -399,18 +421,21 @@ endfunction
 
 " fuzzy find Vim commands (like Ctrl-Shift-P in Sublime/Atom/VSC)
 " nnoremap <silent> <C-p> :call fzf#vim#files('.', {'options': '--prompt ""'})<CR>
-nnoremap <silent> <C-p> :Files<CR>
+nnoremap <silent> <C-p> :GFiles<CR>
 nmap <leader>c :Commands<CR>
 nnoremap <Leader>h :History<CR>
 nnoremap <Leader>b :Buffers<CR>
 nmap <leader>; :Buffers<CR>
 nmap <leader>f :Rg<CR>
 
-nnoremap <silent> <leader>fp :Files<CR>
+nnoremap <silent> <leader>fp :GFiles<CR>
+nnoremap <silent> <leader>ff :Files<CR>
 nnoremap <silent> <leader>fb :Buffers<CR>
 nnoremap <silent> <leader>fh :History<CR>
 nnoremap <silent> <leader>fc :Commands<CR>
+nnoremap <silent> <leader>fl :Rg<CR>
 nnoremap <silent> <Leader>f. :Files <C-R>=expand('%:h')<CR><CR>
+nnoremap <silent> <Leader>. :Files <C-R>=expand('%:h')<CR><CR>
 
 " }}}
 

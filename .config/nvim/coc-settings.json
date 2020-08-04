@@ -8,8 +8,6 @@
   "diagnostic.enable": true,
   "diagnostic.signOffset": 9999999,
   "diagnostic.highlightOffset": 9999999,
-  //"diagnostic.virtualText": true,
-  //"diagnostic.virtualTextPrefix": " ❯❯❯ ",
   "prettier.statusItemText": "★ ",
   "prettier.requireConfig": true,
   "coc.preferences.formatOnSaveFiletypes": ["javascript", "typescript", "typescriptreact", "json", "javascriptreact", "css", "scss", "markdown", "mdx", "md"],
@@ -44,5 +42,5 @@
     "reference": "\uf87a",
     "typeParameter": "\uf278",
     "default": "\uf29c"
-  },
+  }
 }
