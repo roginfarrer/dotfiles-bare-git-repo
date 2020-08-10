@@ -385,7 +385,7 @@ autocmd TermOpen * setlocal listchars= nonumber norelativenumber
 
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
-let $FZF_DEFAULT_OPTS=' --color=dark --color=fg:15,bg:-1,hl:1,fg+:#ffffff,bg+:0,hl+:1 --color=info:0,prompt:0,pointer:12,marker:4,spinner:11,header:-1 --layout=reverse  --margin=1,4'
+" let $FZF_DEFAULT_OPTS=' --color=dark --color=fg:15,bg:-1,hl:1,fg+:#ffffff,bg+:0,hl+:1 --color=info:0,prompt:0,pointer:12,marker:4,spinner:11,header:-1 --layout=reverse  --margin=1,4'
 
 " Mine
 let $FZF_DEFAULT_OPTS = '
@@ -419,8 +419,18 @@ function! FloatingFZF()
   call nvim_open_win(buf, v:true, opts)
 endfunction
 
+" Changes visible output of :Rg to not show path:column:linenumber
+" since it makes reading the actual line results more difficult
+" Reference: https://github.com/junegunn/fzf.vim/issues/960
+let transformer = "| awk -F: 'BEGIN { OFS = FS } {$3 = $3 \"\" $2 \"\" $3; print}'"
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   "rg --column --line-number --no-heading --color=always --smart-case "..shellescape(<q-args>)..transformer,
+  \   1,
+  \   { 'options': '--delimiter=: --with-nth=4..' },
+  \   <bang>0)
+
 " fuzzy find Vim commands (like Ctrl-Shift-P in Sublime/Atom/VSC)
-" nnoremap <silent> <C-p> :call fzf#vim#files('.', {'options': '--prompt ""'})<CR>
 nnoremap <silent> <C-p> :GFiles<CR>
 nmap <leader>c :Commands<CR>
 nnoremap <Leader>h :History<CR>
