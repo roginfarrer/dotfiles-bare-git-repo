@@ -1,6 +1,9 @@
 " Inspired by https://github.com/Melandel/desktop/blob/90023f5e5f00c0f6b6eefd6036e77859130c68ed/setup/my_vimrc.vim#L1072
 
+Plug '~/repos/vim-dirvish-doish'
+
 function! IsPreviouslyYankedItemValid()
+  echo 'hello'
   return @d != ''
 endfunction
 
@@ -20,27 +23,28 @@ function! CopyPreviouslyYankedItemToCurrentDirectory()
 
   let cwd = getcwd()
   let item = trim(@d, '/\')
-  let item_folder= fnamemodify(item, ':h')
-  let item_filename= fnamemodify(item, ':t')
+  echo item
+  " let item_folder= fnamemodify(item, ':h')
+  " let item_filename= fnamemodify(item, ':t')
 
-  let item_finalname = item_filename
-  if !empty(glob(item_filename))
-    let item_finalname = PromptUserForRenameOrSkip(item_filename)
-    redraw
-    echomsg 'a:'.item_finalname
-    if item_finalname == ''
-            return
-    endif
-  endif
+  " let item_finalname = item_filename
+  " if !empty(glob(item_filename))
+  "   let item_finalname = PromptUserForRenameOrSkip(item_filename)
+  "   redraw
+  "   echomsg 'a:'.item_finalname
+  "   if item_finalname == ''
+  "           return
+  "   endif
+  " endif
 
-  let cmd = 'robocopy '
-  if isdirectory(item)
-    let cmd .= printf('/e "%s" "%s\%s"', item, cwd, item_finalname)
-  else
-    let cmd .= printf('"%s" "%s" "%s"', item_folder, cwd, item_finalname)
-  endif
-echomsg cmd
-  silent execute(printf(':!start /b %s', cmd))
+  " let cmd = 'robocopy '
+  " if isdirectory(item)
+  "   let cmd .= printf('/e "%s" "%s\%s"', item, cwd, item_finalname)
+  " else
+  "   let cmd .= printf('"%s" "%s" "%s"', item_folder, cwd, item_finalname)
+  " endif
+" echomsg cmd
+  " silent execute(printf(':!start /b %s', cmd))
 endfunction
 
 function! DeleteItemUnderCursor()
@@ -114,21 +118,22 @@ function! CreateFile()
   normal R
 endf
 
+function! CopyFilePathUnderCursor() abort
+  normal! ^"dy$
+endfunction
+
 function! GetDirvishConfig() 
   unmap <buffer> p
+  unmap <buffer> P
   nnoremap <silent><buffer> <C-n> <nop>
   nnoremap <silent><buffer> <C-p> :GFiles<CR>
-
   nmap <silent><buffer> q <Plug>(dirvish_quit)
-  nnoremap <silent> <buffer> i :call CreateDirectory()<CR>
-  nnoremap <silent> <buffer> I :call CreateFile()<CR>
-  nnoremap <silent> <buffer> dd :call DeleteItemUnderCursor()<CR>
-  nmap <silent> <buffer> cc :call RenameItemUnderCursor()<CR>
-
-  " These probably don't work yet
-  nmap <silent> <buffer> p :call CopyPreviouslyYankedItemToCurrentDirectory()<CR>
-  nmap <silent> <buffer> P :call MovePreviouslyYankedItemToCurrentDirectory()<CR>
-  " nmap <buffer> h <Plug>(dirvish_up)
+  nnoremap <silent><buffer> I :CreateFile<CR>
+  nnoremap <silent><buffer> i :CreateDirectory<CR>
+  nnoremap <silent><buffer> dd :DeleteItemUnderCursor<CR>
+  nnoremap <silent><buffer> yy :CopyFilePathUnderCursor<CR>
+  nmap <silent> <buffer> p :CopyToDirectory<CR>
+  nmap <silent> <buffer> P :MoveToDirectory<CR>
 endfunction
 
 let dirvish_mode = ':sort ,^.*/,' 
