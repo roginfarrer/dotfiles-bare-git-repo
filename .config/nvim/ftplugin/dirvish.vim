@@ -7,8 +7,8 @@ let g:dirvish_dovish_map_keys = 0
 " unmap dirvish defaults
 unmap <buffer> p
 
-nmap <silent><buffer> n <Plug>(dovish_create_file)
-nmap <silent><buffer> N <Plug>(dovish_create_directory)
+nmap <silent><buffer> i <Plug>(dovish_create_file)
+nmap <silent><buffer> I <Plug>(dovish_create_directory)
 nmap <silent><buffer> dd <Plug>(dovish_delete)
 nmap <silent><buffer> r <Plug>(dovish_rename)
 nmap <silent><buffer> yy <Plug>(dovish_yank)

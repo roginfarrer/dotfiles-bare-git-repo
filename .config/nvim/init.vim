@@ -162,7 +162,7 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 set smarttab
 set ai "Auto indent
 set si "Smart indent
-" set wrap "Wrap lines
+set nowrap "don't wrap lines
 
 " Allows you to change buffers even if the current on has unsaved changes
 set hidden
