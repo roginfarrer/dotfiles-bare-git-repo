@@ -54,18 +54,7 @@ Plug 'tpope/vim-rhubarb'                " Utilities on top of fugitive
   vnoremap <leader>gc :'<,'>Gbrowse!<CR>
 
 Plug 'justinmk/vim-dirvish'             " Directory navigation, replaces netrw
-  source $HOME/.config/nvim/configs/dirvish.vim
-  " Group directories first
-  " let dirvish_mode = ':sort ,^.*/,' 
-  " augroup dirvish_config
-  "   autocmd!
-  
-  "   autocmd FileType dirvish
-  "     \ nmap <silent><buffer> q <Plug>(dirvish_quit)
-  "     \|nnoremap <silent><buffer> <C-n> <nop>
-  "     \|nnoremap <silent><buffer> <C-p> :call fzf#vim#files('.', {'options': '--prompt ""'})<CR>
-  " augroup END
-
+Plug 'roginfarrer/vim-dirvish-dovish', {'branch' : 'main'}
 Plug 'mhinz/vim-startify'               " Fancy Start Screen
   let g:startify_bookmarks = [ {'v': '~/.config/nvim/init.vim'}, {'f': '~/.config/fish/config.fish'}, {'k': '~/.config/kitty/kitty.conf'} ]
   let g:startify_change_to_dir = 0
