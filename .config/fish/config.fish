@@ -19,6 +19,7 @@ fnm env --multi | source
 set USER rfarrer
 
 alias vim="nvim"
+alias v="nvim"
 
 ### Git it!
 alias g="git"
