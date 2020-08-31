@@ -94,9 +94,7 @@ Plug 'dense-analysis/ale'
         \'typescript': ['prettier', 'eslint'],
         \}
   let g:ale_typescript_prettier_use_local_config = 1
-  let g:ale_fix_on_save = 1
-  let g:ale_lint_on_text_changed = 'never'
-  let g:ale_lint_on_insert_leave = 0
+  " let g:ale_fix_on_save = 1
   " highlight clear ALEErrorSign
   " highlight clear ALEWarningSign
   " let g:ale_sign_error = '❌'
@@ -507,12 +505,22 @@ endif
   end
 END
 
-nnoremap <silent> K  <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> K  :call <SID>show_documentation()<CR>
 nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <silent> gt <cmd>lua vim.lsp.buf.type_definition()<CR>
 nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
 nmap     <silent> <leader>lr <cmd>lua vim.lsp.buf.rename()<CR>
+
+function! s:show_documentation()
+  " try looking up term in vim manual if in a vim file
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    silent execute(':lua vim.lsp.buf.hover()')
+  endif
+endfunction
 
 " Diagnostics
 " nmap <silent> [g :PrevDiagnosticCycle<CR>
