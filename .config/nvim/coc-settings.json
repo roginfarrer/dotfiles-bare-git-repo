@@ -10,7 +10,7 @@
   "diagnostic.highlightOffset": 9999999,
   "prettier.statusItemText": "★ ",
   "prettier.requireConfig": true,
-  "coc.preferences.formatOnSaveFiletypes": ["javascript", "typescript", "typescriptreact", "json", "javascriptreact", "css", "scss", "markdown", "mdx", "md"],
+  "coc.preferences.formatOnSaveFiletypes": ["javascript", "typescript", "typescriptreact", "json", "javascriptreact", "css", "scss", "markdown", "mdx", "md", "html"],
   "eslint.run": "onSave",
   "typescript.suggestionActions.enabled": true,
   "javascript.validate.enable": false,
