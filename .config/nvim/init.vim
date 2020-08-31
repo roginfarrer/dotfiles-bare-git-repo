@@ -25,7 +25,7 @@ else
 endif
 
 Plug 'jesseleite/vim-agriculture'       " Support Rg with args
-Plug 'neoclide/coc.nvim', {'branch': 'release'} " Autocompletion, and linting, and pretty much eveything
+" Plug 'neoclide/coc.nvim', {'branch': 'release'} " Autocompletion, and linting, and pretty much eveything
 Plug 'sheerun/vim-polyglot'             " Syntax highlighting for pretty much everything
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'tpope/vim-eunuch'                 " Run common Unix commands inside Vim
@@ -83,6 +83,26 @@ Plug 'haya14busa/incsearch.vim'         " Improved search highlighting
 Plug 'tpope/vim-abolish'
 Plug 'cocopon/iceberg.vim'
 Plug 'duggiefresh/vim-easydir'
+Plug 'dense-analysis/ale'
+  let g:ale_fixers = {
+        \   'css': ['prettier', 'stylelint'],
+        \   'javascript': ['prettier', 'eslint'],
+        \   'typescript': ['prettier', 'eslint'],
+        \}
+  let g:ale_linters = {
+        \'javascript': ['prettier', 'eslint'],
+        \'typescript': ['prettier', 'eslint'],
+        \}
+  let g:ale_typescript_prettier_use_local_config = 1
+  let g:ale_fix_on_save = 1
+  let g:ale_lint_on_text_changed = 'never'
+  let g:ale_lint_on_insert_leave = 0
+  " highlight clear ALEErrorSign
+  " highlight clear ALEWarningSign
+  " let g:ale_sign_error = '❌'
+  " let g:ale_sign_warning = '⚠️'
+  nmap <silent> [g <Plug>(ale_previous_wrap)
+  nmap <silent> ]g <Plug>(ale_next_wrap)
 
 " Plug 'lambdalisue/fern.vim'
 " Plug 'hrsh7th/fern-mapping-collapse-or-leave.vim'
@@ -117,6 +137,15 @@ Plug 'duggiefresh/vim-easydir'
 
 " Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
 "   nnoremap - :CHADopen<cr>
+
+
+Plug 'neovim/nvim-lsp'
+Plug 'nvim-lua/completion-nvim'
+" Plug 'nvim-lua/diagnostic-nvim'
+" Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+"   let g:prettier#autoformat_config_present = 1
+"   let g:prettier#autoformat_require_pragma = 0
+"   autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less,*.graphql,*.ts PrettierAsync
 
 call plug#end()
 
@@ -457,12 +486,52 @@ nmap <C-q><C-r> :call ResourcesTab()<CR>
 nmap <silent> <C-q> :call HomebaseTab()<CR>:call ResourcesTab()<CR>:-2tabc<CR>
 
 source $HOME/.config/nvim/configs/functions.vim
-source $HOME/.config/nvim/configs/coc.vim
+" source $HOME/.config/nvim/configs/coc.vim
 if !empty(glob('$HOME/.config/nvim/local-config.vim'))
   source $HOME/.config/nvim/local-config.vim
 endif
 
-autocmd bufnewfile,bufread *.js set filetype=javascriptreact
+" require'diagnostic'.on_attach()
+:lua << END
+  local nvim_lsp = require('nvim_lsp')
+
+  local on_attach = function(_, bufnr) 
+    require'completion'.on_attach()
+  end
+
+  local servers = {'tsserver', 'vimls'}
+  for _, lsp in ipairs(servers) do
+    nvim_lsp[lsp].setup {
+      on_attach = on_attach,
+    }
+  end
+END
+
+nnoremap <silent> K  <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> gt <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
+nmap     <silent> <leader>lr <cmd>lua vim.lsp.buf.rename()<CR>
+
+" Diagnostics
+" nmap <silent> [g :PrevDiagnosticCycle<CR>
+" nmap <silent> ]g :NextDiagnosticCycle<CR>
+" " Enable the inline diagnostic messaging
+" let g:diagnostic_enable_virtual_text = 1
+" " Disable diagnostics while in insert mode
+" let g:diagnostic_insert_delay = 1
+
+" Completion
+" Use in every buffer, not just those with an LSP
+autocmd BufEnter * lua require'completion'.on_attach()
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
+" Avoid showing message extra message when using completion
+set shortmess+=c
 
 " Load with folds collapsed
 " vim:foldmethod=marker:foldlevel=0
