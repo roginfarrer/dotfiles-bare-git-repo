@@ -1,7 +1,6 @@
 let g:coc_global_extensions = [
     \ 'coc-css',
     \ 'coc-emmet',
-    \ 'coc-emoji',
     \ 'coc-eslint',
     \ 'coc-git',
     \ 'coc-html',
@@ -12,9 +11,8 @@ let g:coc_global_extensions = [
     \ 'coc-stylelint',
     \ 'coc-snippets',
     \ 'coc-flow',
-    \ 'coc-yank',
-    \ 'coc-lists',
-    \ 'coc-explorer']
+    \ 'coc-yank']
+    " \ 'coc-vimlsp']
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -71,3 +69,5 @@ nmap <leader>es :CocCommand snippets.editSnippets<CR>
 " Sets up :Prettier command
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
+" Code actions are automated changes or fixes for an issue, such as automatically importing a missing symbol. Code actions can be performed on the word under the cursor with a mapping like the following:
+nmap <leader>do <Plug>(coc-codeaction)

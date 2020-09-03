@@ -15,6 +15,7 @@
   "typescript.suggestionActions.enabled": true,
   "javascript.validate.enable": false,
   "javascript.suggest.enabled": true,
+  "tsserver.formatOnType": true,
 
   "suggest.completionItemKindLabels": {
     "function": "\uf794",

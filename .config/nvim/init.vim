@@ -8,7 +8,6 @@ let mapleader = "\<Space>"
 
 " Plugins {{{
 
-" Install Plug
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -17,25 +16,9 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-if isdirectory('/usr/local/opt/fzf')
-  Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
-else
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
-  Plug 'junegunn/fzf.vim'
-endif
-
-Plug 'jesseleite/vim-agriculture'       " Support Rg with args
-" Plug 'neoclide/coc.nvim', {'branch': 'release'} " Autocompletion, and linting, and pretty much eveything
+" Themes + Look & Feel {{{
 Plug 'sheerun/vim-polyglot'             " Syntax highlighting for pretty much everything
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
-Plug 'tpope/vim-eunuch'                 " Run common Unix commands inside Vim
-Plug 'machakann/vim-sandwich'           " Adds commands for adding/deleting/replacing surrounding text
-Plug 'tpope/vim-commentary'             " Adds commands for commenting lines
-Plug 'tpope/vim-sleuth'                 " Smart detection of line indenting, tab spaces, etc
-Plug 'mattn/emmet-vim'                  " You know, emmet
-Plug 'junegunn/goyo.vim'                " Zen mode
-Plug 'alvan/vim-closetag'               " Auto close html tags
-Plug 'doums/coBra'                      " Autocomplete pairs
 Plug 'itchyny/lightline.vim'            " Custom statusline
 Plug 'Rigellute/rigel'                  " Colorscheme
 Plug 'joshdick/onedark.vim'             " Colorscheme
@@ -43,31 +26,27 @@ Plug 'mhartington/oceanic-next'         " Colorscheme
 Plug 'arzg/vim-colors-xcode'            " Colorscheme
 Plug 'haishanh/night-owl.vim'           " Colorscheme
 Plug 'bluz71/vim-nightfly-guicolors'    " Colorscheme
-Plug 'dhruvasagar/vim-open-url'         " Open URLs in a way that actually works
-  nmap gx <Plug>(open-url-browser)
-Plug 'tpope/vim-fugitive'               " Classic Git integration
-  nmap <leader>gs :G<CR>
-Plug 'tpope/vim-rhubarb'                " Utilities on top of fugitive
-  nnoremap <leader>go :Gbrowse<CR>
-  vnoremap <leader>go :'<,'>Gbrowse<CR>
-  nnoremap <leader>gc :Gbrowse!<CR>
-  vnoremap <leader>gc :'<,'>Gbrowse!<CR>
-
-Plug 'justinmk/vim-dirvish'             " Directory navigation, replaces netrw
-Plug 'roginfarrer/vim-dirvish-dovish', {'branch' : 'main'}
+Plug 'cocopon/iceberg.vim'
 Plug 'mhinz/vim-startify'               " Fancy Start Screen
   let g:startify_bookmarks = [ {'v': '~/.config/nvim/init.vim'}, {'f': '~/.config/fish/config.fish'}, {'k': '~/.config/kitty/kitty.conf'} ]
   let g:startify_change_to_dir = 0
+" }}}
 
-Plug 'skywind3000/vim-terminal-help'    " Quick access to a terminal buffer
-  let g:terminal_shell = '/usr/local/bin/fish'
-  let g:terminal_list = 0
-  let g:terminal_height = '20%'
-
+" File Editing Experience {{{
+Plug 'machakann/vim-sandwich'           " Adds commands for adding/deleting/replacing surrounding text
+Plug 'tpope/vim-commentary'             " Adds commands for commenting lines
+Plug 'tpope/vim-sleuth'                 " Smart detection of line indenting, tab spaces, etc
+Plug 'mattn/emmet-vim'                  " You know, emmet
+Plug 'junegunn/goyo.vim'                " Zen mode
+Plug 'alvan/vim-closetag'               " Auto close html tags
+Plug 'doums/coBra'                      " Autocomplete pairs
 Plug 'mvolkmann/vim-js-arrow-function'  " GOAT. Toggle between expression and statements
   nmap <silent> <leader>tb :call JsArrowFnBraceToggle()<CR>
-
 Plug 'haya14busa/incsearch.vim'         " Improved search highlighting
+Plug 'tpope/vim-abolish'
+Plug 'dhruvasagar/vim-open-url'         " Open URLs in a way that actually works
+  nmap gx <Plug>(open-url-browser)
+  " incsearch Settings {{{
   set hlsearch
   let g:incsearch#auto_nohlsearch = 1
   map /  <Plug>(incsearch-forward)
@@ -79,71 +58,73 @@ Plug 'haya14busa/incsearch.vim'         " Improved search highlighting
   map #  <Plug>(incsearch-nohl-#)
   map g* <Plug>(incsearch-nohl-g*)
   map g# <Plug>(incsearch-nohl-g#)
+  " }}}
+" }}}
 
-Plug 'tpope/vim-abolish'
-Plug 'cocopon/iceberg.vim'
-Plug 'duggiefresh/vim-easydir'
-Plug 'dense-analysis/ale'
-  let g:ale_fixers = {
-        \   'css': ['prettier', 'stylelint'],
-        \   'javascript': ['prettier', 'eslint'],
-        \   'typescript': ['prettier', 'eslint'],
-        \}
-  let g:ale_linters = {
-        \'javascript': ['prettier', 'eslint'],
-        \'typescript': ['prettier', 'eslint'],
-        \}
-  let g:ale_typescript_prettier_use_local_config = 1
-  " let g:ale_fix_on_save = 1
-  " highlight clear ALEErrorSign
-  " highlight clear ALEWarningSign
-  " let g:ale_sign_error = '❌'
-  " let g:ale_sign_warning = '⚠️'
-  nmap <silent> [g <Plug>(ale_previous_wrap)
-  nmap <silent> ]g <Plug>(ale_next_wrap)
+" File Navigation / Project Management {{{
+if isdirectory('/usr/local/opt/fzf')
+  Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
+else
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+  Plug 'junegunn/fzf.vim'
+endif
+Plug 'justinmk/vim-dirvish'             " Directory navigation, replaces netrw
+Plug 'roginfarrer/vim-dirvish-dovish', {'branch' : 'main'}
+Plug 'tpope/vim-eunuch'                 " Run common Unix commands inside Vim
+Plug 'duggiefresh/vim-easydir'          " :e foo/bar.js will create 'foo' directory too
+Plug 'jesseleite/vim-agriculture'       " Support Rg with args
+" }}}
 
-" Plug 'lambdalisue/fern.vim'
-" Plug 'hrsh7th/fern-mapping-collapse-or-leave.vim'
-"   " Disable netrw
-"   let g:loaded_netrw             = 1
-"   let g:loaded_netrwPlugin       = 1
-"   let g:loaded_netrwSettings     = 1
-"   let g:loaded_netrwFileHandlers = 1
-  
-"   " Save the current filepath to a variable,
-"   " then open Fern to the current file
-"   nnoremap <silent> - :let g:fern_prev_file = @%<CR>:Fern %:h -reveal=%<CR>
+" Git {{{
+Plug 'tpope/vim-fugitive'               " Classic Git integration
+  nmap <leader>gs :G<CR>
+Plug 'tpope/vim-rhubarb'                " Utilities on top of fugitive
+  nnoremap <leader>go :Gbrowse<CR>
+  vnoremap <leader>go :'<,'>Gbrowse<CR>
+  nnoremap <leader>gc :Gbrowse!<CR>
+  vnoremap <leader>gc :'<,'>Gbrowse!<CR>
+" }}}
 
-"   function! QuitToPrevFile()
-"     execute "edit " . fern_prev_file
-"   endfunction
+" LSP {{{
+Plug 'neoclide/coc.nvim', {'branch': 'release'} " Autocompletion, and linting, and pretty much eveything
 
-"   augroup my-fern-hijack
-"     autocmd!
-"     autocmd FileType fern call s:init_fern()
-"   augroup END
+" When using nvim-lsp... {{{
+" Plug 'dense-analysis/ale'
+"   let g:ale_fixers = {
+"         \   'css': ['prettier', 'stylelint'],
+"         \   'javascript': ['prettier', 'eslint'],
+"         \   'typescript': ['prettier', 'eslint'],
+"         \}
+"   let g:ale_linters = {
+"         \'javascript': ['prettier', 'eslint'],
+"         \'typescript': ['prettier', 'eslint'],
+"         \}
+"   let g:ale_typescript_prettier_use_local_config = 1
+"   " let g:ale_fix_on_save = 1
+"   " highlight clear ALEErrorSign
+"   " highlight clear ALEWarningSign
+"   " let g:ale_sign_error = '❌'
+"   " let g:ale_sign_warning = '⚠️'
+"   nmap <silent> [g <Plug>(ale_previous_wrap)
+"   nmap <silent> ]g <Plug>(ale_next_wrap)
 
-"   function! s:init_fern() abort
-"     nmap <buffer><silent> q :call QuitToPrevFile()<CR>
-"     let path = expand('%:p')
-"     if !isdirectory(path)
-"       return
-"     endif
-"     bwipeout %
-"     execute printf('Fern %s', fnameescape(path))
-"   endfunction
-
-" Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': ':UpdateRemotePlugins'}
-"   nnoremap - :CHADopen<cr>
-
-
-Plug 'neovim/nvim-lsp'
-Plug 'nvim-lua/completion-nvim'
+" Plug 'neovim/nvim-lsp'
+" Plug 'nvim-lua/completion-nvim'
 " Plug 'nvim-lua/diagnostic-nvim'
 " Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 "   let g:prettier#autoformat_config_present = 1
 "   let g:prettier#autoformat_require_pragma = 0
 "   autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less,*.graphql,*.ts PrettierAsync
+" }}}
+
+" }}}
+
+" Terminal {{{
+Plug 'skywind3000/vim-terminal-help'    " Quick access to a terminal buffer
+  let g:terminal_shell = '/usr/local/bin/fish'
+  let g:terminal_list = 0
+  let g:terminal_height = '20%'
+" }}}
 
 call plug#end()
 
@@ -216,7 +197,6 @@ set foldmethod=syntax
 
 set number
 set relativenumber
-" nnoremap <leader><CR> :nohlsearch<CR>
 
 " Always show the sign column
 set signcolumn=yes
@@ -284,20 +264,16 @@ set noshowmode
 " ALways show the statusbar
 set laststatus=2
 
-let g:rigel_lightline = 1
-function! CocCurrentFunction()
-    return get(b:, 'coc_current_function', '')
-endfunction
+" let g:rigel_lightline = 1
 
 let g:lightline = {
       \ 'colorscheme': 'nightowl',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'cocstatus', 'currentfunction', 'readonly', 'filename', 'modified' ] ]
+      \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
       \ },
       \ 'component_function': {
-      \   'cocstatus': 'coc#status',
-      \   'currentfunction': 'CocCurrentFunction'
+      \   'cocstatus': 'coc#status'
       \ },
       \ }
 
@@ -402,6 +378,7 @@ autocmd TermOpen * setlocal listchars= nonumber norelativenumber
 " [Buffers] Jump to the existing window if possible
 let g:fzf_buffers_jump = 1
 " let $FZF_DEFAULT_OPTS=' --color=dark --color=fg:15,bg:-1,hl:1,fg+:#ffffff,bg+:0,hl+:1 --color=info:0,prompt:0,pointer:12,marker:4,spinner:11,header:-1 --layout=reverse  --margin=1,4'
+"
 
 " Mine
 let $FZF_DEFAULT_OPTS = '
@@ -484,43 +461,43 @@ nmap <C-q><C-r> :call ResourcesTab()<CR>
 nmap <silent> <C-q> :call HomebaseTab()<CR>:call ResourcesTab()<CR>:-2tabc<CR>
 
 source $HOME/.config/nvim/configs/functions.vim
-" source $HOME/.config/nvim/configs/coc.vim
+source $HOME/.config/nvim/configs/coc.vim
 if !empty(glob('$HOME/.config/nvim/local-config.vim'))
   source $HOME/.config/nvim/local-config.vim
 endif
 
 " require'diagnostic'.on_attach()
-:lua << END
-  local nvim_lsp = require('nvim_lsp')
+" :lua << END
+"   local nvim_lsp = require('nvim_lsp')
 
-  local on_attach = function(_, bufnr) 
-    require'completion'.on_attach()
-  end
+"   local on_attach = function(_, bufnr) 
+"     require'completion'.on_attach()
+"   end
 
-  local servers = {'tsserver', 'vimls'}
-  for _, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup {
-      on_attach = on_attach,
-    }
-  end
-END
+"   local servers = {'tsserver', 'vimls'}
+"   for _, lsp in ipairs(servers) do
+"     nvim_lsp[lsp].setup {
+"       on_attach = on_attach,
+"     }
+"   end
+" END
 
-nnoremap <silent> K  :call <SID>show_documentation()<CR>
-nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> gt <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
-nmap     <silent> <leader>lr <cmd>lua vim.lsp.buf.rename()<CR>
+" nnoremap <silent> K  :call <SID>show_documentation()<CR>
+" nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+" nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
+" nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
+" nnoremap <silent> gt <cmd>lua vim.lsp.buf.type_definition()<CR>
+" nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
+" nmap     <silent> <leader>lr <cmd>lua vim.lsp.buf.rename()<CR>
 
-function! s:show_documentation()
-  " try looking up term in vim manual if in a vim file
-  if &filetype == 'vim'
-    execute 'h '.expand('<cword>')
-  else
-    silent execute(':lua vim.lsp.buf.hover()')
-  endif
-endfunction
+" function! s:show_documentation()
+"   " try looking up term in vim manual if in a vim file
+"   if &filetype == 'vim'
+"     execute 'h '.expand('<cword>')
+"   else
+"     silent execute(':lua vim.lsp.buf.hover()')
+"   endif
+" endfunction
 
 " Diagnostics
 " nmap <silent> [g :PrevDiagnosticCycle<CR>
@@ -532,14 +509,15 @@ endfunction
 
 " Completion
 " Use in every buffer, not just those with an LSP
-autocmd BufEnter * lua require'completion'.on_attach()
-" Use <Tab> and <S-Tab> to navigate through popup menu
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" Set completeopt to have a better completion experience
-set completeopt=menuone,noinsert,noselect
-" Avoid showing message extra message when using completion
-set shortmess+=c
+"autocmd BufEnter * lua require'completion'.on_attach()
+"" Use <Tab> and <S-Tab> to navigate through popup menu
+"inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+"inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+"" Set completeopt to have a better completion experience
+"set completeopt=menuone,noinsert,noselect
+"" Avoid showing message extra message when using completion
+"set shortmess+=c
 
-" Load with folds collapsed
-" vim:foldmethod=marker:foldlevel=0
+noremap <F12> <Esc>:syntax sync fromstart<CR>
+
+" vim:foldmethod=marker
