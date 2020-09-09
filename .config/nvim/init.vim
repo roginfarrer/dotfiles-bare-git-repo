@@ -18,6 +18,7 @@ call plug#begin('~/.vim/plugged')
 
 " Themes + Look & Feel {{{
 Plug 'sheerun/vim-polyglot'             " Syntax highlighting for pretty much everything
+  let g:vim_markdown_fenced_languages = ['javascript', 'js=javascript', 'jsx=javascript'] " https://github.com/plasticboy/vim-markdown#fenced-code-block-languages
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'itchyny/lightline.vim'            " Custom statusline
 Plug 'Rigellute/rigel'                  " Colorscheme
