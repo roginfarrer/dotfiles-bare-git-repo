@@ -34,9 +34,11 @@ Plug 'mhinz/vim-startify'               " Fancy Start Screen
 " }}}
 
 " File Editing Experience {{{
+
 Plug 'machakann/vim-sandwich'           " Adds commands for adding/deleting/replacing surrounding text
 Plug 'tpope/vim-commentary'             " Adds commands for commenting lines
-Plug 'tpope/vim-sleuth'                 " Smart detection of line indenting, tab spaces, etc
+" Plug 'tpope/vim-sleuth'                 " Smart detection of line indenting, tab spaces, etc
+Plug 'zsugabubus/crazy8.nvim' " Trying out as replacement for sleuth
 Plug 'mattn/emmet-vim'                  " You know, emmet
 Plug 'junegunn/goyo.vim'                " Zen mode
 Plug 'alvan/vim-closetag'               " Auto close html tags
@@ -60,6 +62,7 @@ Plug 'dhruvasagar/vim-open-url'         " Open URLs in a way that actually works
   map g* <Plug>(incsearch-nohl-g*)
   map g# <Plug>(incsearch-nohl-g#)
   " }}}
+
 " }}}
 
 " File Navigation / Project Management {{{
@@ -132,7 +135,7 @@ call plug#end()
 " }}}
 
 " Turns on detection for fyletypes, indentation files and plugin files
-filetype plugin indent on
+" filetype plugin indent on
 
 " Copy visual selection to clipboard
 map <C-c> "+y
@@ -148,7 +151,7 @@ nnoremap c "_c
 vnoremap c "_c
 
 " Set to auto read when a file is changed from the outside
-set autoread
+" set autoread (should be auto on)
 
 " Enable mouse support
 set mouse=a
@@ -158,20 +161,20 @@ set splitright
 set splitbelow
 
 " Turn backup off, since most stuff is in SVN, git et.c anyway...
-set nobackup
-set nowb
+" set nobackup (should be auto off)
+" set nowb (shouldbe auto off_
 set noswapfile
-setlocal nobackup
-setlocal nowritebackup
+" setlocal nobackup
+" setlocal nowritebackup
 
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 " Be smart when using tabs ;)
-set smarttab
-set ai "Auto indent
-set si "Smart indent
-set wrap "don't wrap lines
+" set smarttab "
+" set ai "Auto indent
+set smartindent "Smart indent
+" set wrap "don't wrap lines
 
 " Allows you to change buffers even if the current on has unsaved changes
 set hidden
@@ -185,13 +188,13 @@ catch
 endtry
 
 " Statusline Config
-set statusline+=%F
-set cmdheight=1
+" set statusline+=%F
+" set cmdheight=1
 
 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=300
 
-set foldenable
+" set foldenable
 set foldlevelstart=10
 set foldnestmax=10
 set foldmethod=syntax
@@ -202,14 +205,11 @@ set relativenumber
 " Always show the sign column
 set signcolumn=yes
 
-" Set 7 lines to the cursor - when moving vertically using j/k
-set so=7
-
 " Turn on the Wild menu
 set wildmenu
 
 " Configure backspace so it acts as it should act
-set backspace=eol,start,indent
+" set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
 
 " Search
@@ -218,11 +218,11 @@ set ignorecase
 " When searching try to be smart about cases
 set smartcase
 " Highlight search results
-set hlsearch
+" set hlsearch
 " Makes search act like search in modern browsers
-set incsearch
+" set incsearch
 
-set inccommand="nosplit"
+" set inccommand="nosplit"
 
 " Don't redraw while executing macros (good performance config)
 set lazyredraw
