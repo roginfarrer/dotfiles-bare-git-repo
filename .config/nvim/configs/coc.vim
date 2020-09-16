@@ -6,13 +6,12 @@ let g:coc_global_extensions = [
     \ 'coc-html',
     \ 'coc-json',
     \ 'coc-prettier',
-    \ 'coc-tsserver',
     \ 'coc-yaml',
     \ 'coc-stylelint',
-    \ 'coc-snippets',
-    \ 'coc-flow',
-    \ 'coc-yank']
-    " \ 'coc-vimlsp']
+    \ 'coc-snippets']
+
+if !(g:use_nvim_lsp)
+  let g:coc_global_extensions += ['coc-tsserver']
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -34,22 +33,22 @@ endfunction
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
-" Remap keys for gotos
+" " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gt <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-" Remap for rename current word
+" " Remap for rename current word
 nmap <leader>lr <Plug>(coc-rename)
 
-" gh - get hint on whatever's under the cursor
+" " gh - get hint on whatever's under the cursor
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 nnoremap <silent> gh :call <SID>show_documentation()<CR>
 
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-" position. Coc only does snippet and additional edit on confirm.
-" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+" " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" " position. Coc only does snippet and additional edit on confirm.
+" " <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
 if exists('*complete_info')
   inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 else
@@ -63,6 +62,8 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
+
+endif
 
 nmap <leader>es :CocCommand snippets.editSnippets<CR>
 

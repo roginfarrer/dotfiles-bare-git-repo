@@ -1,10 +1,14 @@
 " VIMRC
 
-set shell=/bin/bash
+let g:use_nvim_lsp = 0
+
+set shell=/usr/local/bin/zsh
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
 let mapleader = "\<Space>"
+
+let g:ale_disable_lsp = 1
 
 " Plugins {{{
 
@@ -27,6 +31,7 @@ Plug 'mhartington/oceanic-next'         " Colorscheme
 Plug 'arzg/vim-colors-xcode'            " Colorscheme
 Plug 'haishanh/night-owl.vim'           " Colorscheme
 Plug 'bluz71/vim-nightfly-guicolors'    " Colorscheme
+Plug 'challenger-deep-theme/vim'
 Plug 'cocopon/iceberg.vim'
 Plug 'mhinz/vim-startify'               " Fancy Start Screen
   let g:startify_bookmarks = [ {'v': '~/.config/nvim/init.vim'}, {'f': '~/.config/fish/config.fish'}, {'k': '~/.config/kitty/kitty.conf'} ]
@@ -45,23 +50,9 @@ Plug 'alvan/vim-closetag'               " Auto close html tags
 Plug 'doums/coBra'                      " Autocomplete pairs
 Plug 'mvolkmann/vim-js-arrow-function'  " GOAT. Toggle between expression and statements
   nmap <silent> <leader>tb :call JsArrowFnBraceToggle()<CR>
-Plug 'haya14busa/incsearch.vim'         " Improved search highlighting
 Plug 'tpope/vim-abolish'
 Plug 'dhruvasagar/vim-open-url'         " Open URLs in a way that actually works
   nmap gx <Plug>(open-url-browser)
-  " incsearch Settings {{{
-  set hlsearch
-  let g:incsearch#auto_nohlsearch = 1
-  map /  <Plug>(incsearch-forward)
-  map ?  <Plug>(incsearch-backward)
-  map g/ <Plug>(incsearch-stay)
-  map n  <Plug>(incsearch-nohl-n)
-  map N  <Plug>(incsearch-nohl-N)
-  map *  <Plug>(incsearch-nohl-*)
-  map #  <Plug>(incsearch-nohl-#)
-  map g* <Plug>(incsearch-nohl-g*)
-  map g# <Plug>(incsearch-nohl-g#)
-  " }}}
 
 " }}}
 
@@ -112,13 +103,14 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'} " Autocompletion, and linting, a
 "   nmap <silent> [g <Plug>(ale_previous_wrap)
 "   nmap <silent> ]g <Plug>(ale_next_wrap)
 
-" Plug 'neovim/nvim-lsp'
-" Plug 'nvim-lua/completion-nvim'
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
 " Plug 'nvim-lua/diagnostic-nvim'
 " Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 "   let g:prettier#autoformat_config_present = 1
 "   let g:prettier#autoformat_require_pragma = 0
 "   autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less,*.graphql,*.ts PrettierAsync
+
 " }}}
 
 " }}}
@@ -181,11 +173,8 @@ set hidden
 
 " Turn persistent undo on 
 " means that you can undo even when you close a buffer/VIM
-try
-    set undodir=~/.vim_runtime/temp_dirs/undodir
-    set undofile
-catch
-endtry
+set undodir=~/.vim_runtime/temp_dirs/undodir
+set undofile
 
 " Statusline Config
 " set statusline+=%F
@@ -217,12 +206,12 @@ set whichwrap+=<,>,h,l
 set ignorecase
 " When searching try to be smart about cases
 set smartcase
-" Highlight search results
-" set hlsearch
+" Disable highlight search results
+set nohlsearch
 " Makes search act like search in modern browsers
 " set incsearch
 
-" set inccommand="nosplit"
+set inccommand="nosplit"
 
 " Don't redraw while executing macros (good performance config)
 set lazyredraw
@@ -232,9 +221,6 @@ set lazyredraw
 :autocmd InsertLeave * set nocul
 
 " Colors and Fonts {{{
-
-" Enable syntax highlighting
-set background=dark
 
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
@@ -248,14 +234,10 @@ endif
 " colorscheme xcodedarkhc
 " colorscheme iceberg
 colorscheme night-owl
+" colorscheme challenger_deep
 
 " Set syntax highlighting for config files
 autocmd BufNewFile,BufRead *stylelintrc,*eslintrc,*babelrc,*jshintrc,*prettierrc setlocal syntax=json
-
-" Syntax highlighting for flow
-let g:javascript_plugin_flow = 1
-
-syntax enable
 
 " Statusline (Lightline) {{{
 
@@ -467,38 +449,42 @@ if !empty(glob('$HOME/.config/nvim/local-config.vim'))
   source $HOME/.config/nvim/local-config.vim
 endif
 
-" require'diagnostic'.on_attach()
-" :lua << END
-"   local nvim_lsp = require('nvim_lsp')
+if g:use_nvim_lsp
 
-"   local on_attach = function(_, bufnr) 
-"     require'completion'.on_attach()
-"   end
+:lua << END
+  local nvim_lsp = require('nvim_lsp')
 
-"   local servers = {'tsserver', 'vimls'}
-"   for _, lsp in ipairs(servers) do
-"     nvim_lsp[lsp].setup {
-"       on_attach = on_attach,
-"     }
-"   end
-" END
+  local on_attach = function(_, bufnr) 
+    require'completion'.on_attach()
+  end
 
-" nnoremap <silent> K  :call <SID>show_documentation()<CR>
-" nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
-" nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
-" nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
-" nnoremap <silent> gt <cmd>lua vim.lsp.buf.type_definition()<CR>
-" nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
-" nmap     <silent> <leader>lr <cmd>lua vim.lsp.buf.rename()<CR>
+  local servers = {'tsserver'}
+  for _, lsp in ipairs(servers) do
+    nvim_lsp[lsp].setup {
+      on_attach = on_attach,
+    }
+  end
 
-" function! s:show_documentation()
-"   " try looking up term in vim manual if in a vim file
-"   if &filetype == 'vim'
-"     execute 'h '.expand('<cword>')
-"   else
-"     silent execute(':lua vim.lsp.buf.hover()')
-"   endif
-" endfunction
+  --- vim.lsp.callbacks["textDocument/publishDiagnostics"] = function() end
+END
+
+nnoremap <silent> K  :call <SID>show_documentation()<CR>
+nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> gt <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
+nmap     <silent> <leader>lr <cmd>lua vim.lsp.buf.rename()<CR>
+nmap     <silent> <leader>do <cmd>lua vim.lsp.buf.code_action()<CR>
+
+function! s:show_documentation()
+  " try looking up term in vim manual if in a vim file
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    silent execute(':lua vim.lsp.buf.hover()')
+  endif
+endfunction
 
 " Diagnostics
 " nmap <silent> [g :PrevDiagnosticCycle<CR>
@@ -510,15 +496,21 @@ endif
 
 " Completion
 " Use in every buffer, not just those with an LSP
-"autocmd BufEnter * lua require'completion'.on_attach()
-"" Use <Tab> and <S-Tab> to navigate through popup menu
-"inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-"inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-"" Set completeopt to have a better completion experience
-"set completeopt=menuone,noinsert,noselect
+" autocmd BufEnter * lua require'completion'.on_attach()
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
 "" Avoid showing message extra message when using completion
-"set shortmess+=c
+let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+
+endif
 
 noremap <F12> <Esc>:syntax sync fromstart<CR>
+
+augroup TextYankPost
+  au TextYankPost * silent! lua vim.highlight.on_yank()
+augroup END
 
 " vim:foldmethod=marker
