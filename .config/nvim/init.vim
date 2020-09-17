@@ -31,6 +31,7 @@ Plug 'mhartington/oceanic-next'         " Colorscheme
 Plug 'arzg/vim-colors-xcode'            " Colorscheme
 Plug 'haishanh/night-owl.vim'           " Colorscheme
 Plug 'bluz71/vim-nightfly-guicolors'    " Colorscheme
+Plug 'ghifarit53/tokyonight-vim'        " Colorscheme
 Plug 'challenger-deep-theme/vim'
 Plug 'cocopon/iceberg.vim'
 Plug 'mhinz/vim-startify'               " Fancy Start Screen
@@ -43,7 +44,7 @@ Plug 'mhinz/vim-startify'               " Fancy Start Screen
 Plug 'machakann/vim-sandwich'           " Adds commands for adding/deleting/replacing surrounding text
 Plug 'tpope/vim-commentary'             " Adds commands for commenting lines
 " Plug 'tpope/vim-sleuth'                 " Smart detection of line indenting, tab spaces, etc
-Plug 'zsugabubus/crazy8.nvim' " Trying out as replacement for sleuth
+" Plug 'zsugabubus/crazy8.nvim' " Trying out as replacement for sleuth
 Plug 'mattn/emmet-vim'                  " You know, emmet
 Plug 'junegunn/goyo.vim'                " Zen mode
 Plug 'alvan/vim-closetag'               " Auto close html tags
@@ -152,21 +153,12 @@ set mouse=a
 set splitright
 set splitbelow
 
-" Turn backup off, since most stuff is in SVN, git et.c anyway...
-" set nobackup (should be auto off)
-" set nowb (shouldbe auto off_
 set noswapfile
-" setlocal nobackup
-" setlocal nowritebackup
 
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
-" Be smart when using tabs ;)
-" set smarttab "
-" set ai "Auto indent
-set smartindent "Smart indent
-" set wrap "don't wrap lines
+" set smartindent "Smart indent
 
 " Allows you to change buffers even if the current on has unsaved changes
 set hidden
@@ -175,10 +167,6 @@ set hidden
 " means that you can undo even when you close a buffer/VIM
 set undodir=~/.vim_runtime/temp_dirs/undodir
 set undofile
-
-" Statusline Config
-" set statusline+=%F
-" set cmdheight=1
 
 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=300
@@ -194,11 +182,6 @@ set relativenumber
 " Always show the sign column
 set signcolumn=yes
 
-" Turn on the Wild menu
-set wildmenu
-
-" Configure backspace so it acts as it should act
-" set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
 
 " Search
@@ -208,8 +191,6 @@ set ignorecase
 set smartcase
 " Disable highlight search results
 set nohlsearch
-" Makes search act like search in modern browsers
-" set incsearch
 
 set inccommand="nosplit"
 
@@ -222,19 +203,15 @@ set lazyredraw
 
 " Colors and Fonts {{{
 
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 set termguicolors
-
-if &t_Co == 8 && $TERM !~# '^linux\|^Eterm'
-  set t_Co=16
-endif
 
 " colorscheme rigel
 " colorscheme xcodedarkhc
 " colorscheme iceberg
 colorscheme night-owl
 " colorscheme challenger_deep
+" let g:tokyonight_style = 'storm'
+" colorscheme tokyonight
 
 " Set syntax highlighting for config files
 autocmd BufNewFile,BufRead *stylelintrc,*eslintrc,*babelrc,*jshintrc,*prettierrc setlocal syntax=json
@@ -509,8 +486,6 @@ endif
 
 noremap <F12> <Esc>:syntax sync fromstart<CR>
 
-augroup TextYankPost
-  au TextYankPost * silent! lua vim.highlight.on_yank()
-augroup END
+autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="Substitute", timeout=250}
 
 " vim:foldmethod=marker
