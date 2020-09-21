@@ -4,12 +4,6 @@ let g:use_nvim_lsp = 0
 
 set shell=/usr/local/bin/zsh
 
-" With a map leader it's possible to do extra key combinations
-" like <leader>w saves the current file
-let mapleader = "\<Space>"
-
-let g:ale_disable_lsp = 1
-
 " Plugins {{{
 
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -23,7 +17,6 @@ call plug#begin('~/.vim/plugged')
 " Themes + Look & Feel {{{
 Plug 'sheerun/vim-polyglot'             " Syntax highlighting for pretty much everything
   let g:vim_markdown_fenced_languages = ['javascript', 'js=javascript', 'jsx=javascript'] " https://github.com/plasticboy/vim-markdown#fenced-code-block-languages
-Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'itchyny/lightline.vim'            " Custom statusline
 Plug 'Rigellute/rigel'                  " Colorscheme
 Plug 'joshdick/onedark.vim'             " Colorscheme
@@ -34,6 +27,8 @@ Plug 'bluz71/vim-nightfly-guicolors'    " Colorscheme
 Plug 'ghifarit53/tokyonight-vim'        " Colorscheme
 Plug 'challenger-deep-theme/vim'
 Plug 'cocopon/iceberg.vim'
+Plug 'bluz71/vim-nightfly-guicolors'
+Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'mhinz/vim-startify'               " Fancy Start Screen
   let g:startify_bookmarks = [ {'v': '~/.config/nvim/init.vim'}, {'f': '~/.config/fish/config.fish'}, {'k': '~/.config/kitty/kitty.conf'} ]
   let g:startify_change_to_dir = 0
@@ -43,8 +38,7 @@ Plug 'mhinz/vim-startify'               " Fancy Start Screen
 
 Plug 'machakann/vim-sandwich'           " Adds commands for adding/deleting/replacing surrounding text
 Plug 'tpope/vim-commentary'             " Adds commands for commenting lines
-" Plug 'tpope/vim-sleuth'                 " Smart detection of line indenting, tab spaces, etc
-" Plug 'zsugabubus/crazy8.nvim' " Trying out as replacement for sleuth
+Plug 'tpope/vim-sleuth'                 " Smart detection of line indenting, tab spaces, etc
 Plug 'mattn/emmet-vim'                  " You know, emmet
 Plug 'junegunn/goyo.vim'                " Zen mode
 Plug 'alvan/vim-closetag'               " Auto close html tags
@@ -64,6 +58,7 @@ else
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
   Plug 'junegunn/fzf.vim'
 endif
+Plug 'junegunn/vim-peekaboo'
 Plug 'justinmk/vim-dirvish'             " Directory navigation, replaces netrw
 Plug 'roginfarrer/vim-dirvish-dovish', {'branch' : 'main'}
 Plug 'tpope/vim-eunuch'                 " Run common Unix commands inside Vim
@@ -127,24 +122,11 @@ call plug#end()
 
 " }}}
 
-" Turns on detection for fyletypes, indentation files and plugin files
-" filetype plugin indent on
+" General {{{
 
-" Copy visual selection to clipboard
-map <C-c> "+y
-nnoremap <Leader>y "+y
-xnoremap <Leader>y "+y
-nnoremap <Leader>p "+p
-xnoremap <Leader>p "+p
-nnoremap <Leader>P "+P
-xnoremap <Leader>P "+P
-
-" When changing, don't save to register
-nnoremap c "_c
-vnoremap c "_c
-
-" Set to auto read when a file is changed from the outside
-" set autoread (should be auto on)
+" With a map leader it's possible to do extra key combinations
+" like <leader>w saves the current file
+let mapleader = "\<Space>"
 
 " Enable mouse support
 set mouse=a
@@ -158,7 +140,7 @@ set noswapfile
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
-" set smartindent "Smart indent
+set smartindent 
 
 " Allows you to change buffers even if the current on has unsaved changes
 set hidden
@@ -198,36 +180,40 @@ set inccommand="nosplit"
 set lazyredraw
 
 " Use cursorline for insert mode
-:autocmd InsertEnter * set cul
-:autocmd InsertLeave * set nocul
+autocmd InsertEnter * set cul
+autocmd InsertLeave * set nocul
+autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="Substitute", timeout=250}
 
-" Colors and Fonts {{{
+" }}}
+
+" Colors {{{
 
 set termguicolors
 
 " colorscheme rigel
 " colorscheme xcodedarkhc
 " colorscheme iceberg
-colorscheme night-owl
+" colorscheme night-owl
 " colorscheme challenger_deep
 " let g:tokyonight_style = 'storm'
 " colorscheme tokyonight
+colorscheme nightfly
 
 " Set syntax highlighting for config files
 autocmd BufNewFile,BufRead *stylelintrc,*eslintrc,*babelrc,*jshintrc,*prettierrc setlocal syntax=json
 
-" Statusline (Lightline) {{{
-
-" don't display mode, e.g. '-- INSERT --'
-set noshowmode              
-
-" ALways show the statusbar
-set laststatus=2
-
-" let g:rigel_lightline = 1
+lua <<EOF
+  local treesitter = require'nvim-treesitter.configs'
+  treesitter.setup {
+    ensure_installed = "all",
+    highlight = {
+      enable = true
+    }
+  }
+EOF
 
 let g:lightline = {
-      \ 'colorscheme': 'nightowl',
+      \ 'colorscheme': 'nightfly',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
@@ -237,11 +223,25 @@ let g:lightline = {
       \ },
       \ }
 
-"}}}
-
 " }}}
 
 " Keybindings and moving around {{{
+
+" Copy visual selection to clipboard
+map <C-c> "+y
+nnoremap <Leader>y "+y
+xnoremap <Leader>y "+y
+nnoremap <Leader>p "+p
+xnoremap <Leader>p "+p
+nnoremap <Leader>P "+P
+xnoremap <Leader>P "+P
+
+" Make Y behave like it should
+map Y y$
+
+" When changing, don't save to register
+nnoremap c "_c
+vnoremap c "_c
 
 " Fast saving
 nmap <leader>w :w!<cr>
@@ -249,9 +249,6 @@ nmap <leader>w :w!<cr>
 nmap <leader>q :q<cr>
 " Fast saving AND closing
 nmap <leader>x :wq<CR>
-
-" Lazygit
-nnoremap <silent> <Leader>lg :call ToggleLazyGit()<CR>
 
 " newline without insert
 nmap <CR> o<Esc>"_cc<Esc>
@@ -311,6 +308,12 @@ noremap <Space><Space> za
 nnoremap <leader>wd :windo difft<CR>
 nnoremap <leader>wdd :windo diffo<CR>
 
+nnoremap <leader>ev :vsp $MYVIMRC<CR>
+nnoremap <leader>sv :source $MYVIMRC<CR> 
+
+" For when syntax highlighting breaks
+noremap <F12> <Esc>:syntax sync fromstart<CR>
+
 " }}}
 
 " Terminal {{{
@@ -346,42 +349,22 @@ let $FZF_DEFAULT_OPTS = '
 \ --bind="?:toggle-preview"
 \ --margin=1,4 
 \ --layout=reverse 
-\ --color=fg:15,bg:-1,hl:14,fg+:#ffffff,bg+:-1,hl+:1 
-\ --color=info:15,prompt:11,pointer:14,marker:4,spinner:11,header:-1 
 \ '
-let g:fzf_layout = { 'window': 'call FloatingFZF()' }
-
-function! FloatingFZF()
-  let buf = nvim_create_buf(v:false, v:true)
-  call setbufvar(buf, '&signcolumn', 'no')
-
-  let height = float2nr(&lines * 0.9)
-  let width = float2nr(&columns * 0.8)
-  let horizontal = float2nr((&columns - width) / 2)
-  let vertical = 1
-
-  let opts = {
-        \ 'relative': 'editor',
-        \ 'row': vertical,
-        \ 'col': horizontal,
-        \ 'width': width,
-        \ 'height': height,
-        \ 'style': 'minimal'
-        \ }
-
-  call nvim_open_win(buf, v:true, opts)
-endfunction
+" \ --color=fg:15,bg:-1,hl:14,fg+:#ffffff,bg+:-1,hl+:1 
+" \ --color=info:15,prompt:11,pointer:14,marker:4,spinner:11,header:-1 
+" let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+let g:fzf_layout = { 'window': { 'width': 0.9 , 'height': 0.9 } }
 
 " Changes visible output of :Rg to not show path:column:linenumber
 " since it makes reading the actual line results more difficult
 " Reference: https://github.com/junegunn/fzf.vim/issues/960
-let transformer = "| awk -F: 'BEGIN { OFS = FS } {$3 = $3 \"\" $2 \"\" $3; print}'"
-command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   "rg --column --line-number --no-heading --color=always --smart-case "..shellescape(<q-args>)..transformer,
-  \   1,
-  \   { 'options': '--delimiter=: --with-nth=4..' },
-  \   <bang>0)
+" let transformer = "| awk -F: 'BEGIN { OFS = FS } {$3 = $3 \"\" $2 \"\" $3; print}'"
+" command! -bang -nargs=* Rg
+"   \ call fzf#vim#grep(
+"   \   "rg --column --line-number --no-heading --color=always --smart-case "..shellescape(<q-args>)..transformer,
+"   \   1,
+"   \   { 'options': '--delimiter=: --with-nth=4..' },
+"   \   <bang>0)
 
 " fuzzy find Vim commands (like Ctrl-Shift-P in Sublime/Atom/VSC)
 nnoremap <silent> <C-p> :GFiles<CR>
@@ -402,29 +385,13 @@ nnoremap <silent> <Leader>. :Files <C-R>=expand('%:h')<CR><CR>
 
 " }}}
 
-nnoremap <leader>ev :vsp $MYVIMRC<CR>
-nnoremap <leader>sv :source $MYVIMRC<CR> 
-
-function! HomebaseTab()
-  execute 'tabe'
-  execute 'tcd ~/Wayfair/homebase'
-  execute 'Startify'
-endfunction
-function! ResourcesTab()
-  execute 'tabe'
-  execute 'tcd ~/Wayfair/monolith/resources'
-  execute 'Startify'
-endfunction
-
-nmap <C-q><C-h> :call HomebaseTab()<CR>
-nmap <C-q><C-r> :call ResourcesTab()<CR>
-nmap <silent> <C-q> :call HomebaseTab()<CR>:call ResourcesTab()<CR>:-2tabc<CR>
-
 source $HOME/.config/nvim/configs/functions.vim
 source $HOME/.config/nvim/configs/coc.vim
 if !empty(glob('$HOME/.config/nvim/local-config.vim'))
   source $HOME/.config/nvim/local-config.vim
 endif
+
+" nvim-lsp set-up {{{
 
 if g:use_nvim_lsp
 
@@ -484,8 +451,4 @@ let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 
 endif
 
-noremap <F12> <Esc>:syntax sync fromstart<CR>
-
-autocmd TextYankPost * silent! lua vim.highlight.on_yank{higroup="Substitute", timeout=250}
-
-" vim:foldmethod=marker
+" }}}

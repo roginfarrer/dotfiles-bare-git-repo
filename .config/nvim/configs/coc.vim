@@ -8,7 +8,8 @@ let g:coc_global_extensions = [
     \ 'coc-prettier',
     \ 'coc-yaml',
     \ 'coc-stylelint',
-    \ 'coc-snippets']
+    \ 'coc-snippets',
+    \ 'coc-styled-components']
 
 if !(g:use_nvim_lsp)
   let g:coc_global_extensions += ['coc-tsserver']

@@ -1,6 +1,5 @@
 {
   "coc.preferences.colorSupport": true,
-  "diagnostic.refreshOnInsertMode": true,
   "diagnostic.hintSign": "ღ",
   "diagnostic.infoSign": "ʘ",
   "diagnostic.errorSign": "",
@@ -15,7 +14,11 @@
   "typescript.suggestionActions.enabled": true,
   "javascript.validate.enable": false,
   "javascript.suggest.enabled": true,
-  "tsserver.formatOnType": true,
+  "git.changedSign.text": " ",
+  "git.addedSign.text": " ",
+  "git.removedSign.text": " ",
+  "git.changeRemovedSign.text": " ",
+  "git.topRemovedSign.text": " ",
 
   "suggest.completionItemKindLabels": {
     "function": "\uf794",
