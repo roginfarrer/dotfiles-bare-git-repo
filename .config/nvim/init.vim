@@ -307,9 +307,10 @@ noremap <Leader>yf :let @*=expand("%")<cr>:echo "Copied file to clipboard"<cr>
 noremap <Space><Space> za
 
 " Diff windows
-nnoremap <leader>wd :windo difft<CR>
-nnoremap <leader>wdd :windo diffo<CR>
+" nnoremap <leader>wd :windo difft<CR>
+" nnoremap <leader>wdd :windo diffo<CR>
 
+nnoremap <leader>ek :vsp $HOME/.config/kitty/kitty.conf<CR>
 nnoremap <leader>ev :vsp $MYVIMRC<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR> 
 
