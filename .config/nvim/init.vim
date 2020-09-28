@@ -71,10 +71,6 @@ Plug 'jesseleite/vim-agriculture'       " Support Rg with args
 Plug 'tpope/vim-fugitive'               " Classic Git integration
   nmap <leader>gs :G<CR>
 Plug 'tpope/vim-rhubarb'                " Utilities on top of fugitive
-  nnoremap <leader>go :Gbrowse<CR>
-  vnoremap <leader>go :'<,'>Gbrowse<CR>
-  nnoremap <leader>gc :Gbrowse!<CR>
-  vnoremap <leader>gc :'<,'>Gbrowse!<CR>
 " }}}
 
 " LSP {{{
@@ -316,6 +312,11 @@ nnoremap <leader>sv :source $MYVIMRC<CR>
 
 " For when syntax highlighting breaks
 noremap <F12> <Esc>:syntax sync fromstart<CR>
+
+nnoremap <leader>go :Gbrowse<CR>
+vnoremap <leader>go :'<,'>Gbrowse<CR>
+nnoremap <leader>gc :Gbrowse!<CR>
+vnoremap <leader>gc :'<,'>Gbrowse!<CR>
 
 " }}}
 
