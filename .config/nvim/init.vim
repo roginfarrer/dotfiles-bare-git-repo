@@ -61,7 +61,17 @@ else
 endif
 Plug 'junegunn/vim-peekaboo'
 Plug 'justinmk/vim-dirvish'             " Directory navigation, replaces netrw
-Plug 'roginfarrer/vim-dirvish-dovish', {'branch' : 'main'}
+
+" Plug 'roginfarrer/vim-dirvish-dovish', {'branch' : 'main'}
+" Plug '~/repos/vim-dirvish-dovish'
+
+" Plug 'cocopon/vaffle.vim'
+" Until https://github.com/cocopon/vaffle.vim/pull/57 is merged, using the commit
+Plug 'WhoIsSethDaniel/vaffle.vim', {'branch': 'keepalt_on_edit'}
+  let g:vaffle_show_hidden_files = 1
+  " For Startify: if no current buffer, open CWD instead of current file
+  nnoremap <expr> - empty(expand('%')) ? ":Vaffle<CR>" : ":Vaffle %<CR>""
+
 Plug 'tpope/vim-eunuch'                 " Run common Unix commands inside Vim
 Plug 'duggiefresh/vim-easydir'          " :e foo/bar.js will create 'foo' directory too
 Plug 'jesseleite/vim-agriculture'       " Support Rg with args
