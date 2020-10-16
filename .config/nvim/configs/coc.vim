@@ -9,7 +9,9 @@ let g:coc_global_extensions = [
     \ 'coc-yaml',
     \ 'coc-stylelint',
     \ 'coc-snippets',
-    \ 'coc-styled-components']
+    \ 'coc-styled-components',
+    \ 'coc-tabnine',
+    \ 'coc-vimlsp']
 
 if !(g:use_nvim_lsp)
   let g:coc_global_extensions += ['coc-tsserver']
@@ -31,8 +33,8 @@ function! s:check_back_space() abort
 endfunction
 
 " " Use `[g` and `]g` to navigate diagnostics
-" nmap <silent> [g <Plug>(coc-diagnostic-prev)
-" nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)

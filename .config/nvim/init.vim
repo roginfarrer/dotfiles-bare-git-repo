@@ -76,24 +76,24 @@ Plug 'tpope/vim-rhubarb'                " Utilities on top of fugitive
 " LSP {{{
 Plug 'neoclide/coc.nvim', {'branch': 'release'} " Autocompletion, and linting, and pretty much eveything
 
-Plug 'dense-analysis/ale'
-let g:ale_fixers = {
-      \   'css': ['prettier', 'stylelint'],
-      \   'javascript': ['prettier', 'eslint'],
-      \   'typescript': ['prettier', 'eslint'],
-      \}
-let g:ale_linters = {
-      \'javascript': ['prettier', 'eslint'],
-      \'typescript': ['prettier', 'eslint'],
-      \}
-let g:ale_typescript_prettier_use_local_config = 1
-" let g:ale_fix_on_save = 1
-" highlight clear ALEErrorSign
-" highlight clear ALEWarningSign
-" let g:ale_sign_error = '❌'
-" let g:ale_sign_warning = '⚠️'
-nmap <silent> [g <Plug>(ale_previous_wrap)
-nmap <silent> ]g <Plug>(ale_next_wrap)
+" Plug 'dense-analysis/ale'
+" let g:ale_fixers = {
+"       \   'css': ['prettier', 'stylelint'],
+"       \   'javascript': ['prettier', 'eslint'],
+"       \   'typescript': ['prettier', 'eslint'],
+"       \}
+" let g:ale_linters = {
+"       \'javascript': ['prettier', 'eslint'],
+"       \'typescript': ['prettier', 'eslint'],
+"       \}
+" let g:ale_typescript_prettier_use_local_config = 1
+" " let g:ale_fix_on_save = 1
+" " highlight clear ALEErrorSign
+" " highlight clear ALEWarningSign
+" " let g:ale_sign_error = '❌'
+" " let g:ale_sign_warning = '⚠️'
+" nmap <silent> [g <Plug>(ale_previous_wrap)
+" nmap <silent> ]g <Plug>(ale_next_wrap)
 
 " When using nvim-lsp... {{{
 
@@ -200,15 +200,15 @@ colorscheme nightfly
 " Set syntax highlighting for config files
 autocmd BufNewFile,BufRead *stylelintrc,*eslintrc,*babelrc,*jshintrc,*prettierrc setlocal syntax=json
 
-" lua <<EOF
-"   local treesitter = require'nvim-treesitter.configs'
-"   treesitter.setup {
-"     ensure_installed = "all",
-"     highlight = {
-"       enable = true
-"     }
-"   }
-" EOF
+lua <<EOF
+  local treesitter = require'nvim-treesitter.configs'
+  treesitter.setup {
+    ensure_installed = "all",
+    highlight = {
+      enable = true
+    }
+  }
+EOF
 
 let g:lightline = {
       \ 'colorscheme': 'nightfly',
