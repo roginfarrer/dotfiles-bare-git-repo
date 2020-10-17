@@ -19,7 +19,7 @@
   "git.removedSign.text": " ",
   "git.changeRemovedSign.text": " ",
   "git.topRemovedSign.text": " ",
-  "diagnostic.displayByAle": true,
+  "diagnostic.displayByAle": false,
 
   "suggest.completionItemKindLabels": {
     "function": "\uf794",
