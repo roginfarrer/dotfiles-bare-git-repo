@@ -205,7 +205,8 @@ lua <<EOF
   treesitter.setup {
     ensure_installed = "all",
     highlight = {
-      enable = true
+      enable = true,
+      disable = {"md", "markdown"},
     }
   }
 EOF
