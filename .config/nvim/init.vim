@@ -3,7 +3,7 @@
 let g:use_nvim_lsp = 0
 let g:ale_disable_lsp = 1
 
-set shell=/usr/local/bin/zsh
+" set shell=/usr/local/bin/zsh
 
 " Plugins {{{
 
@@ -49,6 +49,13 @@ Plug 'mvolkmann/vim-js-arrow-function'  " GOAT. Toggle between expression and st
 Plug 'tpope/vim-abolish'
 Plug 'dhruvasagar/vim-open-url'         " Open URLs in a way that actually works
   nmap gx <Plug>(open-url-browser)
+Plug 'vim-test/vim-test'
+  let g:test#strategy = "neovim"
+  nmap t<C-n> :TestNearest<CR>
+  nmap t<C-f> :TestFile<CR>
+  nmap t<C-s> :TestSuite<CR>
+  nmap t<C-l> :TestLast<CR>
+  nmap t<C-g> :TestVisit<CR>
 
 " }}}
 
@@ -59,7 +66,7 @@ else
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
   Plug 'junegunn/fzf.vim'
 endif
-Plug 'junegunn/vim-peekaboo'
+" Plug 'junegunn/vim-peekaboo'
 Plug 'justinmk/vim-dirvish'             " Directory navigation, replaces netrw
 Plug 'roginfarrer/vim-dirvish-dovish', {'branch' : 'main'}
 Plug 'tpope/vim-eunuch'                 " Run common Unix commands inside Vim
