@@ -50,12 +50,15 @@ Plug 'tpope/vim-abolish'
 Plug 'dhruvasagar/vim-open-url'         " Open URLs in a way that actually works
   nmap gx <Plug>(open-url-browser)
 Plug 'vim-test/vim-test'
+  let g:test#javascript#runner = 'jest'
   let g:test#strategy = "neovim"
+  let test#neovim#term_position = "vert"
   nmap t<C-n> :TestNearest<CR>
   nmap t<C-f> :TestFile<CR>
   nmap t<C-s> :TestSuite<CR>
   nmap t<C-l> :TestLast<CR>
   nmap t<C-g> :TestVisit<CR>
+Plug 'tpope/vim-dispatch'
 
 " }}}
 
@@ -207,16 +210,16 @@ colorscheme nightfly
 " Set syntax highlighting for config files
 autocmd BufNewFile,BufRead *stylelintrc,*eslintrc,*babelrc,*jshintrc,*prettierrc setlocal syntax=json
 
-lua <<EOF
-  local treesitter = require'nvim-treesitter.configs'
-  treesitter.setup {
-    ensure_installed = "all",
-    highlight = {
-      enable = true,
-      disable = {"md", "markdown"},
-    }
-  }
-EOF
+" lua <<EOF
+"   local treesitter = require'nvim-treesitter.configs'
+"   treesitter.setup {
+"     ensure_installed = "all",
+"     highlight = {
+"       enable = true,
+"       disable = {"md", "markdown"},
+"     }
+"   }
+" EOF
 
 let g:lightline = {
       \ 'colorscheme': 'nightfly',
