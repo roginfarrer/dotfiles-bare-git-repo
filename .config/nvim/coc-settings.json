@@ -20,6 +20,8 @@
   "git.changeRemovedSign.text": " ",
   "git.topRemovedSign.text": " ",
   "diagnostic.displayByAle": false,
+  "typescript.preferences.useAliasesForRenames": false,
+  "javascript.preferences.useAliasesForRenames": false,
 
   "suggest.completionItemKindLabels": {
     "function": "\uf794",
