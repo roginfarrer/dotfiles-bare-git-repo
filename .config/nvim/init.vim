@@ -85,6 +85,8 @@ Plug 'roginfarrer/vim-dirvish-dovish', {'branch' : 'main'}
 Plug 'tpope/vim-eunuch'                 " Run common Unix commands inside Vim
 Plug 'duggiefresh/vim-easydir'          " :e foo/bar.js will create 'foo' directory too
 Plug 'jesseleite/vim-agriculture'       " Support Rg with args
+" Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
+"   let g:clap_layout = { 'relative': 'editor' }
 " }}}
 
 " Git {{{
@@ -96,18 +98,28 @@ Plug 'tpope/vim-rhubarb'                " Utilities on top of fugitive
 " LSP {{{
 Plug 'neoclide/coc.nvim', {'branch': 'release'} " Autocompletion, and linting, and pretty much eveything
 
-" Plug 'dense-analysis/ale'
-" let g:ale_fixers = {
-"       \   'css': ['prettier', 'stylelint'],
-"       \   'javascript': ['prettier', 'eslint'],
-"       \   'typescript': ['prettier', 'eslint'],
-"       \}
+
+Plug 'dense-analysis/ale'
+let g:ale_fixers = {
+      \   'css': ['prettier', 'stylelint'],
+      \   'scss': ['prettier', 'stylelint'],
+      \   'javascript': ['prettier', 'eslint'],
+      \   'typescript': ['prettier', 'eslint'],
+      \   'javascriptreact': ['prettier', 'eslint'],
+      \   'typescriptreact': ['prettier', 'eslint'],
+      \   'markdown': ['prettier'],
+      \   'markdown.mdx': ['prettier'],
+      \   'vim': ['remove_trailing_lines', 'trim_whitespace'],
+      \   'lua': ['luafmt']
+      \}
+
+
 " let g:ale_linters = {
 "       \'javascript': ['prettier', 'eslint'],
 "       \'typescript': ['prettier', 'eslint'],
 "       \}
-" let g:ale_typescript_prettier_use_local_config = 1
-" " let g:ale_fix_on_save = 1
+let g:ale_typescript_prettier_use_local_config = 1
+let g:ale_fix_on_save = 1
 " " highlight clear ALEErrorSign
 " " highlight clear ALEWarningSign
 " " let g:ale_sign_error = '❌'
@@ -138,6 +150,14 @@ Plug 'skywind3000/vim-terminal-help'    " Quick access to a terminal buffer
 
 call plug#end()
 
+" Must be set after plug#end()
+function! FormatLua(buffer) abort
+    return {
+    \   'command': 'luafmt --stdin'
+    \}
+endfunction
+call ale#fix#registry#Add('luafmt', 'FormatLua', ['lua'], 'luafmt for lua')
+
 " }}}
 
 " General {{{
@@ -158,12 +178,14 @@ set noswapfile
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
-set smartindent 
+set smartindent
+set expandtab
+set shiftwidth=2
 
 " Allows you to change buffers even if the current on has unsaved changes
 set hidden
 
-" Turn persistent undo on 
+" Turn persistent undo on
 " means that you can undo even when you close a buffer/VIM
 set undodir=~/.vim_runtime/temp_dirs/undodir
 set undofile
@@ -329,7 +351,7 @@ noremap <Space><Space> za
 
 nnoremap <leader>ek :vsp $HOME/.config/kitty/kitty.conf<CR>
 nnoremap <leader>ev :vsp $MYVIMRC<CR>
-nnoremap <leader>sv :source $MYVIMRC<CR> 
+nnoremap <leader>sv :source $MYVIMRC<CR>
 
 " For when syntax highlighting breaks
 noremap <F12> <Esc>:syntax sync fromstart<CR>
@@ -358,7 +380,7 @@ autocmd TermOpen * startinsert
 
 " Turn off line numbers etc
 autocmd TermOpen * setlocal listchars= nonumber norelativenumber
- 
+
 " }}}
 
 " FZF {{{
@@ -370,13 +392,13 @@ let g:fzf_buffers_jump = 1
 
 " Mine
 let $FZF_DEFAULT_OPTS = '
-\ --color=dark 
+\ --color=dark
 \ --bind="?:toggle-preview"
-\ --margin=1,4 
-\ --layout=reverse 
+\ --margin=1,4
+\ --layout=reverse
 \ '
-" \ --color=fg:15,bg:-1,hl:14,fg+:#ffffff,bg+:-1,hl+:1 
-" \ --color=info:15,prompt:11,pointer:14,marker:4,spinner:11,header:-1 
+" \ --color=fg:15,bg:-1,hl:14,fg+:#ffffff,bg+:-1,hl+:1
+" \ --color=info:15,prompt:11,pointer:14,marker:4,spinner:11,header:-1
 " let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 let g:fzf_layout = { 'window': { 'width': 0.9 , 'height': 0.9 } }
 
@@ -408,6 +430,14 @@ nnoremap <silent> <leader>fl :Rg<CR>
 nnoremap <silent> <Leader>f. :Files <C-R>=expand('%:h')<CR><CR>
 nnoremap <silent> <Leader>. :Files <C-R>=expand('%:h')<CR><CR>
 
+" nnoremap <silent> <C-p> :Clap gfiles<CR>
+" nmap <leader>c :Clap command<CR>
+" nnoremap <Leader>h :Clap history<CR>
+" nnoremap <Leader>b :Clap buffers<CR>
+" nmap <leader>; :Clap buffers<CR>
+" nmap <leader>f :Clap grep<CR>
+" nmap <leader>ff :Clap files<CR>
+
 " }}}
 
 source $HOME/.config/nvim/configs/functions.vim
@@ -416,6 +446,8 @@ if !empty(glob('$HOME/.config/nvim/local-config.vim'))
   source $HOME/.config/nvim/local-config.vim
 endif
 
+autocmd BufEnter,BufRead *.tsx set filetype=typescriptreact
+
 " nvim-lsp set-up {{{
 
 if g:use_nvim_lsp
@@ -423,7 +455,7 @@ if g:use_nvim_lsp
 :lua << END
   local nvim_lsp = require('nvim_lsp')
 
-  local on_attach = function(_, bufnr) 
+  local on_attach = function(_, bufnr)
     require'completion'.on_attach()
   end
 

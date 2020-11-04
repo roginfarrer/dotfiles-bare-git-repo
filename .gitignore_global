@@ -40,7 +40,6 @@ ehthumbs.db
 Thumbs.db
 
 # For Wayfair #
-.nvmrc
 jsconfig.json
 .vim/
 
