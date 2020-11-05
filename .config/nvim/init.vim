@@ -103,6 +103,7 @@ Plug 'dense-analysis/ale'
 let g:ale_fixers = {
       \   'css': ['prettier', 'stylelint'],
       \   'scss': ['prettier', 'stylelint'],
+      \   'json': ['prettier'],
       \   'javascript': ['prettier', 'eslint'],
       \   'typescript': ['prettier', 'eslint'],
       \   'javascriptreact': ['prettier', 'eslint'],
