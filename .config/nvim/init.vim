@@ -101,25 +101,19 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'} " Autocompletion, and linting, a
 
 Plug 'dense-analysis/ale'
 let g:ale_fixers = {
-      \   'css': ['prettier', 'stylelint'],
-      \   'scss': ['prettier', 'stylelint'],
-      \   'json': ['prettier'],
-      \   'javascript': ['prettier', 'eslint'],
-      \   'typescript': ['prettier', 'eslint'],
-      \   'javascriptreact': ['prettier', 'eslint'],
-      \   'typescriptreact': ['prettier', 'eslint'],
-      \   'markdown': ['prettier'],
-      \   'markdown.mdx': ['prettier'],
       \   'vim': ['remove_trailing_lines', 'trim_whitespace'],
       \   'lua': ['luafmt']
       \}
+Plug 'sbdchd/neoformat'
+
 
 
 " let g:ale_linters = {
 "       \'javascript': ['prettier', 'eslint'],
 "       \'typescript': ['prettier', 'eslint'],
 "       \}
-let g:ale_typescript_prettier_use_local_config = 1
+let g:ale_linters_explicit = 1
+" let g:ale_typescript_prettier_use_local_config = 1
 let g:ale_fix_on_save = 1
 " " highlight clear ALEErrorSign
 " " highlight clear ALEWarningSign
@@ -133,10 +127,10 @@ let g:ale_fix_on_save = 1
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 " Plug 'nvim-lua/diagnostic-nvim'
-" Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
-"   let g:prettier#autoformat_config_present = 1
-"   let g:prettier#autoformat_require_pragma = 0
-"   autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less,*.graphql,*.ts PrettierAsync
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+  let g:prettier#autoformat_config_present = 1
+  let g:prettier#autoformat_require_pragma = 0
+  autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less,*.graphql,*.ts,*.md,*.mdx PrettierAsync
 
 " }}}
 
@@ -241,7 +235,7 @@ set termguicolors
 colorscheme nightfly
 
 " Set syntax highlighting for config files
-autocmd BufNewFile,BufRead *stylelintrc,*eslintrc,*babelrc,*jshintrc,*prettierrc setlocal syntax=json
+autocmd BufNewFile,BufRead,BufEnter *stylelintrc,*eslintrc,*babelrc,*jshintrc,*prettierrc setlocal filetype=json
 
 " lua <<EOF
 "   local treesitter = require'nvim-treesitter.configs'
