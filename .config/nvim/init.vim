@@ -93,6 +93,7 @@ Plug 'jesseleite/vim-agriculture'       " Support Rg with args
 Plug 'tpope/vim-fugitive'               " Classic Git integration
   nmap <leader>gs :G<CR>
 Plug 'tpope/vim-rhubarb'                " Utilities on top of fugitive
+Plug 'airblade/vim-gitgutter'
 " }}}
 
 " LSP {{{
@@ -100,21 +101,27 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'} " Autocompletion, and linting, a
 
 
 Plug 'dense-analysis/ale'
+      " \   'css': ['prettier', 'stylelint'],
+      " \   'scss': ['prettier', 'stylelint'],
+      " \   'json': ['prettier'],
+      " \   'javascript': ['prettier', 'eslint'],
+      " \   'typescript': ['prettier', 'eslint'],
+      " \   'javascriptreact': ['prettier', 'eslint'],
+      " \   'typescriptreact': ['prettier', 'eslint'],
+      " \   'markdown': ['prettier'],
+      " \   'markdown.mdx': ['prettier'],
 let g:ale_fixers = {
       \   'vim': ['remove_trailing_lines', 'trim_whitespace'],
       \   'lua': ['luafmt']
       \}
-Plug 'sbdchd/neoformat'
-
-
 
 " let g:ale_linters = {
 "       \'javascript': ['prettier', 'eslint'],
 "       \'typescript': ['prettier', 'eslint'],
 "       \}
 let g:ale_linters_explicit = 1
-" let g:ale_typescript_prettier_use_local_config = 1
-let g:ale_fix_on_save = 1
+let g:ale_typescript_prettier_use_local_config = 1
+" let g:ale_fix_on_save = 1
 " " highlight clear ALEErrorSign
 " " highlight clear ALEWarningSign
 " " let g:ale_sign_error = '❌'
@@ -130,7 +137,8 @@ Plug 'nvim-lua/completion-nvim'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
   let g:prettier#autoformat_config_present = 1
   let g:prettier#autoformat_require_pragma = 0
-  autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less,*.graphql,*.ts,*.md,*.mdx PrettierAsync
+  let g:prettier#quickfix_enabled = 0
+  autocmd BufWritePre *.md,*.mdx PrettierAsync
 
 " }}}
 
@@ -237,25 +245,27 @@ colorscheme nightfly
 " Set syntax highlighting for config files
 autocmd BufNewFile,BufRead,BufEnter *stylelintrc,*eslintrc,*babelrc,*jshintrc,*prettierrc setlocal filetype=json
 
-" lua <<EOF
-"   local treesitter = require'nvim-treesitter.configs'
-"   treesitter.setup {
-"     ensure_installed = "all",
-"     highlight = {
-"       enable = true,
-"       disable = {"md", "markdown"},
-"     }
-"   }
-" EOF
+lua <<EOF
+  local treesitter = require'nvim-treesitter.configs'
+  treesitter.setup {
+    ensure_installed = "all",
+    highlight = {
+      enable = true,
+      disable = {"md", "markdown"},
+    }
+  }
+EOF
 
 let g:lightline = {
       \ 'colorscheme': 'nightfly',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
+      \             [ 'readonly', 'filename', 'modified' ] ],
+      \   'right': [ ['percent', 'filetype'],
+      \              ['gitbranch'] ]
       \ },
       \ 'component_function': {
-      \   'cocstatus': 'coc#status'
+      \   'gitbranch': 'FugitiveHead'
       \ },
       \ }
 
