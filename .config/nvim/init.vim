@@ -58,7 +58,7 @@ Plug 'vim-test/vim-test'
   nmap t<C-s> :TestSuite<CR>
   nmap t<C-l> :TestLast<CR>
   nmap t<C-g> :TestVisit<CR>
-Plug 'tpope/vim-dispatch'
+Plug 'wellle/targets.vim'
 
 " }}}
 
