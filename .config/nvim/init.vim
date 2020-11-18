@@ -101,16 +101,16 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'} " Autocompletion, and linting, a
 
 
 Plug 'dense-analysis/ale'
-      " \   'css': ['prettier', 'stylelint'],
-      " \   'scss': ['prettier', 'stylelint'],
-      " \   'json': ['prettier'],
-      " \   'javascript': ['prettier', 'eslint'],
-      " \   'typescript': ['prettier', 'eslint'],
-      " \   'javascriptreact': ['prettier', 'eslint'],
-      " \   'typescriptreact': ['prettier', 'eslint'],
-      " \   'markdown': ['prettier'],
-      " \   'markdown.mdx': ['prettier'],
 let g:ale_fixers = {
+      \   'css': ['prettier', 'stylelint'],
+      \   'scss': ['prettier', 'stylelint'],
+      \   'json': ['prettier'],
+      \   'javascript': ['prettier', 'eslint'],
+      \   'typescript': ['prettier', 'eslint'],
+      \   'javascriptreact': ['prettier', 'eslint'],
+      \   'typescriptreact': ['prettier', 'eslint'],
+      \   'markdown': ['prettier'],
+      \   'markdown.mdx': ['prettier'],
       \   'vim': ['remove_trailing_lines', 'trim_whitespace'],
       \   'lua': ['luafmt']
       \}
@@ -121,7 +121,7 @@ let g:ale_fixers = {
 "       \}
 let g:ale_linters_explicit = 1
 let g:ale_typescript_prettier_use_local_config = 1
-" let g:ale_fix_on_save = 1
+let g:ale_fix_on_save = 1
 " " highlight clear ALEErrorSign
 " " highlight clear ALEWarningSign
 " " let g:ale_sign_error = '❌'
@@ -134,11 +134,11 @@ let g:ale_typescript_prettier_use_local_config = 1
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 " Plug 'nvim-lua/diagnostic-nvim'
-Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
-  let g:prettier#autoformat_config_present = 1
-  let g:prettier#autoformat_require_pragma = 0
-  let g:prettier#quickfix_enabled = 0
-  autocmd BufWritePre *.md,*.mdx PrettierAsync
+" Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+"   let g:prettier#autoformat_config_present = 1
+"   let g:prettier#autoformat_require_pragma = 0
+"   let g:prettier#quickfix_enabled = 0
+"   autocmd BufWritePre *.md,*.mdx PrettierAsync
 
 " }}}
 
