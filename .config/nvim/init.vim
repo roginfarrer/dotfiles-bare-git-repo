@@ -115,10 +115,15 @@ let g:ale_fixers = {
       \   'lua': ['luafmt']
       \}
 
-" let g:ale_linters = {
-"       \'javascript': ['prettier', 'eslint'],
-"       \'typescript': ['prettier', 'eslint'],
-"       \}
+let js_linters = ['stylelint', 'eslint']
+let g:ale_linters = {
+      \'typescript': js_linters,
+      \'typescriptreact': js_linters,
+      \'javascript': js_linters,
+      \'javascriptreact': js_linters,
+      \'css': ['stylelint'],
+      \'scss': ['stylelint'],
+      \}
 let g:ale_linters_explicit = 1
 let g:ale_typescript_prettier_use_local_config = 1
 let g:ale_fix_on_save = 1
@@ -126,8 +131,8 @@ let g:ale_fix_on_save = 1
 " " highlight clear ALEWarningSign
 " " let g:ale_sign_error = '❌'
 " " let g:ale_sign_warning = '⚠️'
-" nmap <silent> [g <Plug>(ale_previous_wrap)
-" nmap <silent> ]g <Plug>(ale_next_wrap)
+nmap <silent> [g <Plug>(ale_previous_wrap)
+nmap <silent> ]g <Plug>(ale_next_wrap)
 
 " When using nvim-lsp... {{{
 
