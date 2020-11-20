@@ -99,7 +99,6 @@ Plug 'airblade/vim-gitgutter'
 " LSP {{{
 Plug 'neoclide/coc.nvim', {'branch': 'release'} " Autocompletion, and linting, and pretty much eveything
 
-
 Plug 'dense-analysis/ale'
 let g:ale_fixers = {
       \   'css': ['prettier', 'stylelint'],
@@ -133,17 +132,25 @@ let g:ale_fix_on_save = 1
 " " let g:ale_sign_warning = '⚠️'
 nmap <silent> [g <Plug>(ale_previous_wrap)
 nmap <silent> ]g <Plug>(ale_next_wrap)
-
-" When using nvim-lsp... {{{
-
-Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/completion-nvim'
-" Plug 'nvim-lua/diagnostic-nvim'
 " Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 "   let g:prettier#autoformat_config_present = 1
 "   let g:prettier#autoformat_require_pragma = 0
 "   let g:prettier#quickfix_enabled = 0
 "   autocmd BufWritePre *.md,*.mdx PrettierAsync
+
+" When using nvim-lsp... {{{
+
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
+Plug 'aca/completion-tabnine', { 'do': './install.sh' }
+  let g:completion_chain_complete_list = {
+    \ 'default': [
+    \    {'complete_items': ['lsp', 'snippet', 'tabnine' ]},
+    \    {'mode': '<c-p>'},
+    \    {'mode': '<c-n>'}
+    \]
+    \}
+Plug 'nathunsmitty/nvim-ale-diagnostic'
 
 " }}}
 
@@ -451,7 +458,9 @@ nnoremap <silent> <Leader>. :Files <C-R>=expand('%:h')<CR><CR>
 " }}}
 
 source $HOME/.config/nvim/configs/functions.vim
-source $HOME/.config/nvim/configs/coc.vim
+if !(g:use_nvim_lsp)
+  source $HOME/.config/nvim/configs/coc.vim
+endif
 if !empty(glob('$HOME/.config/nvim/local-config.vim'))
   source $HOME/.config/nvim/local-config.vim
 endif
@@ -462,21 +471,16 @@ autocmd BufEnter,BufRead *.tsx set filetype=typescriptreact
 
 if g:use_nvim_lsp
 
+autocmd BufEnter * lua require'completion'.on_attach()
+lua require("lsp-ale-diagnostic")
+
 :lua << END
-  local nvim_lsp = require('nvim_lsp')
+  local nvim_lsp = require('lspconfig')
 
-  local on_attach = function(_, bufnr)
-    require'completion'.on_attach()
-  end
-
-  local servers = {'tsserver'}
+  local servers = {'tsserver', 'vimls', 'cssls'}
   for _, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup {
-      on_attach = on_attach,
-    }
+    nvim_lsp[lsp].setup{}
   end
-
-  --- vim.lsp.callbacks["textDocument/publishDiagnostics"] = function() end
 END
 
 nnoremap <silent> K  :call <SID>show_documentation()<CR>
@@ -498,8 +502,8 @@ function! s:show_documentation()
 endfunction
 
 " Diagnostics
-" nmap <silent> [g :PrevDiagnosticCycle<CR>
-" nmap <silent> ]g :NextDiagnosticCycle<CR>
+nmap <silent> [G <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+nmap <silent> ]G <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 " " Enable the inline diagnostic messaging
 " let g:diagnostic_enable_virtual_text = 1
 " " Disable diagnostics while in insert mode
@@ -513,8 +517,10 @@ inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " Set completeopt to have a better completion experience
 set completeopt=menuone,noinsert,noselect
+" Avoid showing message extra message when using completion
+set shortmess+=c
 "" Avoid showing message extra message when using completion
-let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy', 'all']
 
 endif
 

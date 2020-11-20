@@ -1,11 +1,9 @@
 let g:coc_global_extensions = [
     \ 'coc-css',
     \ 'coc-emmet',
-    \ 'coc-eslint',
     \ 'coc-html',
     \ 'coc-json',
     \ 'coc-yaml',
-    \ 'coc-stylelint',
     \ 'coc-snippets',
     \ 'coc-styled-components',
     \ 'coc-tabnine',

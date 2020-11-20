@@ -14,7 +14,7 @@ end
 starship init fish | source
 
 # fnm
-fnm env --multi | source
+fnm env | source
 
 set USER rfarrer
 
