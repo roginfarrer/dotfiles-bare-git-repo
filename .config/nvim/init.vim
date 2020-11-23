@@ -113,7 +113,6 @@ let g:ale_fixers = {
       \   'vim': ['remove_trailing_lines', 'trim_whitespace'],
       \   'lua': ['luafmt']
       \}
-
 let js_linters = ['stylelint', 'eslint']
 let g:ale_linters = {
       \'typescript': js_linters,
@@ -126,17 +125,13 @@ let g:ale_linters = {
 let g:ale_linters_explicit = 1
 let g:ale_typescript_prettier_use_local_config = 1
 let g:ale_fix_on_save = 1
-" " highlight clear ALEErrorSign
-" " highlight clear ALEWarningSign
-" " let g:ale_sign_error = '❌'
-" " let g:ale_sign_warning = '⚠️'
+let g:ale_virtualtext_cursor = 1
+let g:ale_cursor_detail = 1
+let g:ale_echo_cursor = 0
 nmap <silent> [g <Plug>(ale_previous_wrap)
 nmap <silent> ]g <Plug>(ale_next_wrap)
-" Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
-"   let g:prettier#autoformat_config_present = 1
-"   let g:prettier#autoformat_require_pragma = 0
-"   let g:prettier#quickfix_enabled = 0
-"   autocmd BufWritePre *.md,*.mdx PrettierAsync
+
+" Toggle whether the diagnostic errors are shown in a preview window
 
 " When using nvim-lsp... {{{
 
@@ -150,7 +145,7 @@ Plug 'aca/completion-tabnine', { 'do': './install.sh' }
     \    {'mode': '<c-n>'}
     \]
     \}
-Plug 'nathunsmitty/nvim-ale-diagnostic'
+Plug 'nathunsmitty/nvim-ale-diagnostic', {'branch': 'main'}
 
 " }}}
 
@@ -164,6 +159,17 @@ Plug 'skywind3000/vim-terminal-help'    " Quick access to a terminal buffer
 " }}}
 
 call plug#end()
+
+function! s:ToggleAlePreviewWindow() abort
+  if (g:ale_cursor_detail)
+    " Close the ALEPreviewWindow if open
+    execute(':pclose')
+    let g:ale_cursor_detail = 0
+  else
+    let g:ale_cursor_detail = 1
+  endif
+endfunction
+nmap <Leader>ap :call <SID>ToggleAlePreviewWindow()<CR>
 
 " Must be set after plug#end()
 function! FormatLua(buffer) abort
@@ -326,10 +332,10 @@ nnoremap k gk
 set scrolloff=10
 
 " Tab shortcuts
-noremap <Leader>tp :tabprevious<CR>
-noremap <Leader>tn :tabnext<CR>
-noremap <S-Tab> :tabprevious<CR>
-noremap <Tab> :tabnext<CR>
+" noremap <Leader>tp :tabprevious<CR>
+" noremap <Leader>tn :tabnext<CR>
+" noremap <S-Tab> :tabprevious<CR>
+" noremap <Tab> :tabnext<CR>
 
 " Remap VIM 0 to first non-blank character
 map 0 ^
@@ -457,71 +463,14 @@ nnoremap <silent> <Leader>. :Files <C-R>=expand('%:h')<CR><CR>
 
 " }}}
 
-source $HOME/.config/nvim/configs/functions.vim
 if !(g:use_nvim_lsp)
-  source $HOME/.config/nvim/configs/coc.vim
+  source $HOME/.config/nvim/coc.vim
+else
+  source $HOME/.config/nvim/lsp.vim
 endif
+
 if !empty(glob('$HOME/.config/nvim/local-config.vim'))
   source $HOME/.config/nvim/local-config.vim
 endif
 
 autocmd BufEnter,BufRead *.tsx set filetype=typescriptreact
-
-" nvim-lsp set-up {{{
-
-if g:use_nvim_lsp
-
-autocmd BufEnter * lua require'completion'.on_attach()
-lua require("lsp-ale-diagnostic")
-
-:lua << END
-  local nvim_lsp = require('lspconfig')
-
-  local servers = {'tsserver', 'vimls', 'cssls'}
-  for _, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup{}
-  end
-END
-
-nnoremap <silent> K  :call <SID>show_documentation()<CR>
-nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> gt <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
-nmap     <silent> <leader>lr <cmd>lua vim.lsp.buf.rename()<CR>
-nmap     <silent> <leader>do <cmd>lua vim.lsp.buf.code_action()<CR>
-
-function! s:show_documentation()
-  " try looking up term in vim manual if in a vim file
-  if &filetype == 'vim'
-    execute 'h '.expand('<cword>')
-  else
-    silent execute(':lua vim.lsp.buf.hover()')
-  endif
-endfunction
-
-" Diagnostics
-nmap <silent> [G <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
-nmap <silent> ]G <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
-" " Enable the inline diagnostic messaging
-" let g:diagnostic_enable_virtual_text = 1
-" " Disable diagnostics while in insert mode
-" let g:diagnostic_insert_delay = 1
-
-" Completion
-" Use in every buffer, not just those with an LSP
-" autocmd BufEnter * lua require'completion'.on_attach()
-" Use <Tab> and <S-Tab> to navigate through popup menu
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" Set completeopt to have a better completion experience
-set completeopt=menuone,noinsert,noselect
-" Avoid showing message extra message when using completion
-set shortmess+=c
-"" Avoid showing message extra message when using completion
-let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy', 'all']
-
-endif
-
-" }}}

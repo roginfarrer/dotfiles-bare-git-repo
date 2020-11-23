@@ -1,6 +1,6 @@
 {
   "coc.preferences.colorSupport": true,
-  "diagnostic.displayByAle": false,
+  "diagnostic.displayByAle": true,
   "diagnostic.enable": true,
   "diagnostic.errorSign": "",
   "diagnostic.highlightOffset": 9999999,
