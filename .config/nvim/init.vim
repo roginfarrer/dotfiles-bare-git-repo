@@ -156,6 +156,9 @@ Plug 'skywind3000/vim-terminal-help'    " Quick access to a terminal buffer
   let g:terminal_shell = '/usr/local/bin/fish'
   let g:terminal_list = 0
   let g:terminal_height = '20%'
+Plug 'voldikss/vim-floaterm'
+  nnoremap <silent> <C-t> :FloatermToggle<CR>
+  tnoremap <silent> <C-t> <C-\><C-n>:FloatermToggle<CR>
 " }}}
 
 call plug#end()

@@ -68,6 +68,5 @@ if test -e ./local-config.fish
   source ./local-config.fish
 end
 
-# set -g FZF_CTRL_T_OPTS '--preview'
 set -g FZF_CTRL_T_COMMAND 'rg --files'
 set -g fish_user_paths "/usr/local/opt/python@3.8/bin" $fish_user_paths
