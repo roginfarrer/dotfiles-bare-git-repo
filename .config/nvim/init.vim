@@ -172,7 +172,7 @@ function! s:ToggleAlePreviewWindow() abort
     let g:ale_cursor_detail = 1
   endif
 endfunction
-nmap <Leader>ap :call <SID>ToggleAlePreviewWindow()<CR>
+nnoremap <Leader>ap :call <SID>ToggleAlePreviewWindow()<CR>
 
 " Must be set after plug#end()
 function! FormatLua(buffer) abort
