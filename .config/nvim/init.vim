@@ -100,6 +100,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'neoclide/coc.nvim', {'branch': 'release'} " Autocompletion, and linting, and pretty much eveything
 
 Plug 'dense-analysis/ale'
+" Plug 'kevinclark/ale', {'branch': 'nvim-floating'}
+" Plug 'jargonzombies/ale', {'branch': 'nvim-floating'}
 let g:ale_fixers = {
       \   'css': ['prettier', 'stylelint'],
       \   'scss': ['prettier', 'stylelint'],
@@ -114,22 +116,22 @@ let g:ale_fixers = {
       \   'lua': ['luafmt']
       \}
 let js_linters = ['stylelint', 'eslint']
-let g:ale_linters = {
-      \'typescript': js_linters,
-      \'typescriptreact': js_linters,
-      \'javascript': js_linters,
-      \'javascriptreact': js_linters,
-      \'css': ['stylelint'],
-      \'scss': ['stylelint'],
-      \}
+" let g:ale_linters = {
+"       \'typescript': js_linters,
+"       \'typescriptreact': js_linters,
+"       \'javascript': js_linters,
+"       \'javascriptreact': js_linters,
+"       \'css': ['stylelint'],
+"       \'scss': ['stylelint'],
+"       \}
 let g:ale_linters_explicit = 1
 let g:ale_typescript_prettier_use_local_config = 1
 let g:ale_fix_on_save = 1
-let g:ale_virtualtext_cursor = 1
-let g:ale_cursor_detail = 1
-let g:ale_echo_cursor = 0
-nmap <silent> [g <Plug>(ale_previous_wrap)
-nmap <silent> ]g <Plug>(ale_next_wrap)
+let g:ale_virtualtext_cursor = 0
+let g:ale_cursor_detail = 0
+let g:ale_echo_cursor = 1
+" nmap <silent> [g <Plug>(ale_previous_wrap)
+" nmap <silent> ]g <Plug>(ale_next_wrap)
 
 " Toggle whether the diagnostic errors are shown in a preview window
 
@@ -163,16 +165,16 @@ Plug 'voldikss/vim-floaterm'
 
 call plug#end()
 
-function! s:ToggleAlePreviewWindow() abort
-  if (g:ale_cursor_detail)
-    " Close the ALEPreviewWindow if open
-    execute(':pclose')
-    let g:ale_cursor_detail = 0
-  else
-    let g:ale_cursor_detail = 1
-  endif
-endfunction
-nnoremap <Leader>ap :call <SID>ToggleAlePreviewWindow()<CR>
+" function! s:ToggleAlePreviewWindow() abort
+"   if (g:ale_cursor_detail)
+"     " Close the ALEPreviewWindow if open
+"     execute(':pclose')
+"     let g:ale_cursor_detail = 0
+"   else
+"     let g:ale_cursor_detail = 1
+"   endif
+" endfunction
+" nnoremap <Leader>ap :call <SID>ToggleAlePreviewWindow()<CR>
 
 " Must be set after plug#end()
 function! FormatLua(buffer) abort

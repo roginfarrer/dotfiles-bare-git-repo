@@ -1,12 +1,11 @@
 {
   "coc.preferences.colorSupport": true,
-  "diagnostic.displayByAle": true,
+  "stylelintplus.cssInJs": true,
   "diagnostic.enable": true,
   "diagnostic.errorSign": "",
   "diagnostic.highlightOffset": 9999999,
   "diagnostic.hintSign": "ღ",
   "diagnostic.infoSign": "ʘ",
-  "diagnostic.signOffset": 9999999,
   "diagnostic.warningSign": "",
   "eslint.run": "onSave",
   "javascript.format.enabled": false,
