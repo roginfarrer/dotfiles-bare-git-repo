@@ -43,7 +43,7 @@ Plug 'tpope/vim-sleuth'                 " Smart detection of line indenting, tab
 Plug 'mattn/emmet-vim'                  " You know, emmet
 Plug 'junegunn/goyo.vim'                " Zen mode
 Plug 'alvan/vim-closetag'               " Auto close html tags
-Plug 'doums/coBra'                      " Autocomplete pairs
+Plug 'jiangmiao/auto-pairs'                      " Autocomplete pairs
 Plug 'mvolkmann/vim-js-arrow-function'  " GOAT. Toggle between expression and statements
   nmap <silent> <leader>tb :call JsArrowFnBraceToggle()<CR>
 Plug 'tpope/vim-abolish'
