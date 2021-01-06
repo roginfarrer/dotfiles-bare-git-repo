@@ -69,6 +69,11 @@ else
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
   Plug 'junegunn/fzf.vim'
 endif
+
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+
 " Plug 'junegunn/vim-peekaboo'
 Plug 'justinmk/vim-dirvish'             " Directory navigation, replaces netrw
 
@@ -99,22 +104,22 @@ Plug 'airblade/vim-gitgutter'
 " LSP {{{
 Plug 'neoclide/coc.nvim', {'branch': 'release'} " Autocompletion, and linting, and pretty much eveything
 
-Plug 'dense-analysis/ale'
+" Plug 'dense-analysis/ale'
 " Plug 'kevinclark/ale', {'branch': 'nvim-floating'}
 " Plug 'jargonzombies/ale', {'branch': 'nvim-floating'}
-let g:ale_fixers = {
-      \   'css': ['prettier', 'stylelint'],
-      \   'scss': ['prettier', 'stylelint'],
-      \   'json': ['prettier'],
-      \   'javascript': ['prettier', 'eslint'],
-      \   'typescript': ['prettier', 'eslint'],
-      \   'javascriptreact': ['prettier', 'eslint'],
-      \   'typescriptreact': ['prettier', 'eslint'],
-      \   'markdown': ['prettier'],
-      \   'markdown.mdx': ['prettier'],
-      \   'vim': ['remove_trailing_lines', 'trim_whitespace'],
-      \   'lua': ['luafmt']
-      \}
+" let g:ale_fixers = {
+"       \   'css': ['prettier', 'stylelint'],
+"       \   'scss': ['prettier', 'stylelint'],
+"       \   'json': ['prettier'],
+"       \   'javascript': ['prettier', 'eslint'],
+"       \   'typescript': ['prettier', 'eslint'],
+"       \   'javascriptreact': ['prettier', 'eslint'],
+"       \   'typescriptreact': ['prettier', 'eslint'],
+"       \   'markdown': ['prettier'],
+"       \   'markdown.mdx': ['prettier'],
+"       \   'vim': ['remove_trailing_lines', 'trim_whitespace'],
+"       \   'lua': ['luafmt']
+"       \}
 let js_linters = ['stylelint', 'eslint']
 " let g:ale_linters = {
 "       \'typescript': js_linters,
@@ -126,14 +131,23 @@ let js_linters = ['stylelint', 'eslint']
 "       \}
 let g:ale_linters_explicit = 1
 let g:ale_typescript_prettier_use_local_config = 1
-let g:ale_fix_on_save = 1
+" let g:ale_fix_on_save = 1
 let g:ale_virtualtext_cursor = 0
 let g:ale_cursor_detail = 0
 let g:ale_echo_cursor = 1
 " nmap <silent> [g <Plug>(ale_previous_wrap)
 " nmap <silent> ]g <Plug>(ale_next_wrap)
 
-" Toggle whether the diagnostic errors are shown in a preview window
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
+let g:prettier#autoformat = 1
+let g:prettier#autoformat_require_pragma = 0
+let g:prettier#quickfix_enabled = 0
+augroup FormatAutogroup
+  autocmd!
+  autocmd BufWritePre *.mdx call prettier#Autoformat()
+augroup END
 
 " When using nvim-lsp... {{{
 
@@ -165,6 +179,11 @@ Plug 'voldikss/vim-floaterm'
 
 call plug#end()
 
+" augroup fmt
+"   autocmd!
+"   autocmd BufWritePre * undojoin | ALEFix
+" augroup END
+
 " function! s:ToggleAlePreviewWindow() abort
 "   if (g:ale_cursor_detail)
 "     " Close the ALEPreviewWindow if open
@@ -177,12 +196,12 @@ call plug#end()
 " nnoremap <Leader>ap :call <SID>ToggleAlePreviewWindow()<CR>
 
 " Must be set after plug#end()
-function! FormatLua(buffer) abort
-    return {
-    \   'command': 'luafmt --stdin'
-    \}
-endfunction
-call ale#fix#registry#Add('luafmt', 'FormatLua', ['lua'], 'luafmt for lua')
+" function! FormatLua(buffer) abort
+"     return {
+"     \   'command': 'luafmt --stdin'
+"     \}
+" endfunction
+" call ale#fix#registry#Add('luafmt', 'FormatLua', ['lua'], 'luafmt for lua')
 
 " }}}
 
@@ -442,21 +461,21 @@ let g:fzf_layout = { 'window': { 'width': 0.9 , 'height': 0.9 } }
 "   \   <bang>0)
 
 " fuzzy find Vim commands (like Ctrl-Shift-P in Sublime/Atom/VSC)
-nnoremap <silent> <C-p> :GFiles<CR>
-nmap <leader>c :Commands<CR>
-nnoremap <Leader>h :History<CR>
-nnoremap <Leader>b :Buffers<CR>
-nmap <leader>; :Buffers<CR>
-nmap <leader>f :Rg<CR>
+" nnoremap <silent> <C-p> :GFiles<CR>
+" nmap <leader>c :Commands<CR>
+" nnoremap <Leader>h :History<CR>
+" nnoremap <Leader>b :Buffers<CR>
+" nmap <leader>; :Buffers<CR>
+" nmap <leader>f :Rg<CR>
 
-nnoremap <silent> <leader>fp :GFiles<CR>
-nnoremap <silent> <leader>ff :Files<CR>
-nnoremap <silent> <leader>fb :Buffers<CR>
-nnoremap <silent> <leader>fh :History<CR>
-nnoremap <silent> <leader>fc :Commands<CR>
-nnoremap <silent> <leader>fl :Rg<CR>
-nnoremap <silent> <Leader>f. :Files <C-R>=expand('%:h')<CR><CR>
-nnoremap <silent> <Leader>. :Files <C-R>=expand('%:h')<CR><CR>
+" nnoremap <silent> <leader>fp :GFiles<CR>
+" nnoremap <silent> <leader>ff :Files<CR>
+" nnoremap <silent> <leader>fb :Buffers<CR>
+" nnoremap <silent> <leader>fh :History<CR>
+" nnoremap <silent> <leader>fc :Commands<CR>
+" nnoremap <silent> <leader>fl :Rg<CR>
+" nnoremap <silent> <Leader>f. :Files <C-R>=expand('%:h')<CR><CR>
+" nnoremap <silent> <Leader>. :Files <C-R>=expand('%:h')<CR><CR>
 
 " nnoremap <silent> <C-p> :Clap gfiles<CR>
 " nmap <leader>c :Clap command<CR>
@@ -465,6 +484,35 @@ nnoremap <silent> <Leader>. :Files <C-R>=expand('%:h')<CR><CR>
 " nmap <leader>; :Clap buffers<CR>
 " nmap <leader>f :Clap grep<CR>
 " nmap <leader>ff :Clap files<CR>
+
+" }}}
+
+" Telescope {{{
+nnoremap <silent> <C-p> <cmd>Telescope find_files<cr>
+nnoremap <silent> <leader>f <cmd>Telescope live_grep<cr>
+nnoremap <silent> <leader>; <cmd>Telescope buffers<cr>
+nnoremap <silent> <leader>h <cmd>Telescope oldfiles<cr>
+nnoremap <silent> <leader>c <cmd>Telescope commands<cr>
+
+lua <<EOF
+local actions = require('telescope.actions')
+require('telescope').setup{
+  defaults = {
+    prompt_position = "top",
+    sorting_strategy = "ascending",
+    mappings = {
+      --- insert mode
+      i = {
+        ["<esc>"] = actions.close
+      },
+      --- normal mode
+      n = {
+        ["<esc>"] = actions.close
+      }
+    }
+  }
+}
+EOF
 
 " }}}
 

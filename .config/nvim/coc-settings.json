@@ -7,7 +7,6 @@
   "diagnostic.hintSign": "ღ",
   "diagnostic.infoSign": "ʘ",
   "diagnostic.warningSign": "",
-  "eslint.run": "onSave",
   "javascript.format.enabled": false,
   "javascript.preferences.useAliasesForRenames": false,
   "javascript.suggest.enabled": true,
