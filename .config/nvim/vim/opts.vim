@@ -30,7 +30,8 @@ set lazyredraw
 " Number of lines that offset buffer scrolling movement, so cursor doesn't get
 " to the top/bottom 10 lines of buffer
 set scrolloff=10
+set shell=/usr/local/bin/zsh
 
 set termguicolors
 colorscheme nightfly
-
+" colorscheme spaceodyssey

@@ -50,6 +50,12 @@ deleteOldBranchesLoop() {
 
 alias deleteOldBranches="confirm deleteOldBranchesLoop"
 
+fgb() {
+  git for-each-ref --sort=-committerdate refs/heads --format='%(refname:short)' | fzf
+}
+
+alias fcb="fgb | xargs git checkout"
+
 ## Config Files
 alias dotfiles="${EDITOR} -n ~/dotfiles"
 alias config="${EDITOR} -n ~/dotfiles/zsh"
@@ -86,6 +92,7 @@ alias gitlogchange="git log --oneline -p" # actual changes
 alias gitlogstat="git log --oneline --stat" # number of lines changed
 alias gitloggraph="git log --oneline --graph" # graph view of branches
 alias gcp="git cherry-pick"
+alias config="git --git-dir=${HOME}/.dotfiles/ --work-tree=${HOME}"
 
 ### Misc
 alias edit="${EDITOR}"

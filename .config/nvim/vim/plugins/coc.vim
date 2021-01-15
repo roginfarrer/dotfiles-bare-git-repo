@@ -1,3 +1,5 @@
+let g:coc_node_path = '~/.fnm/aliases/latest/bin/node'
+
 let g:coc_global_extensions = [
     \ 'coc-css',
     \ 'coc-emmet',
