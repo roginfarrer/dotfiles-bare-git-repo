@@ -2,7 +2,7 @@
 let g:use_nvim_lsp = 0
 
 " 0 = use fzf, 1 = use telescope
-let g:use_telescope = 1
+let g:use_telescope = 0
 
 " Plug Startup {{{
 

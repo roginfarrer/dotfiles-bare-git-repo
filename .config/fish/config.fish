@@ -14,7 +14,8 @@ end
 starship init fish | source
 
 # fnm
-fnm env --use-on-cd | source
+fnm env --shell fish --use-on-cd | source
+fnm completions --shell fish | source
 
 set USER rfarrer
 
@@ -69,4 +70,4 @@ if test -e ./local-config.fish
 end
 
 set -g FZF_CTRL_T_COMMAND 'rg --files'
-set -g fish_user_paths "/usr/local/opt/python@3.8/bin" $fish_user_paths
+# set -g fish_user_paths "/usr/local/opt/python@3.8/bin" $fish_user_paths
