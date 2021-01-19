@@ -8,6 +8,7 @@ set noswapfile
 set smartindent
 set expandtab
 set shiftwidth=2
+set linebreak
 set hidden
 set undodir=~/.vim_runtime/temp_dirs/undodir
 set undofile
