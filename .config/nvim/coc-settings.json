@@ -1,4 +1,5 @@
 {
+  "coc.preferences.formatOnSaveFiletypes": ["lua", "css", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact", "markdown", "markdown.mdx", "mdx", "json"],
   "coc.preferences.colorSupport": true,
   "stylelintplus.cssInJs": true,
   "diagnostic.enable": true,
@@ -40,5 +41,23 @@
     "reference": "\uf87a",
     "typeParameter": "\uf278",
     "default": "\uf29c"
+  },
+  "diagnostic-languageserver.formatters": {
+    "luafmt-custom": {
+      "command": "luafmt",
+      "args": ["--stdin", "--indent-count", "2"],
+      "isStdout": true
+    }
+  },
+  "diagnostic-languageserver.formatFiletypes": { 
+    "lua": "luafmt-custom"
+  },
+  "languageserver": {
+    "bash": {
+      "command": "bash-language-server",
+      "args": ["start"],
+      "filetypes": ["sh", "zsh", "bash"],
+      "ignoredRootPaths": ["~"]
+    }
   }
 }

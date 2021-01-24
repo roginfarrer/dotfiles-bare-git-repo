@@ -32,6 +32,7 @@ set lazyredraw
 " to the top/bottom 10 lines of buffer
 set scrolloff=10
 set shell=/usr/local/bin/zsh
+set completeopt=menuone,noinsert,noselect
 
 set termguicolors
 colorscheme nightfly

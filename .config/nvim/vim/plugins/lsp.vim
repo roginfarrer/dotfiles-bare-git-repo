@@ -1,14 +1,14 @@
-autocmd BufEnter * lua require'completion'.on_attach()
-lua require("lsp-ale-diagnostic")
+" autocmd BufEnter * lua require'completion'.on_attach()
+" lua require("lsp-ale-diagnostic")
 
-:lua << END
-  local nvim_lsp = require('lspconfig')
+" :lua << END
+"   local nvim_lsp = require('lspconfig')
 
-  local servers = {'tsserver', 'vimls', 'cssls'}
-  for _, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup{}
-  end
-END
+"   local servers = {'tsserver', 'vimls', 'cssls'}
+"   for _, lsp in ipairs(servers) do
+"     nvim_lsp[lsp].setup{}
+"   end
+" END
 
 nnoremap <silent> K  :call <SID>show_documentation()<CR>
 nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
@@ -29,8 +29,8 @@ function! s:show_documentation()
 endfunction
 
 " Diagnostics
-nmap <silent> [G <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
-nmap <silent> ]G <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+nmap <silent> [g <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+nmap <silent> ]g <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 " " Enable the inline diagnostic messaging
 " let g:diagnostic_enable_virtual_text = 1
 " " Disable diagnostics while in insert mode
@@ -40,11 +40,15 @@ nmap <silent> ]G <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 " Use in every buffer, not just those with an LSP
 " autocmd BufEnter * lua require'completion'.on_attach()
 " Use <Tab> and <S-Tab> to navigate through popup menu
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" imap <C-Space> <Plug>(completion_trigger)
+" imap <tab> <Plug>(completion_smart_tab)
+" imap <s-tab> <Plug>(completion_smart_s_tab)
 " Set completeopt to have a better completion experience
-set completeopt=menuone,noinsert,noselect
+" set completeopt=menuone,noinsert,noselect
 " Avoid showing message extra message when using completion
-set shortmess+=c
+" set shortmess+=c
 "" Avoid showing message extra message when using completion
-let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy', 'all']
+" let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy', 'all']
+" let g:completion_trigger_keyword_length = 0
