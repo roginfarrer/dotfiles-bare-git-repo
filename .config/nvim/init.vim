@@ -117,6 +117,7 @@ if !empty(glob('$HOME/.config/nvim/vim/local-config.vim'))
   source $HOME/.config/nvim/vim/local-config.vim
 endif
 
+" whitespace
 " let g:normal_fg = synIDattr(hlID('Normal'), 'fg')
 " let g:normal_bg = synIDattr(hlID('Normal'), 'bg')
 " let set_color_output = system('kitty @ --to=$KITTY_LISTEN_ON set-colors --all --configured background=' . g:normal_bg . ' foreground=' . g:normal_fg)
