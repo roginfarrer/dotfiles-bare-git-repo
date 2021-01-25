@@ -14,9 +14,12 @@ set undodir=~/.vim_runtime/temp_dirs/undodir
 set undofile
 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=300
+set foldenable
 set foldlevelstart=10
 set foldnestmax=10
-set foldmethod=syntax
+" set foldmethod=syntax
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
 set signcolumn=yes
 set whichwrap+=<,>,h,l
 " Ignore case when searching

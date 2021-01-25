@@ -87,3 +87,6 @@ nnoremap <leader>go :Gbrowse<CR>
 vnoremap <leader>go :'<,'>Gbrowse<CR>
 nnoremap <leader>gc :Gbrowse!<CR>
 vnoremap <leader>gc :'<,'>Gbrowse!<CR>
+
+nmap gx <Plug>(open-url-browser)
+nmap <leader>gs :G<CR>

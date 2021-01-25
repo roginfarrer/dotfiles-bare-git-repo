@@ -25,7 +25,6 @@ Plug 'sheerun/vim-polyglot'             " Syntax highlighting for pretty much ev
 Plug 'itchyny/lightline.vim'            " Custom statusline
 Plug 'glepnir/galaxyline.nvim', {'branch': 'main'}
 Plug 'mhinz/vim-startify'               
-" ColorSchemes
 Plug 'Rigellute/rigel'                  
 Plug 'cocopon/iceberg.vim'
 Plug 'bluz71/vim-nightfly-guicolors'
@@ -40,7 +39,6 @@ Plug 'junegunn/goyo.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-abolish'
 Plug 'dhruvasagar/vim-open-url'
-  nmap gx <Plug>(open-url-browser)
 Plug 'vim-test/vim-test'
 Plug 'wellle/targets.vim'
 if isdirectory('/usr/local/opt/fzf')
@@ -54,15 +52,12 @@ Plug 'nvim-lua/plenary.nvim', Cond(g:use_telescope)
 Plug 'nvim-telescope/telescope.nvim', Cond(g:use_telescope)
 Plug 'nvim-telescope/telescope-fzy-native.nvim', Cond(g:use_telescope)
 Plug 'nvim-telescope/telescope-fzf-writer.nvim', Cond(g:use_telescope)
-" Plug 'junegunn/vim-peekaboo'
 Plug 'justinmk/vim-dirvish'
 Plug 'roginfarrer/vim-dirvish-dovish', {'branch' : 'main'}
-" Plug '~/repos/vim-dirvish-dovish'
 Plug 'tpope/vim-eunuch'   
 Plug 'duggiefresh/vim-easydir'
 Plug 'jesseleite/vim-agriculture'
 Plug 'tpope/vim-fugitive'
-  nmap <leader>gs :G<CR>
 Plug 'tpope/vim-rhubarb'
 Plug 'whiteinge/diffconflicts'
 Plug 'airblade/vim-gitgutter'
@@ -80,13 +75,11 @@ Plug 'norcalli/nvim-colorizer.lua'
 
 call plug#end()
 
-" https://github.com/plasticboy/vim-markdown#fenced-code-block-languages
-let g:vim_markdown_fenced_languages = ['bash=sh', 'js=javascript', 'jsx=javascript'] 
-
 source $HOME/.config/nvim/vim/opts.vim
 source $HOME/.config/nvim/vim/keybindings.vim
 source $HOME/.config/nvim/vim/autocmd.vim
 source $HOME/.config/nvim/vim/terminal.vim
+luafile $HOME/.config/nvim/lua/init.lua
 
 source $HOME/.config/nvim/vim/plugins/lightline.vim
 source $HOME/.config/nvim/vim/plugins/firenvim.vim
@@ -94,6 +87,7 @@ source $HOME/.config/nvim/vim/plugins/floaterm.vim
 " source $HOME/.config/nvim/vim/plugins/prettier.vim
 source $HOME/.config/nvim/vim/plugins/startify.vim
 source $HOME/.config/nvim/vim/plugins/vim-test.vim
+source $HOME/.config/nvim/vim/plugins/polyglot.vim
 luafile $HOME/.config/nvim/lua/plugins/treesitter.lua
 
 if g:use_nvim_lsp
@@ -116,11 +110,3 @@ endif
 if !empty(glob('$HOME/.config/nvim/vim/local-config.vim'))
   source $HOME/.config/nvim/vim/local-config.vim
 endif
-
-" whitespace
-" let g:normal_fg = synIDattr(hlID('Normal'), 'fg')
-" let g:normal_bg = synIDattr(hlID('Normal'), 'bg')
-" let set_color_output = system('kitty @ --to=$KITTY_LISTEN_ON set-colors --all --configured background=' . g:normal_bg . ' foreground=' . g:normal_fg)
-" if set_color_output
-"   echo set_color_output
-" endif
