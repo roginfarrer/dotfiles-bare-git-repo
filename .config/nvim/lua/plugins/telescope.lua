@@ -1,5 +1,6 @@
 local actions = require "telescope.actions"
 local builtin = require "telescope.builtin"
+local vimp = require "vimp"
 
 require("telescope").setup {
   defaults = {
@@ -63,6 +64,12 @@ function M.recent_buffers()
     sorter = require "telescope.sorters".get_substr_matcher()
   }
 end
+
+vimp.nnoremap({"silent"}, "<C-p>", [[<cmd>Telescope git_files<CR>]])
+vimp.nnoremap({"silent"}, "<Leader>f", [[<cmd>Telescope live_grep<CR>]])
+vimp.nnoremap({"silent"}, "<Leader>;", [[lua require("plugins.telescope").recent_buffers()<CR>]])
+vimp.nnoremap({"silent"}, "<Leader>h", [[<cmd>Telescope oldfiles<CR>]])
+vimp.nnoremap({"silent"}, "<Leader>c", [[<cmd>Telescope command_history<CR>]])
 
 return setmetatable(
   {},

@@ -59,5 +59,6 @@
       "filetypes": ["sh", "zsh", "bash"],
       "ignoredRootPaths": ["~"]
     }
-  }
+  },
+	"Lua.diagnostics.globals": ["vim"]
 }
