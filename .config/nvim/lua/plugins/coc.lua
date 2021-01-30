@@ -7,7 +7,7 @@ local function t(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 function _G.smart_tab()
-  return vim.fn.pumvisible() == 1 and t "<C-n>" or _G.check_back_space() and t "<Tab>" or vim.call("coc#refresh()")
+  return vim.fn.pumvisible() == 1 and t "<C-n>" or _G.check_back_space() and t "<Tab>" or vim.fn["coc#refresh"]()
 end
 function _G.check_back_space()
   local col = vim.api.nvim_win_get_cursor(0)[2]
@@ -38,54 +38,61 @@ vimp.nmap({"silent"}, "gr", "<Plug>(coc-references)")
 vimp.nmap({"silent"}, "<leader>do", "<Plug>(coc-codeaction)")
 
 vimp.inoremap({"silent", "expr"}, "<Tab>", "v:lua.smart_tab()")
-vimp.inoremap({"silent", "expr"}, "<c-space>", [[:call coc#refresh()]])
+vimp.inoremap(
+  {"silent", "expr"},
+  "<S-Tab>",
+  function()
+    return vim.fn.pumvisible() == 1 and t "<C-p>" or t "<C-h>"
+  end
+)
+vimp.inoremap({"silent", "expr"}, "<c-space>", vim.fn["coc#refresh"])
 
 vimp.nmap({"silent"}, "[g", "<Plug>(coc-diagnostic-prev)")
 vimp.nmap({"silent"}, "]g", "<Plug>(coc-diagnostic-next)")
 
-vimp.nnoremap({"silent"}, "K", [[:call CocAction('doHover')]])
+vimp.nnoremap({"silent"}, "K", [[:call CocAction('doHover')<CR>]])
 vimp.nmap("<leader>es", [[:CocCommand snippets.editSnippets<CR>]])
 
 vimp.nnoremap(
   {"silent", "nowait", "expr"},
   "<C-f>",
   function()
-    return vim.cmd("coc#float#has_scroll()") and vim.cmd("coc#float#scroll(1)") or t "<C-f>"
+    return vim.fn["coc#float#has_scroll"]() and vim.fn["float#scroll"](1) or t "<C-f>"
   end
 )
 vimp.nnoremap(
   {"silent", "nowait", "expr"},
   "<C-b>",
   function()
-    return vim.cmd("coc#float#has_scroll()") and vim.cmd("coc#float#scroll(0)") or t "<C-b>"
+    return vim.fn["float#has_scroll"]() and vim.fn["float#scroll"](0) or t "<C-b>"
   end
 )
 vimp.inoremap(
   {"silent", "nowait", "expr"},
   "<C-f>",
   function()
-    return vim.cmd("coc#float#has_scroll()") and [[\<c-r>=coc#float#scroll(1)\<cr>]] or t "<Right>"
+    return vim.fn["float#has_scroll"]() and [[\<c-r>=coc#float#scroll(1)\<cr>]] or t "<Right>"
   end
 )
 vimp.inoremap(
   {"silent", "nowait", "expr"},
   "<C-b>",
   function()
-    return vim.cmd("coc#float#has_scroll()") and [[\<c-r>=coc#float#scroll(0)\<cr>]] or t "<Left>"
+    return vim.fn["float#has_scroll"]() and [[\<c-r>=coc#float#scroll(0)\<cr>]] or t "<Left>"
   end
 )
 vimp.vnoremap(
   {"silent", "nowait", "expr"},
   "<C-f>",
   function()
-    return vim.cmd("coc#float#has_scroll()") and vim.cmd("coc#float#scroll(1)") or t "<C-f>"
+    return vim.fn["float#has_scroll"]() and vim.fn["float#scroll"](1) or t "<C-f>"
   end
 )
 vimp.vnoremap(
   {"silent", "nowait", "expr"},
   "<C-b>",
   function()
-    return vim.cmd("coc#float#has_scroll()") and vim.cmd("coc#float#scroll(0)") or t "<C-b>"
+    return vim.fn["float#has_scroll"]() and vim.fn["float#scroll"](0) or t "<C-b>"
   end
 )
 

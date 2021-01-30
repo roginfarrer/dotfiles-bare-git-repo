@@ -26,12 +26,12 @@ require("telescope").setup {
   }
 }
 require("telescope").load_extension("fzy_native")
--- require('telescope').load_extension('fzf_writer')
+require("telescope").load_extension("fzf_writer")
 
 local M = {}
 
 function M.search_dotfiles()
-  require("telescope.builtin").find_files {
+  builtin.find_files {
     cwd = "~",
     find_command = {
       "git",
@@ -50,7 +50,7 @@ function M.search_dotfiles()
 end
 
 function M.search_config()
-  require("telescope.builtin").find_files {
+  builtin.find_files {
     shorten_path = true,
     cwd = "~/.config",
     prompt = "~ .config ~"
@@ -60,16 +60,23 @@ end
 function M.recent_buffers()
   builtin.buffers {
     sort_lastused = true,
-    ignore_current_buffer = true,
+    -- ignore_current_buffer = true,
     sorter = require "telescope.sorters".get_substr_matcher()
   }
 end
 
+vimp.nnoremap({"silent"}, "<Leader>fp", [[<cmd>Telescope git_files<CR>]])
+vimp.nnoremap({"silent"}, "<Leader>ff", [[<cmd>Telescope find_files<CR>]])
+vimp.nnoremap({"silent"}, "<Leader>fg", [[<cmd>Telescope live_grep<CR>]])
+vimp.nnoremap({"silent"}, "<leader>fb", M.recent_buffers)
+vimp.nnoremap({"silent"}, "<leader>fd", M.search_dotfiles)
+vimp.nnoremap({"silent"}, "<Leader>fh", [[<cmd>Telescope oldfiles<CR>]])
+
 vimp.nnoremap({"silent"}, "<C-p>", [[<cmd>Telescope git_files<CR>]])
-vimp.nnoremap({"silent"}, "<Leader>f", [[<cmd>Telescope live_grep<CR>]])
-vimp.nnoremap({"silent"}, "<Leader>;", [[lua require("plugins.telescope").recent_buffers()<CR>]])
-vimp.nnoremap({"silent"}, "<Leader>h", [[<cmd>Telescope oldfiles<CR>]])
+vimp.nnoremap({"silent"}, "<Leader>.", [[<cmd>Telescope find_files<CR>]])
+vimp.nnoremap({"silent"}, "<leader>;", M.recent_buffers)
 vimp.nnoremap({"silent"}, "<Leader>c", [[<cmd>Telescope command_history<CR>]])
+vimp.nnoremap({"silent"}, "<Leader>h", [[<cmd>Telescope oldfiles<CR>]])
 
 return setmetatable(
   {},

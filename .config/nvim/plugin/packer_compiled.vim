@@ -38,11 +38,23 @@ _G.packer_plugins = {
     only_setup = false,
     path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/diffconflicts"
   },
-  ["galaxyline.nvim"] = {
+  firenvim = {
     loaded = true,
     only_sequence = true,
     only_setup = false,
-    path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/galaxyline.nvim"
+    path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/firenvim"
+  },
+  fzf = {
+    loaded = true,
+    only_sequence = true,
+    only_setup = false,
+    path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/fzf"
+  },
+  ["fzf.vim"] = {
+    loaded = true,
+    only_sequence = true,
+    only_setup = false,
+    path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/fzf.vim"
   },
   ["goyo.vim"] = {
     loaded = true,
@@ -79,6 +91,12 @@ _G.packer_plugins = {
     only_sequence = true,
     only_setup = false,
     path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/nvim-web-devicons"
+  },
+  ["packer.nvim"] = {
+    loaded = true,
+    only_sequence = true,
+    only_setup = false,
+    path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/packer.nvim"
   },
   ["plenary.nvim"] = {
     loaded = true,

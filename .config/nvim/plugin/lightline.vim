@@ -1,5 +1,3 @@
-luafile $HOME/.config/nvim/main.lua
-
 let g:lightline = {
       \ 'colorscheme': 'nightfly',
       \ 'active': {
@@ -12,3 +10,6 @@ let g:lightline = {
       \   'gitbranch': 'FugitiveHead'
       \ },
       \ }
+
+
+

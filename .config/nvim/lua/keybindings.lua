@@ -1,39 +1,65 @@
 local vimp = require "vimp"
 
-vimp.nmap("<C-c>", '"+y')
-vimp.nnoremap("<Leader>y", '"+y')
-vimp.xnoremap("<Leader>y", '"+y')
-vimp.nnoremap("<Leader>p", '"+p')
-vimp.xnoremap("<Leader>p", '"+p')
-vimp.nnoremap("<Leader>P", '"+P')
-vimp.xnoremap("<Leader>P", '"+P')
+local nnoremap = vimp.nnoremap
+local nmap = vimp.nmap
+local vnoremap = vimp.vnoremap
+local xnoremap = vimp.xnoremap
+
+nmap("<C-c>", '"+y')
+nnoremap("<Leader>y", '"+y')
+xnoremap("<Leader>y", '"+y')
+nnoremap("<Leader>p", '"+p')
+xnoremap("<Leader>p", '"+p')
+nnoremap("<Leader>P", '"+P')
+xnoremap("<Leader>P", '"+P')
 
 -- Make Y behave like it should
-vimp.nmap("Y", "y$")
+nmap("Y", "y$")
 
 -- Whening changing, don't save to register
-vimp.nnoremap("c", '"_c')
-vimp.vnoremap("c", '"_c')
+nnoremap("c", '"_c')
+vnoremap("c", '"_c')
 
-vimp.nmap("<C-j>", "<C-W>j")
-vimp.nmap("<C-k>", "<C-W>k")
-vimp.nmap("<C-h>", "<C-W>h")
-vimp.nmap("<C-l>", "<C-W>l")
+nmap("<C-j>", "<C-W>j")
+nmap("<C-k>", "<C-W>k")
+nmap("<C-h>", "<C-W>h")
+nmap("<C-l>", "<C-W>l")
 
-vimp.nmap("<leader>w", [[:w!<CR>]])
-vimp.nmap("<leader>q", [[:q<CR>]])
-vimp.nmap("<leader>x", [[:wq<CR>]])
+nmap("<leader>w", [[:w!<CR>]])
+nmap("<leader>q", [[:q<CR>]])
+nmap("<leader>x", [[:wq<CR>]])
 
 -- newline without insert
-vimp.nmap("<CR>", 'o<Esc>"_cc<Esc>')
+nmap("<CR>", 'o<Esc>"_cc<Esc>')
 
 -- If you like long lines with line wrapping enabled, this solves the problem that pressing down jumpes your cursor “over” the current line to the next line. It changes behaviour so that it jumps to the next row in the editor (much more natural)
-vimp.nnoremap("j", "gj")
-vimp.nnoremap("k", "gk")
+nnoremap("j", "gj")
+nnoremap("k", "gk")
 
-vimp.nmap("0", "^")
+nmap("0", "^")
 
-vimp.nnoremap("<A-k>", [[:m .-2<CR>==]])
-vimp.nnoremap("<A-j>", [[:m .+1<CR>==]])
-vimp.vnoremap("<A-j>", [[:m '>+1<CR>gv=gv]])
-vimp.vnoremap("<A-k>", [[:m '<-2<CR>gv=gv]])
+nnoremap("<A-k>", [[:m .-2<CR>==]])
+nnoremap("<A-j>", [[:m .+1<CR>==]])
+vnoremap("<A-j>", [[:m '>+1<CR>gv=gv]])
+vnoremap("<A-k>", [[:m '<-2<CR>gv=gv]])
+
+-- Toggle folds
+nnoremap("<Space><Space>", "za")
+
+nnoremap("<leader>ek", [[:vsp $HOME/.config/kitty/kitty.conf<CR>]])
+nnoremap("<leader>ev", [[:vsp $HOME/.config/nvim/init.lua<CR>]])
+
+nnoremap({"silent"}, "<leader>go", [[:Gbrowse<CR>]])
+vnoremap({"silent"}, "<leader>go", [[:'<,'>Gbrowse<CR>]])
+nnoremap({"silent"}, "<leader>gc", [[:Gbrowse!<CR>]])
+vnoremap({"silent"}, "<leader>gc", [[:'<,'>Gbrowse!<CR>]])
+-- vimp complains about duplicate mapping
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>yf",
+  [[:let @*=expand("%")<cr>:echo "Copied file to clipboard"<cr>]],
+  {noremap = true}
+)
+
+nmap("gx", "<Plug>(open-url-browser)")
+nmap("<leader>gs", [[:G<CR>]])
