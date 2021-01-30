@@ -13,7 +13,7 @@ end
 
 return require("packer").startup(
   function(use)
-    use {"wbthomason/packer.nvim"}
+    use "wbthomason/packer.nvim"
 
     -- Colors
     use "Rigellute/rigel"
@@ -21,7 +21,7 @@ return require("packer").startup(
     use "bluz71/vim-nightfly-guicolors"
     use "Dualspc/spaceodyssey"
 
-    use {"sheerun/vim-polyglot", config = require "plugins.polyglot"}
+    -- use {"sheerun/vim-polyglot", config = require "plugins.polyglot"}
     use "itchyny/lightline.vim"
     use {"mhinz/vim-startify", config = require "plugins.startify"}
     use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate", config = require "plugins.treesitter"}
@@ -77,6 +77,11 @@ return require("packer").startup(
     }
     use "kyazdani42/nvim-web-devicons"
     use "ryanoasis/vim-devicons"
-    use "norcalli/nvim-colorizer.lua"
+    use {
+      "norcalli/nvim-colorizer.lua",
+      config = function()
+        require "colorizer".setup()
+      end
+    }
   end
 )

@@ -66,17 +66,18 @@ function M.recent_buffers()
 end
 
 vimp.nnoremap({"silent"}, "<Leader>fp", [[<cmd>Telescope git_files<CR>]])
-vimp.nnoremap({"silent"}, "<Leader>ff", [[<cmd>Telescope find_files<CR>]])
+vimp.nnoremap({"silent"}, "<Leader>f.", [[<cmd>Telescope find_files<CR>]])
 vimp.nnoremap({"silent"}, "<Leader>fg", [[<cmd>Telescope live_grep<CR>]])
 vimp.nnoremap({"silent"}, "<leader>fb", M.recent_buffers)
 vimp.nnoremap({"silent"}, "<leader>fd", M.search_dotfiles)
 vimp.nnoremap({"silent"}, "<Leader>fh", [[<cmd>Telescope oldfiles<CR>]])
 
 vimp.nnoremap({"silent"}, "<C-p>", [[<cmd>Telescope git_files<CR>]])
-vimp.nnoremap({"silent"}, "<Leader>.", [[<cmd>Telescope find_files<CR>]])
+-- vimp.nnoremap({"silent"}, "<Leader>.", [[<cmd>Telescope find_files<CR>]])
 vimp.nnoremap({"silent"}, "<leader>;", M.recent_buffers)
-vimp.nnoremap({"silent"}, "<Leader>c", [[<cmd>Telescope command_history<CR>]])
-vimp.nnoremap({"silent"}, "<Leader>h", [[<cmd>Telescope oldfiles<CR>]])
+-- vimp.nnoremap({"silent"}, "<Leader>c", [[<cmd>Telescope command_history<CR>]])
+-- vimp.nnoremap({"silent"}, "<Leader>h", [[<cmd>Telescope oldfiles<CR>]])
+-- vimp.nnoremap({"silent"}, "<leader>d", M.search_dotfiles)
 
 return setmetatable(
   {},

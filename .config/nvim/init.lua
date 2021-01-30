@@ -4,6 +4,5 @@ vim.g.use_telescope = true
 require "settings"
 require "autocmds"
 require "keybindings"
-require "misc"
 
-require "plugins.__plugins"
+require "plugins"

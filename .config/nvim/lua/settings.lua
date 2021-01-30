@@ -34,6 +34,7 @@ opt.number = true
 opt.relativenumber = true
 opt.scrolloff = 10
 opt.shiftwidth = 2
+opt.tabstop = 2
 opt.signcolumn = "yes"
 opt.smartcase = true
 opt.smartindent = true
@@ -45,5 +46,5 @@ opt.termguicolors = true
 opt.undofile = true
 opt.updatetime = 300
 
-vim.api.nvim_command('let mapleader = " "')
-vim.api.nvim_command("colorscheme nightfly")
+vim.cmd('let mapleader = " "')
+vim.cmd("colorscheme nightfly")

@@ -27,7 +27,6 @@ vim.g.coc_global_extensions = {
   "coc-styled-components",
   "coc-tabnine",
   "coc-lua",
-  "coc-vimlsp",
   "coc-vimlsp"
 }
 
