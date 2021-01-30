@@ -63,7 +63,9 @@ Plug 'whiteinge/diffconflicts'
 Plug 'airblade/vim-gitgutter'
 Plug 'neoclide/coc.nvim', Cond(!(g:use_nvim_lsp), {'branch': 'release'})
 Plug 'neovim/nvim-lspconfig', Cond(g:use_nvim_lsp)
+Plug 'svermeulen/vimpeccable'
 " Plug 'nvim-lua/completion-nvim', Cond(g:use_nvim_lsp)
+Plug 'hrsh7th/nvim-compe', Cond(g:use_nvim_lsp)
 Plug 'Shougo/deoplete.nvim', Cond((g:use_nvim_lsp), { 'do': ':UpdateRemotePlugins' })
 Plug 'shougo/deoplete.nvim', Cond(g:use_nvim_lsp)
 " Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
@@ -93,6 +95,7 @@ luafile $HOME/.config/nvim/lua/plugins/treesitter.lua
 if g:use_nvim_lsp
   source $HOME/.config/nvim/vim/plugins/lsp.vim
   source $HOME/.config/nvim/vim/plugins/deoplete.vim
+  luafile $HOME/.config/nvim/lua/plugins/compe.lua
   luafile $HOME/.config/nvim/lua/plugins/lsp.lua
 else
   source $HOME/.config/nvim/vim/plugins/coc.vim
