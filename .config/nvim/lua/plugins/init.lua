@@ -34,14 +34,12 @@ return require("packer").startup(
     use "dhruvasagar/vim-open-url"
     use {"vim-test/vim-test", config = require "plugins.vim-test"}
     use "wellle/targets.vim"
-    -- if not vim.g.use_telescope then
     if vim.fn.isdirectory("/usr/local/opt/fzf") then
       use {"/usr/local/opt/fzf", disable = vim.g.use_telescope}
     else
       use {"junegunn/fzf", rtp = "~/.fzf", run = "./install --bin", disable = vim.g.use_telescope}
     end
     use {"junegunn/fzf.vim", disable = vim.g.use_telescope}
-    -- end
     use {
       "nvim-telescope/telescope.nvim",
       config = require "plugins.telescope",
