@@ -14,7 +14,7 @@ function _G.check_back_space()
   return (col == 0 or vim.api.nvim_get_current_line():sub(col, col):match("%s")) and true
 end
 
-vim.g.coc_node_path = "~/.fnm/aliases/latest/bin/node"
+-- vim.g.coc_node_path = "$HOME/.fnm/aliases/latest/bin/node"
 
 vim.g.coc_global_extensions = {
   "coc-tsserver",

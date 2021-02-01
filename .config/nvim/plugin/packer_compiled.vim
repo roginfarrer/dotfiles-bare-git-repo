@@ -27,6 +27,7 @@ _G.packer_plugins = {
     path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/auto-pairs"
   },
   ["coc.nvim"] = {
+    config = { "\27LJ\2\n+\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\16plugins.coc\frequire\0" },
     loaded = true,
     only_sequence = true,
     only_setup = false,
@@ -43,18 +44,6 @@ _G.packer_plugins = {
     only_sequence = true,
     only_setup = false,
     path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/firenvim"
-  },
-  fzf = {
-    loaded = true,
-    only_sequence = true,
-    only_setup = false,
-    path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/fzf"
-  },
-  ["fzf.vim"] = {
-    loaded = true,
-    only_sequence = true,
-    only_setup = false,
-    path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/fzf.vim"
   },
   ["goyo.vim"] = {
     loaded = true,
@@ -75,12 +64,14 @@ _G.packer_plugins = {
     path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/lightline.vim"
   },
   ["nvim-colorizer.lua"] = {
+    config = { "\27LJ\2\n7\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\14colorizer\frequire\0" },
     loaded = true,
     only_sequence = true,
     only_setup = false,
     path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/nvim-colorizer.lua"
   },
   ["nvim-treesitter"] = {
+    config = { "\27LJ\2\n2\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\23plugins.treesitter\frequire\0" },
     loaded = true,
     only_sequence = true,
     only_setup = false,
@@ -93,10 +84,10 @@ _G.packer_plugins = {
     path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/nvim-web-devicons"
   },
   ["packer.nvim"] = {
-    loaded = true,
-    only_sequence = true,
+    loaded = false,
+    only_sequence = false,
     only_setup = false,
-    path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/packer.nvim"
+    path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/opt/packer.nvim"
   },
   ["plenary.nvim"] = {
     loaded = true,
@@ -134,13 +125,8 @@ _G.packer_plugins = {
     only_setup = false,
     path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/telescope-fzf-writer.nvim"
   },
-  ["telescope-fzy-native.nvim"] = {
-    loaded = true,
-    only_sequence = true,
-    only_setup = false,
-    path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/telescope-fzy-native.nvim"
-  },
   ["telescope.nvim"] = {
+    config = { "\27LJ\2\n1\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\22plugins.telescope\frequire\0" },
     loaded = true,
     only_sequence = true,
     only_setup = false,
@@ -195,12 +181,14 @@ _G.packer_plugins = {
     path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/vim-eunuch"
   },
   ["vim-floaterm"] = {
+    config = { "\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plugins.floaterm\frequire\0" },
     loaded = true,
     only_sequence = true,
     only_setup = false,
     path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/vim-floaterm"
   },
   ["vim-fugitive"] = {
+    config = { "\27LJ\2\n+\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\16plugins.git\frequire\0" },
     loaded = true,
     only_sequence = true,
     only_setup = false,
@@ -224,13 +212,8 @@ _G.packer_plugins = {
     only_setup = false,
     path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/vim-open-url"
   },
-  ["vim-polyglot"] = {
-    loaded = true,
-    only_sequence = true,
-    only_setup = false,
-    path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/vim-polyglot"
-  },
   ["vim-rhubarb"] = {
+    config = { "\27LJ\2\n+\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\16plugins.git\frequire\0" },
     loaded = true,
     only_sequence = true,
     only_setup = false,
@@ -249,12 +232,14 @@ _G.packer_plugins = {
     path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/vim-sleuth"
   },
   ["vim-startify"] = {
+    config = { "\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plugins.startify\frequire\0" },
     loaded = true,
     only_sequence = true,
     only_setup = false,
     path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/vim-startify"
   },
   ["vim-test"] = {
+    config = { "\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plugins.vim-test\frequire\0" },
     loaded = true,
     only_sequence = true,
     only_setup = false,
@@ -397,6 +382,24 @@ end
 
 -- Pre-load configuration
 -- Post-load configuration
+-- Config for: vim-startify
+loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plugins.startify\frequire\0")()
+-- Config for: coc.nvim
+loadstring("\27LJ\2\n+\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\16plugins.coc\frequire\0")()
+-- Config for: nvim-treesitter
+loadstring("\27LJ\2\n2\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\23plugins.treesitter\frequire\0")()
+-- Config for: vim-rhubarb
+loadstring("\27LJ\2\n+\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\16plugins.git\frequire\0")()
+-- Config for: nvim-colorizer.lua
+loadstring("\27LJ\2\n7\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\14colorizer\frequire\0")()
+-- Config for: telescope.nvim
+loadstring("\27LJ\2\n1\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\22plugins.telescope\frequire\0")()
+-- Config for: vim-floaterm
+loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plugins.floaterm\frequire\0")()
+-- Config for: vim-test
+loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plugins.vim-test\frequire\0")()
+-- Config for: vim-fugitive
+loadstring("\27LJ\2\n+\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\16plugins.git\frequire\0")()
 -- Conditional loads
 -- Load plugins in order defined by `after`
 END

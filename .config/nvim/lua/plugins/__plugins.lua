@@ -1,19 +1,17 @@
 local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
 
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  if vim.fn.input("Download Packer? (y for yes): ") ~= "y" then
-    return
-  end
-
-  local out = vim.fn.system(string.format("git clone %s %s", "https://github.com/wbthomason/packer.nvim", install_path))
-
-  print(out)
-  print("Downloading packer.nvim...")
+  execute("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
+  execute "packadd packer.nvim"
 end
+
+vim.cmd [[packadd packer.nvim]]
+-- Run :PackerCompile whenver this file is updated
+vim.cmd [[autocmd BufWritePost __plugins.lua PackerCompile]]
 
 return require("packer").startup(
   function(use)
-    use "wbthomason/packer.nvim"
+    use {"wbthomason/packer.nvim", opt = true}
 
     -- Colors
     use "Rigellute/rigel"
@@ -21,10 +19,21 @@ return require("packer").startup(
     use "bluz71/vim-nightfly-guicolors"
     use "Dualspc/spaceodyssey"
 
-    -- use {"sheerun/vim-polyglot", config = require "plugins.polyglot"}
+    -- use {"sheerun/vim-polyglot", config = function() require "plugins.polyglot" end}
     use "itchyny/lightline.vim"
-    use {"mhinz/vim-startify", config = require "plugins.startify"}
-    use {"nvim-treesitter/nvim-treesitter", run = ":TSUpdate", config = require "plugins.treesitter"}
+    use {
+      "mhinz/vim-startify",
+      config = function()
+        require "plugins.startify"
+      end
+    }
+    use {
+      "nvim-treesitter/nvim-treesitter",
+      run = ":TSUpdate",
+      config = function()
+        require "plugins.treesitter"
+      end
+    }
     use "machakann/vim-sandwich"
     use "tpope/vim-commentary"
     use "tpope/vim-sleuth"
@@ -32,7 +41,12 @@ return require("packer").startup(
     use "jiangmiao/auto-pairs"
     use "tpope/vim-abolish"
     use "dhruvasagar/vim-open-url"
-    use {"vim-test/vim-test", config = require "plugins.vim-test"}
+    use {
+      "vim-test/vim-test",
+      config = function()
+        require "plugins.vim-test"
+      end
+    }
     use "wellle/targets.vim"
     if vim.fn.isdirectory("/usr/local/opt/fzf") then
       use {"/usr/local/opt/fzf", disable = vim.g.use_telescope}
@@ -42,12 +56,14 @@ return require("packer").startup(
     use {"junegunn/fzf.vim", disable = vim.g.use_telescope}
     use {
       "nvim-telescope/telescope.nvim",
-      config = require "plugins.telescope",
+      config = function()
+        require "plugins.telescope"
+      end,
       disabled = not vim.g.use_telescope,
       requires = {
         "nvim-lua/plenary.nvim",
         "nvim-lua/popup.nvim",
-        "nvim-telescope/telescope-fzy-native.nvim",
+        -- "nvim-telescope/telescope-fzy-native.nvim",
         "nvim-telescope/telescope-fzf-writer.nvim"
       }
     }
@@ -56,17 +72,36 @@ return require("packer").startup(
     use "tpope/vim-eunuch"
     use "duggiefresh/vim-easydir"
     use "jesseleite/vim-agriculture"
-    use "tpope/vim-fugitive"
-    use "tpope/vim-rhubarb"
+    use {"tpope/vim-fugitive", config = function()
+        require "plugins.git"
+      end}
+    use {
+      "tpope/vim-rhubarb",
+      config = function()
+        require "plugins.git"
+      end
+    }
     use "whiteinge/diffconflicts"
     use "airblade/vim-gitgutter"
-    use {"neoclide/coc.nvim", branch = "release", disable = vim.g.use_nvim_lsp, config = require "plugins.coc"}
+    use {
+      "neoclide/coc.nvim",
+      branch = "release",
+      disable = vim.g.use_nvim_lsp,
+      config = function()
+        require "plugins.coc"
+      end
+    }
     use {"neovim/nvim-lspconfig", disable = not vim.g.use_nvim_lsp}
     use "svermeulen/vimpeccable"
     use {"hrsh7th/nvim-compe", disable = not vim.g.use_nvim_lsp}
     -- use 'Shougo/deoplete.nvim', Cond((g:use_nvim_lsp), { 'do': ':UpdateRemoteuseins' })
     -- use 'shougo/deoplete.nvim', Cond(g:use_nvim_lsp)
-    use {"voldikss/vim-floaterm", config = require "plugins.floaterm"}
+    use {
+      "voldikss/vim-floaterm",
+      config = function()
+        require "plugins.floaterm"
+      end
+    }
     use {
       "glacambre/firenvim",
       run = function()
