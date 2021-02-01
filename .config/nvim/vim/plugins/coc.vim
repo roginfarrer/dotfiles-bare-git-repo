@@ -1,4 +1,4 @@
-let g:coc_node_path = '~/.fnm/aliases/latest/bin/node'
+let g:coc_node_path = '~/.fnm/aliases/default/bin/node'
 
 let g:coc_global_extensions = [
     \ 'coc-css',
@@ -8,7 +8,6 @@ let g:coc_global_extensions = [
     \ 'coc-yaml',
     \ 'coc-snippets',
     \ 'coc-styled-components',
-    \ 'coc-tabnine',
     \ 'coc-lua',
     \ 'coc-vimlsp',
     \ 'coc-vimlsp']
