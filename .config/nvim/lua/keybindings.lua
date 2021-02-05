@@ -4,6 +4,7 @@ local nnoremap = vimp.nnoremap
 local nmap = vimp.nmap
 local vnoremap = vimp.vnoremap
 local xnoremap = vimp.xnoremap
+local tnoremap = vimp.tnoremap
 
 nmap("<C-c>", '"+y')
 nnoremap("<Leader>y", '"+y')
@@ -63,3 +64,14 @@ vim.api.nvim_set_keymap(
 
 nmap("gx", "<Plug>(open-url-browser)")
 nmap("<leader>gs", [[:G<CR>]])
+
+-- TERMINAL --
+-- To map <Esc> to exit terminal-mode: >
+tnoremap("<leader><Esc>", [[<C-\><C-n>]])
+tnoremap("<leader>j", [[<C-\><C-n>]])
+
+-- Open a new split with a terminal
+nnoremap("<leader>te", [[:vs<CR>:terminal fish<CR>]])
+
+-- a paste from register chord
+tnoremap({"expr"}, "<A-r>", [['<C-/>']])

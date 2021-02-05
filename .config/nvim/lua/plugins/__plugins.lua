@@ -49,21 +49,26 @@ return require("packer").startup(
     }
     use "wellle/targets.vim"
     if vim.fn.isdirectory("/usr/local/opt/fzf") then
-      use {"/usr/local/opt/fzf", disable = vim.g.use_telescope}
+      use {"/usr/local/opt/fzf", opt = vim.g.use_telescope}
     else
-      use {"junegunn/fzf", rtp = "~/.fzf", run = "./install --bin", disable = vim.g.use_telescope}
+      use {"junegunn/fzf", rtp = "~/.fzf", run = "./install --bin", opt = vim.g.use_telescope}
     end
-    use {"junegunn/fzf.vim", disable = vim.g.use_telescope}
+    use {
+      "junegunn/fzf.vim",
+      opt = vim.g.use_telescope,
+      config = function()
+        vim.cmd("source $HOME/.config/nvim/vim/fzf.vim")
+      end
+    }
     use {
       "nvim-telescope/telescope.nvim",
       config = function()
         require "plugins.telescope"
       end,
-      disabled = not vim.g.use_telescope,
+      opt = not vim.g.use_telescope,
       requires = {
         "nvim-lua/plenary.nvim",
         "nvim-lua/popup.nvim",
-        -- "nvim-telescope/telescope-fzy-native.nvim",
         "nvim-telescope/telescope-fzf-writer.nvim"
       }
     }
@@ -72,9 +77,12 @@ return require("packer").startup(
     use "tpope/vim-eunuch"
     use "duggiefresh/vim-easydir"
     use "jesseleite/vim-agriculture"
-    use {"tpope/vim-fugitive", config = function()
+    use {
+      "tpope/vim-fugitive",
+      config = function()
         require "plugins.git"
-      end}
+      end
+    }
     use {
       "tpope/vim-rhubarb",
       config = function()
@@ -86,14 +94,14 @@ return require("packer").startup(
     use {
       "neoclide/coc.nvim",
       branch = "release",
-      disable = vim.g.use_nvim_lsp,
+      opt = vim.g.use_nvim_lsp,
       config = function()
         require "plugins.coc"
       end
     }
-    use {"neovim/nvim-lspconfig", disable = not vim.g.use_nvim_lsp}
+    use {"neovim/nvim-lspconfig", opt = not vim.g.use_nvim_lsp}
     use "svermeulen/vimpeccable"
-    use {"hrsh7th/nvim-compe", disable = not vim.g.use_nvim_lsp}
+    use {"hrsh7th/nvim-compe", opt = not vim.g.use_nvim_lsp}
     -- use 'Shougo/deoplete.nvim', Cond((g:use_nvim_lsp), { 'do': ':UpdateRemoteuseins' })
     -- use 'shougo/deoplete.nvim', Cond(g:use_nvim_lsp)
     use {
@@ -116,5 +124,6 @@ return require("packer").startup(
         require "colorizer".setup()
       end
     }
+    use {"plasticboy/vim-markdown"}
   end
 )

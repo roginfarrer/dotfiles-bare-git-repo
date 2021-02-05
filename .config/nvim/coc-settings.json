@@ -23,7 +23,7 @@
   "javascript.format.enabled": false,
   "javascript.preferences.useAliasesForRenames": false,
   "javascript.suggest.enabled": true,
-  "javascript.validate.enable": false,
+  "javascript.validate.enable": true,
   "typescript.format.enabled": false,
   "typescript.preferences.useAliasesForRenames": false,
   "typescript.suggestionActions.enabled": true,

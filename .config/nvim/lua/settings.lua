@@ -46,5 +46,5 @@ opt.termguicolors = true
 opt.undofile = true
 opt.updatetime = 300
 
-vim.cmd('let mapleader = " "')
+vim.g.mapleader = " "
 vim.cmd("colorscheme nightfly")

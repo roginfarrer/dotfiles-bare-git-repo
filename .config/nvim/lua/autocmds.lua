@@ -17,4 +17,8 @@ M.autocmd("TextYankPost", "*", [[silent! lua vim.highlight.on_yank{higroup="Subs
 
 M.autocmd("BufEnter,BufRead", "*.tsx", "set filetype=javascriptreact")
 
+M.autocmd("TermOpen", "*", "startinsert")
+
+M.autocmd("TermOpen", "*", [[setlocal listchars= nonumber norelativenumber]])
+
 return M
