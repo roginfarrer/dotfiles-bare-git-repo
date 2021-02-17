@@ -1,3 +1,4 @@
+"\ 'colorscheme': 'jellybeans',
 let g:lightline = {
       \ 'colorscheme': 'nightfly',
       \ 'active': {
@@ -10,5 +11,3 @@ let g:lightline = {
       \   'gitbranch': 'FugitiveHead'
       \ },
       \ }
-
-

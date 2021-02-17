@@ -1,5 +1,17 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": ["lua", "css", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact", "markdown", "markdown.mdx", "mdx", "json"],
+  "coc.preferences.formatOnSaveFiletypes": [
+    "lua",
+    "css",
+    "scss",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "markdown",
+    "markdown.mdx",
+    "mdx",
+    "json"
+  ],
   "coc.preferences.colorSupport": true,
   "stylelintplus.cssInJs": true,
   "diagnostic.enable": true,
@@ -11,7 +23,7 @@
   "javascript.format.enabled": false,
   "javascript.preferences.useAliasesForRenames": false,
   "javascript.suggest.enabled": true,
-  "javascript.validate.enable": false,
+  "javascript.validate.enable": true,
   "typescript.format.enabled": false,
   "typescript.preferences.useAliasesForRenames": false,
   "typescript.suggestionActions.enabled": true,
@@ -49,7 +61,7 @@
       "isStdout": true
     }
   },
-  "diagnostic-languageserver.formatFiletypes": { 
+  "diagnostic-languageserver.formatFiletypes": {
     "lua": "luafmt-custom"
   },
   "languageserver": {
@@ -59,5 +71,6 @@
       "filetypes": ["sh", "zsh", "bash"],
       "ignoredRootPaths": ["~"]
     }
-  }
+  },
+  "Lua.diagnostics.globals": ["vim"]
 }
