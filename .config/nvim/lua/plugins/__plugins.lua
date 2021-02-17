@@ -20,7 +20,13 @@ return require("packer").startup(
     use "Dualspc/spaceodyssey"
 
     -- use {"sheerun/vim-polyglot", config = function() require "plugins.polyglot" end}
-    use "itchyny/lightline.vim"
+    use {
+      "itchyny/lightline.vim",
+      config = function()
+        -- require "plugins.lightline"
+        vim.cmd("source $HOME/.config/nvim/vim/lightline.vim")
+      end
+    }
     use {
       "mhinz/vim-startify",
       config = function()

@@ -1,5 +1,5 @@
 vim.g.use_nvim_lsp = false
-vim.g.use_telescope = false
+vim.g.use_telescope = true
 
 require "plugins.__plugins"
 

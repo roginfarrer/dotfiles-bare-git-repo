@@ -23,11 +23,12 @@ if not string.find(package.cpath, install_cpath_pattern, 1, true) then
 end
 
 local function try_loadstring(s, component, name)
-  local success, err = pcall(loadstring(s))
+  local success, result = pcall(loadstring(s))
   if not success then
     print('Error running ' .. component .. ' for ' .. name)
-    error(err)
+    error(result)
   end
+  return result
 end
 
 _G.packer_plugins = {
@@ -49,13 +50,15 @@ _G.packer_plugins = {
     path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/firenvim"
   },
   fzf = {
-    loaded = true,
-    path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/fzf"
+    loaded = false,
+    needs_bufread = false,
+    path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/opt/fzf"
   },
   ["fzf.vim"] = {
     config = { "\27LJ\2\nI\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0*source $HOME/.config/nvim/vim/fzf.vim\bcmd\bvim\0" },
-    loaded = true,
-    path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/fzf.vim"
+    loaded = false,
+    needs_bufread = false,
+    path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/opt/fzf.vim"
   },
   ["goyo.vim"] = {
     loaded = true,
@@ -66,6 +69,7 @@ _G.packer_plugins = {
     path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/iceberg.vim"
   },
   ["lightline.vim"] = {
+    config = { "\27LJ\2\nO\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0000source $HOME/.config/nvim/vim/lightline.vim\bcmd\bvim\0" },
     loaded = true,
     path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/lightline.vim"
   },
@@ -75,11 +79,14 @@ _G.packer_plugins = {
     path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/nvim-colorizer.lua"
   },
   ["nvim-compe"] = {
+    after_files = { "/Users/rfarrer/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_buffer.vim", "/Users/rfarrer/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_calc.vim", "/Users/rfarrer/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_nvim_lsp.vim", "/Users/rfarrer/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_nvim_lua.vim", "/Users/rfarrer/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_omni.vim", "/Users/rfarrer/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_path.vim", "/Users/rfarrer/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_snippets_nvim.vim", "/Users/rfarrer/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_spell.vim", "/Users/rfarrer/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_tags.vim", "/Users/rfarrer/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_treesitter.vim", "/Users/rfarrer/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_ultisnips.vim", "/Users/rfarrer/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_vim_lsc.vim", "/Users/rfarrer/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_vim_lsp.vim", "/Users/rfarrer/.local/share/nvim/site/pack/packer/opt/nvim-compe/after/plugin/compe_vsnip.vim" },
     loaded = false,
+    needs_bufread = false,
     path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/opt/nvim-compe"
   },
   ["nvim-lspconfig"] = {
     loaded = false,
+    needs_bufread = false,
     path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/opt/nvim-lspconfig"
   },
   ["nvim-treesitter"] = {
@@ -93,21 +100,16 @@ _G.packer_plugins = {
   },
   ["packer.nvim"] = {
     loaded = false,
+    needs_bufread = false,
     path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/opt/packer.nvim"
   },
   ["plenary.nvim"] = {
-    load_after = {
-      ["telescope.nvim"] = true
-    },
-    loaded = false,
-    path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/opt/plenary.nvim"
+    loaded = true,
+    path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/plenary.nvim"
   },
   ["popup.nvim"] = {
-    load_after = {
-      ["telescope.nvim"] = true
-    },
-    loaded = false,
-    path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/opt/popup.nvim"
+    loaded = true,
+    path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/popup.nvim"
   },
   rigel = {
     loaded = true,
@@ -122,17 +124,13 @@ _G.packer_plugins = {
     path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/targets.vim"
   },
   ["telescope-fzf-writer.nvim"] = {
-    load_after = {
-      ["telescope.nvim"] = true
-    },
-    loaded = false,
-    path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/opt/telescope-fzf-writer.nvim"
+    loaded = true,
+    path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/telescope-fzf-writer.nvim"
   },
   ["telescope.nvim"] = {
-    after = { "telescope-fzf-writer.nvim", "plenary.nvim", "popup.nvim" },
     config = { "\27LJ\2\n1\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\22plugins.telescope\frequire\0" },
-    loaded = false,
-    path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/opt/telescope.nvim"
+    loaded = true,
+    path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/telescope.nvim"
   },
   ["vim-abolish"] = {
     loaded = true,
@@ -192,6 +190,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/vim-open-url"
   },
+  ["vim-polyglot"] = {
+    loaded = true,
+    path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/vim-polyglot"
+  },
   ["vim-rhubarb"] = {
     config = { "\27LJ\2\n+\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\16plugins.git\frequire\0" },
     loaded = true,
@@ -221,24 +223,26 @@ _G.packer_plugins = {
   }
 }
 
--- Config for: coc.nvim
-try_loadstring("\27LJ\2\n+\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\16plugins.coc\frequire\0", "config", "coc.nvim")
--- Config for: fzf.vim
-try_loadstring("\27LJ\2\nI\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0*source $HOME/.config/nvim/vim/fzf.vim\bcmd\bvim\0", "config", "fzf.vim")
 -- Config for: vim-rhubarb
 try_loadstring("\27LJ\2\n+\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\16plugins.git\frequire\0", "config", "vim-rhubarb")
+-- Config for: lightline.vim
+try_loadstring("\27LJ\2\nO\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0000source $HOME/.config/nvim/vim/lightline.vim\bcmd\bvim\0", "config", "lightline.vim")
+-- Config for: telescope.nvim
+try_loadstring("\27LJ\2\n1\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\22plugins.telescope\frequire\0", "config", "telescope.nvim")
+-- Config for: vim-startify
+try_loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plugins.startify\frequire\0", "config", "vim-startify")
+-- Config for: coc.nvim
+try_loadstring("\27LJ\2\n+\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\16plugins.coc\frequire\0", "config", "coc.nvim")
 -- Config for: nvim-colorizer.lua
 try_loadstring("\27LJ\2\n7\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\14colorizer\frequire\0", "config", "nvim-colorizer.lua")
 -- Config for: vim-test
 try_loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plugins.vim-test\frequire\0", "config", "vim-test")
 -- Config for: vim-floaterm
 try_loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plugins.floaterm\frequire\0", "config", "vim-floaterm")
--- Config for: vim-fugitive
-try_loadstring("\27LJ\2\n+\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\16plugins.git\frequire\0", "config", "vim-fugitive")
--- Config for: vim-startify
-try_loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plugins.startify\frequire\0", "config", "vim-startify")
 -- Config for: nvim-treesitter
 try_loadstring("\27LJ\2\n2\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\23plugins.treesitter\frequire\0", "config", "nvim-treesitter")
+-- Config for: vim-fugitive
+try_loadstring("\27LJ\2\n+\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\16plugins.git\frequire\0", "config", "vim-fugitive")
 END
 
 catch
