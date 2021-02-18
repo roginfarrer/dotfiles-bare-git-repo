@@ -130,6 +130,6 @@ return require("packer").startup(
         require "colorizer".setup()
       end
     }
-    use {"plasticboy/vim-markdown"}
+    -- use {"plasticboy/vim-markdown"}
   end
 )

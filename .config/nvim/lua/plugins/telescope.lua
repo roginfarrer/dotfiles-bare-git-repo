@@ -31,20 +31,21 @@ require("telescope").load_extension("fzf_writer")
 local M = {}
 
 function M.search_dotfiles()
-  builtin.git_files {
-    cwd = "~/.local/share/chezmoi/",
-    -- find_command = {
-    --   "git",
-    --   "--git-dir",
-    --   "/Users/rfarrer/.dotfiles/",
-    --   "--work-tree",
-    --   "/Users/rfarrer/",
-    --   "ls-tree",
-    --   "--full-tree",
-    --   "-r",
-    --   "--name-only",
-    --   "HEAD"
-    -- },
+  builtin.find_files {
+    -- cwd = "~/.local/share/chezmoi/",
+    cwd = "~",
+    find_command = {
+      "git",
+      "--git-dir",
+      "/Users/rfarrer/.dotfiles/",
+      "--work-tree",
+      "/Users/rfarrer/",
+      "ls-tree",
+      "--full-tree",
+      "-r",
+      "--name-only",
+      "HEAD"
+    },
     prompt = "~ dotfiles ~"
   }
 end

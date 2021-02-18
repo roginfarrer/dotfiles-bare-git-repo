@@ -178,10 +178,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/vim-gitgutter"
   },
-  ["vim-markdown"] = {
-    loaded = true,
-    path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/vim-markdown"
-  },
   ["vim-nightfly-guicolors"] = {
     loaded = true,
     path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/vim-nightfly-guicolors"
@@ -189,10 +185,6 @@ _G.packer_plugins = {
   ["vim-open-url"] = {
     loaded = true,
     path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/vim-open-url"
-  },
-  ["vim-polyglot"] = {
-    loaded = true,
-    path = "/Users/rfarrer/.local/share/nvim/site/pack/packer/start/vim-polyglot"
   },
   ["vim-rhubarb"] = {
     config = { "\27LJ\2\n+\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\16plugins.git\frequire\0" },
@@ -223,26 +215,26 @@ _G.packer_plugins = {
   }
 }
 
--- Config for: vim-rhubarb
-try_loadstring("\27LJ\2\n+\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\16plugins.git\frequire\0", "config", "vim-rhubarb")
--- Config for: lightline.vim
-try_loadstring("\27LJ\2\nO\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0000source $HOME/.config/nvim/vim/lightline.vim\bcmd\bvim\0", "config", "lightline.vim")
--- Config for: telescope.nvim
-try_loadstring("\27LJ\2\n1\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\22plugins.telescope\frequire\0", "config", "telescope.nvim")
--- Config for: vim-startify
-try_loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plugins.startify\frequire\0", "config", "vim-startify")
--- Config for: coc.nvim
-try_loadstring("\27LJ\2\n+\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\16plugins.coc\frequire\0", "config", "coc.nvim")
 -- Config for: nvim-colorizer.lua
 try_loadstring("\27LJ\2\n7\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\14colorizer\frequire\0", "config", "nvim-colorizer.lua")
--- Config for: vim-test
-try_loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plugins.vim-test\frequire\0", "config", "vim-test")
 -- Config for: vim-floaterm
 try_loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plugins.floaterm\frequire\0", "config", "vim-floaterm")
--- Config for: nvim-treesitter
-try_loadstring("\27LJ\2\n2\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\23plugins.treesitter\frequire\0", "config", "nvim-treesitter")
+-- Config for: telescope.nvim
+try_loadstring("\27LJ\2\n1\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\22plugins.telescope\frequire\0", "config", "telescope.nvim")
 -- Config for: vim-fugitive
 try_loadstring("\27LJ\2\n+\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\16plugins.git\frequire\0", "config", "vim-fugitive")
+-- Config for: vim-rhubarb
+try_loadstring("\27LJ\2\n+\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\16plugins.git\frequire\0", "config", "vim-rhubarb")
+-- Config for: vim-test
+try_loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plugins.vim-test\frequire\0", "config", "vim-test")
+-- Config for: vim-startify
+try_loadstring("\27LJ\2\n0\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\21plugins.startify\frequire\0", "config", "vim-startify")
+-- Config for: nvim-treesitter
+try_loadstring("\27LJ\2\n2\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\23plugins.treesitter\frequire\0", "config", "nvim-treesitter")
+-- Config for: coc.nvim
+try_loadstring("\27LJ\2\n+\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\16plugins.coc\frequire\0", "config", "coc.nvim")
+-- Config for: lightline.vim
+try_loadstring("\27LJ\2\nO\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0000source $HOME/.config/nvim/vim/lightline.vim\bcmd\bvim\0", "config", "lightline.vim")
 END
 
 catch
