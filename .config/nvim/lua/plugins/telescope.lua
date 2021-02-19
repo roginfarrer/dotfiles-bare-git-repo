@@ -1,5 +1,11 @@
+local finders = require("telescope.finders")
+local make_entry = require("telescope.make_entry")
+local pickers = require("telescope.pickers")
 local actions = require "telescope.actions"
 local builtin = require "telescope.builtin"
+
+local conf = require("telescope.config").values
+
 local vimp = require "vimp"
 
 require("telescope").setup {
@@ -66,11 +72,31 @@ function M.recent_buffers()
   }
 end
 
+function M.arglist(opts)
+  opts = opts or {}
+  local locations = vim.fn.argv()
+
+  if vim.tbl_isempty(locations) then
+    return
+  end
+
+  pickers.new(
+    opts,
+    {
+      prompt_title = "Quickfix",
+      finder = finders.new_table(locations),
+      previewer = conf.qflist_previewer(opts),
+      sorter = conf.generic_sorter(opts)
+    }
+  ):find()
+end
+
 vimp.nnoremap({"silent"}, "<Leader>fp", [[<cmd>Telescope git_files<CR>]])
 vimp.nnoremap({"silent"}, "<Leader>f.", [[<cmd>Telescope find_files<CR>]])
 vimp.nnoremap({"silent"}, "<Leader>fg", [[<cmd>Telescope live_grep<CR>]])
 vimp.nnoremap({"silent"}, "<leader>fb", M.recent_buffers)
 vimp.nnoremap({"silent"}, "<leader>fd", M.search_dotfiles)
+vimp.nnoremap({"silent"}, "<leader>fa", M.arglist)
 vimp.nnoremap({"silent"}, "<Leader>fh", [[<cmd>Telescope oldfiles<CR>]])
 
 vimp.nnoremap({"silent"}, "<C-p>", [[<cmd>Telescope git_files<CR>]])
