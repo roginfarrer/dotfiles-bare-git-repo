@@ -48,4 +48,4 @@ opt.undofile = true
 opt.updatetime = 300
 
 vim.g.mapleader = " "
-vim.cmd("colorscheme nightfly")
+vim.cmd("colorscheme spaceodyssey")

@@ -1,6 +1,6 @@
 "\ 'colorscheme': 'jellybeans',
 let g:lightline = {
-      \ 'colorscheme': 'nightfly',
+      \ 'colorscheme': 'jellybeans',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'readonly', 'filename', 'modified' ] ],
