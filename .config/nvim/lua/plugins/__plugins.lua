@@ -130,6 +130,12 @@ return require("packer").startup(
         require "colorizer".setup()
       end
     }
+    use {
+      "windwp/nvim-ts-autotag",
+      config = function()
+        require("nvim-ts-autotag").setup()
+      end
+    }
     -- use {"plasticboy/vim-markdown"}
   end
 )

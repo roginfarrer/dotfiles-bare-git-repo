@@ -13,7 +13,7 @@
     "json"
   ],
   "coc.preferences.colorSupport": true,
-  "stylelintplus.cssInJs": true,
+  "stylelintplus.cssInJs": false,
   "diagnostic.enable": true,
   "diagnostic.errorSign": "",
   "diagnostic.highlightOffset": 9999999,

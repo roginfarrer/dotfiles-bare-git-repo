@@ -36,6 +36,7 @@ vimp.nmap({"silent"}, "gi", "<Plug>(coc-implementation)")
 vimp.nmap({"silent"}, "gr", "<Plug>(coc-references)")
 vimp.nmap({"silent"}, "<leader>lr", "<Plug>(coc-rename)")
 vimp.nmap({"silent"}, "<leader>do", "<Plug>(coc-codeaction)")
+vimp.xmap({"silent"}, "<leader>do", "<Plug>(coc-codeaction-selected)")
 
 vimp.inoremap({"silent", "expr"}, "<Tab>", "v:lua.smart_tab()")
 vimp.inoremap(
