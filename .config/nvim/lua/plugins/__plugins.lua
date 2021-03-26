@@ -89,6 +89,21 @@ return require("packer").startup(
         require "plugins.git"
       end
     }
+    -- use {
+    --   "TimUntersberger/neogit",
+    --   config = function()
+    --     require("neogit").setup {
+    --       -- override/add mappings
+    --       mappings = {
+    --         -- modify status buffer mappings
+    --         status = {
+    --           -- Adds a mapping with "B" as key that does the "BranchPopup" command
+    --           ["B"] = "BranchPopup"
+    --         }
+    --       }
+    --     }
+    --   end
+    -- }
     use {
       "tpope/vim-rhubarb",
       config = function()
@@ -96,7 +111,12 @@ return require("packer").startup(
       end
     }
     use "whiteinge/diffconflicts"
-    use "airblade/vim-gitgutter"
+    use {
+      "lewis6991/gitsigns.nvim",
+      requires = {
+        "nvim-lua/plenary.nvim"
+      }
+    }
     use {
       "neoclide/coc.nvim",
       branch = "release",
@@ -137,5 +157,7 @@ return require("packer").startup(
       end
     }
     -- use {"plasticboy/vim-markdown"}
+    use {"lighthaus-theme/vim-lighthaus"}
+    use "JoosepAlviste/nvim-ts-context-commentstring"
   end
 )

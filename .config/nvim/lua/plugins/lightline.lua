@@ -1,5 +1,5 @@
 vim.g.lightline = {
-  colorscheme = "nightfly",
+  colorscheme = "lighthaus",
   active = {
     left = {
       {"mode", "paste"},

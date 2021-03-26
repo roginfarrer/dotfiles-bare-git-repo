@@ -1,12 +1,26 @@
-local treesitter = require "nvim-treesitter.configs"
-
-treesitter.setup {
-  ensure_installed = "all",
+require "nvim-treesitter.configs".setup {
+  ensure_installed = {
+    "javascript",
+    "typescript",
+    "tsx",
+    "css",
+    "bash",
+    "yaml",
+    "json",
+    "lua",
+    "toml",
+    "regex",
+    "php",
+    "graphql"
+  },
   indent = {
     enable = true
   },
   highlight = {
     enable = true,
-    disable = {"md", "markdown"}
+    use_languagetree = true
+  },
+  context_commentstring = {
+    enable = true
   }
 }
