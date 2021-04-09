@@ -17,7 +17,7 @@ return require("packer").startup(
     use "Rigellute/rigel"
     use "cocopon/iceberg.vim"
     use "bluz71/vim-nightfly-guicolors"
-    use "Dualspc/spaceodyssey"
+    use {"Dualspc/spaceodyssey", branch = "lua"}
 
     -- use {"sheerun/vim-polyglot", config = function() require "plugins.polyglot" end}
     use {
@@ -89,21 +89,21 @@ return require("packer").startup(
         require "plugins.git"
       end
     }
-    -- use {
-    --   "TimUntersberger/neogit",
-    --   config = function()
-    --     require("neogit").setup {
-    --       -- override/add mappings
-    --       mappings = {
-    --         -- modify status buffer mappings
-    --         status = {
-    --           -- Adds a mapping with "B" as key that does the "BranchPopup" command
-    --           ["B"] = "BranchPopup"
-    --         }
-    --       }
-    --     }
-    --   end
-    -- }
+    use {
+      "TimUntersberger/neogit",
+      config = function()
+        require("neogit").setup {
+          -- override/add mappings
+          mappings = {
+            -- modify status buffer mappings
+            status = {
+              -- Adds a mapping with "B" as key that does the "BranchPopup" command
+              ["B"] = "BranchPopup"
+            }
+          }
+        }
+      end
+    }
     use {
       "tpope/vim-rhubarb",
       config = function()
@@ -156,8 +156,9 @@ return require("packer").startup(
         require("nvim-ts-autotag").setup()
       end
     }
-    -- use {"plasticboy/vim-markdown"}
+    use {"plasticboy/vim-markdown"}
     use {"lighthaus-theme/vim-lighthaus"}
     use "JoosepAlviste/nvim-ts-context-commentstring"
+    use "christianchiarulli/nvcode-color-schemes.vim"
   end
 )
