@@ -16,6 +16,7 @@ M.autocmd("InsertLeave", "*", "set nocul")
 M.autocmd("TextYankPost", "*", [[silent! lua vim.highlight.on_yank{higroup="Substitute", timeout=250}]])
 
 M.autocmd("BufEnter,BufRead", "*.tsx", "set filetype=typescriptreact")
+M.autocmd("BufEnter,BufRead", "*.mdx", "set filetype=markdown.mdx")
 
 M.autocmd("TermOpen", "*", "startinsert")
 

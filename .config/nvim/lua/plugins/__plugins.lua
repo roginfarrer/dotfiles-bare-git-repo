@@ -104,12 +104,12 @@ return require("packer").startup(
         }
       end
     }
-    use {
-      "tpope/vim-rhubarb",
-      config = function()
-        require "plugins.git"
-      end
-    }
+    -- use {
+    --   "tpope/vim-rhubarb",
+    --   config = function()
+    --     require "plugins.git"
+    --   end
+    -- }
     use "whiteinge/diffconflicts"
     use {
       "lewis6991/gitsigns.nvim",
@@ -156,9 +156,43 @@ return require("packer").startup(
         require("nvim-ts-autotag").setup()
       end
     }
-    use {"plasticboy/vim-markdown"}
+    -- use {"plasticboy/vim-markdown", requires = {"godlygeek/tabular"}}
+    -- use {"jxnblk/vim-mdx-js"}
+    use {
+      "tpope/vim-markdown",
+      config = function()
+        vim.g.markdown_fenced_languages = {
+          "html",
+          "css",
+          "scss",
+          -- "typescript=typescriptreact",
+          -- "javascript=javascriptreact",
+          -- "bash=sh",
+          "sh",
+          "javascript",
+          "yaml",
+          "json"
+        }
+      end
+    }
     use {"lighthaus-theme/vim-lighthaus"}
     use "JoosepAlviste/nvim-ts-context-commentstring"
     use "christianchiarulli/nvcode-color-schemes.vim"
+    use {
+      "ruifm/gitlinker.nvim",
+      config = function()
+        if vim.fn.empty(vim.fn.glob("$HOME/.config/nvim/lua/plugins/DO_NOT_COMMIT_gitlinker.lua")) == 0 then
+          require "plugins.DO_NOT_COMMIT_gitlinker"
+        else
+          require "gitlinker".setup(
+            {
+              opts = {
+                mappings = "<leader>gc"
+              }
+            }
+          )
+        end
+      end
+    }
   end
 )
