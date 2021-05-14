@@ -13,12 +13,6 @@ return require("packer").startup(
   function(use)
     use {"wbthomason/packer.nvim", opt = true}
 
-    -- Colors
-    use "Rigellute/rigel"
-    use "cocopon/iceberg.vim"
-    use "bluz71/vim-nightfly-guicolors"
-    use {"Dualspc/spaceodyssey", branch = "lua"}
-
     -- use {"sheerun/vim-polyglot", config = function() require "plugins.polyglot" end}
     use {
       "itchyny/lightline.vim",
@@ -104,12 +98,12 @@ return require("packer").startup(
         }
       end
     }
-    -- use {
-    --   "tpope/vim-rhubarb",
-    --   config = function()
-    --     require "plugins.git"
-    --   end
-    -- }
+    use {
+      "tpope/vim-rhubarb",
+      config = function()
+        require "plugins.git"
+      end
+    }
     use "whiteinge/diffconflicts"
     use {
       "lewis6991/gitsigns.nvim",
@@ -175,24 +169,38 @@ return require("packer").startup(
         }
       end
     }
-    use {"lighthaus-theme/vim-lighthaus"}
     use "JoosepAlviste/nvim-ts-context-commentstring"
+
+    -- Colors
+    use "Rigellute/rigel"
+    use "cocopon/iceberg.vim"
+    use "bluz71/vim-nightfly-guicolors"
+    use {"Dualspc/spaceodyssey", branch = "lua"}
+    use "windwp/wind-colors"
+    use {"metalelf0/jellybeans-nvim", requires = {"rktjmp/lush.nvim"}}
     use "christianchiarulli/nvcode-color-schemes.vim"
-    use {
-      "ruifm/gitlinker.nvim",
-      config = function()
-        if vim.fn.empty(vim.fn.glob("$HOME/.config/nvim/lua/plugins/DO_NOT_COMMIT_gitlinker.lua")) == 0 then
-          require "plugins.DO_NOT_COMMIT_gitlinker"
-        else
-          require "gitlinker".setup(
-            {
-              opts = {
-                mappings = "<leader>gc"
-              }
-            }
-          )
-        end
-      end
-    }
+    use {"folke/tokyonight.nvim"}
+    use {"lighthaus-theme/vim-lighthaus"}
+    use "shaunsingh/moonlight.nvim"
+
+    -- use {
+    --   "ruifm/gitlinker.nvim",
+    --   requires = "nvim-lua/plenary.nvim",
+    --   config = function()
+    --     if vim.fn.empty(vim.fn.glob("$HOME/.config/nvim/lua/plugins/DO_NOT_COMMIT_gitlinker.lua")) == 0 then
+    --       require "plugins.DO_NOT_COMMIT_gitlinker"
+    --     else
+    --       require "gitlinker".setup(
+    --         {
+    --           opts = {
+    --             mappings = "<leader>gc",
+    --             -- adds current line nr in the url for normal mode
+    --             add_current_line_on_normal_mode = false
+    --           }
+    --         }
+    --       )
+    --     end
+    --   end
+    -- }
   end
 )

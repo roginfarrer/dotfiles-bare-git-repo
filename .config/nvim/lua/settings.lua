@@ -49,3 +49,7 @@ opt.updatetime = 300
 
 vim.g.mapleader = " "
 vim.cmd("colorscheme nightfly")
+-- vim.cmd("colorscheme jellybeans-nvim")
+-- vim.g.tokyonight_style = "night"
+-- vim.cmd("colorscheme tokyonight")
+-- require("material").set()

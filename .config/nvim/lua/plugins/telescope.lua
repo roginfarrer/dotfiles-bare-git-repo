@@ -1,5 +1,4 @@
 local finders = require("telescope.finders")
-local make_entry = require("telescope.make_entry")
 local pickers = require("telescope.pickers")
 local actions = require "telescope.actions"
 local builtin = require "telescope.builtin"
@@ -100,11 +99,7 @@ vimp.nnoremap({"silent"}, "<leader>fa", M.arglist)
 vimp.nnoremap({"silent"}, "<Leader>fh", [[<cmd>Telescope oldfiles<CR>]])
 
 vimp.nnoremap({"silent"}, "<C-p>", [[<cmd>Telescope git_files<CR>]])
--- vimp.nnoremap({"silent"}, "<Leader>.", [[<cmd>Telescope find_files<CR>]])
 vimp.nnoremap({"silent"}, "<leader>;", M.recent_buffers)
--- vimp.nnoremap({"silent"}, "<Leader>c", [[<cmd>Telescope command_history<CR>]])
--- vimp.nnoremap({"silent"}, "<Leader>h", [[<cmd>Telescope oldfiles<CR>]])
--- vimp.nnoremap({"silent"}, "<leader>d", M.search_dotfiles)
 
 return setmetatable(
   {},
