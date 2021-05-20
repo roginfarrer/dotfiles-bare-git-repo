@@ -38,7 +38,13 @@ return require("packer").startup(
     use "tpope/vim-commentary"
     use "tpope/vim-sleuth"
     use "junegunn/goyo.vim"
-    use "jiangmiao/auto-pairs"
+    -- use "jiangmiao/auto-pairs"
+    use {
+      "steelsojka/pears.nvim",
+      config = function()
+        require "pears".setup()
+      end
+    }
     use "tpope/vim-abolish"
     use "dhruvasagar/vim-open-url"
     use {
