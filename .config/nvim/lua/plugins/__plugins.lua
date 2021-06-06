@@ -157,22 +157,11 @@ return require("packer").startup(
       end
     }
     -- use {"plasticboy/vim-markdown", requires = {"godlygeek/tabular"}}
-    -- use {"jxnblk/vim-mdx-js"}
+    use {"jxnblk/vim-mdx-js"}
     use {
       "tpope/vim-markdown",
       config = function()
-        vim.g.markdown_fenced_languages = {
-          "html",
-          "css",
-          "scss",
-          -- "typescript=typescriptreact",
-          -- "javascript=javascriptreact",
-          -- "bash=sh",
-          "sh",
-          "javascript",
-          "yaml",
-          "json"
-        }
+        require("plugins.polyglot")
       end
     }
     use "JoosepAlviste/nvim-ts-context-commentstring"

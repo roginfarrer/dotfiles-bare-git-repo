@@ -97,4 +97,6 @@ vimp.vnoremap(
   end
 )
 
-require("autocmds").autocmd("BufWritePre", "*.mdx", ":CocCommand prettier.formatFile")
+vim.g.coc_filetype_map = {
+  ["markdown.mdx"] = "mdx"
+}
