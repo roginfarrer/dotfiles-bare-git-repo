@@ -153,7 +153,7 @@ return require("packer").startup(
     use {
       "windwp/nvim-ts-autotag",
       config = function()
-        require("nvim-ts-autotag").setup()
+        require "nvim-ts-autotag".setup()
       end
     }
     -- use {"plasticboy/vim-markdown", requires = {"godlygeek/tabular"}}
@@ -161,7 +161,7 @@ return require("packer").startup(
     use {
       "tpope/vim-markdown",
       config = function()
-        require("plugins.polyglot")
+        require "plugins.polyglot"
       end
     }
     use "JoosepAlviste/nvim-ts-context-commentstring"
@@ -177,6 +177,13 @@ return require("packer").startup(
     use {"folke/tokyonight.nvim"}
     use {"lighthaus-theme/vim-lighthaus"}
     use "shaunsingh/moonlight.nvim"
+    use {
+      "kkoomen/vim-doge",
+      run = ":call doge#install()",
+      config = function()
+        require "plugins.doge"
+      end
+    }
 
     -- use {
     --   "ruifm/gitlinker.nvim",
