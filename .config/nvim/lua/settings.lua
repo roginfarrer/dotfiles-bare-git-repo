@@ -1,23 +1,19 @@
 -- TODO: Remove when https://github.com/neovim/neovim/pull/13479 lands
 local opts_info = vim.api.nvim_get_all_options_info()
-local opt =
-  setmetatable(
-  {},
-  {
-    __index = vim.o,
-    __newindex = function(_, key, value)
-      vim.o[key] = value
-      local scope = opts_info[key].scope
-      if scope == "win" then
-        vim.wo[key] = value
-      elseif scope == "buf" then
-        vim.bo[key] = value
-      end
-    end
-  }
-)
+local opt = setmetatable({}, {
+	__index = vim.o,
+	__newindex = function(_, key, value)
+		vim.o[key] = value
+		local scope = opts_info[key].scope
+		if scope == "win" then
+			vim.wo[key] = value
+		elseif scope == "buf" then
+			vim.bo[key] = value
+		end
+	end,
+})
 
-opt.completeopt = "menuone,noinsert,noselect"
+opt.completeopt = "menuone,noselect"
 opt.expandtab = true
 opt.foldlevel = 99
 opt.foldmethod = "expr"
@@ -48,8 +44,8 @@ opt.undofile = true
 opt.updatetime = 300
 
 vim.g.mapleader = " "
-vim.cmd("colorscheme nightfly")
+-- vim.cmd("colorscheme nightfly")
 -- vim.cmd("colorscheme jellybeans-nvim")
 -- vim.g.tokyonight_style = "night"
--- vim.cmd("colorscheme tokyonight")
+vim.cmd("colorscheme tokyonight")
 -- require("material").set()

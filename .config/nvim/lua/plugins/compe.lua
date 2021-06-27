@@ -1,25 +1,58 @@
-local vimp = require'vimp'
+local u = require("utils")
 
-require'compe'.setup {
-  enabled = true;
-  -- min_length = 1;
-  -- preselect = 'enable' || 'disable' || 'always';
-  -- throttle_time = ... number ...;
-  -- source_timeout = ... number ...;
-  -- incomplete_delay = ... number ...;
-  -- allow_prefix_unmatch = false;
+require("compe").setup({
+	preselect = "always",
+	source = {
+		path = true,
+		buffer = true,
+		nvim_lsp = true,
+		nvim_lua = true,
+	},
+})
 
-  source = {
-    path = true;
-    buffer = true;
-    -- vsnip = true;
-    nvim_lsp = true;
-  };
-}
+local t = function(str)
+	return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
 
--- vimp.inoremap({'expr', 'silent'}, '<C-Space>', [[:call compe#complete()]])
--- vimp.inoremap({'expr', 'silent'}, '<CR>', [[:call compe#confirm("<CR>")]])
--- vimp.inoremap({'expr', 'silent'}, '<C-e>', [[:call compe#close("<C-e>"))]])
--- inoremap <silent><expr> <C-Space> compe#complete()
---   inoremap <silent><expr> <CR>      compe#confirm('<CR>')
---   inoremap <silent><expr> <C-e>     compe#close('<C-e>')
+local check_back_space = function()
+	local col = vim.fn.col(".") - 1
+	if col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
+		return true
+	else
+		return false
+	end
+end
+
+-- Use (s-)tab to:
+--- move to prev/next item in completion menuone
+--- jump to prev/next snippet's placeholder
+_G.tab_complete = function()
+	if vim.fn.pumvisible() == 1 then
+		return t("<C-n>")
+	elseif vim.fn.call("vsnip#available", { 1 }) == 1 then
+		return t("<Plug>(vsnip-expand-or-jump)")
+	elseif check_back_space() then
+		return t("<Tab>")
+	else
+		return vim.fn["compe#complete"]()
+	end
+end
+_G.s_tab_complete = function()
+	if vim.fn.pumvisible() == 1 then
+		return t("<C-p>")
+	elseif vim.fn.call("vsnip#jumpable", { -1 }) == 1 then
+		return t("<Plug>(vsnip-jump-prev)")
+	else
+		-- If <S-Tab> is not working in your terminal, change it to <C-h>
+		return t("<S-Tab>")
+	end
+end
+
+vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", { expr = true })
+vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", { expr = true })
+vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", { expr = true })
+vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", { expr = true })
+
+vim.api.nvim_set_keymap("i", "<C-Space>", "compe#complete()", { expr = true, silent = true })
+vim.api.nvim_set_keymap("i", "<CR>", [[compe#confirm("<CR>")]], { expr = true, silent = true })
+vim.api.nvim_set_keymap("i", "<C-e>", [[compe#close("<C-e>")]], { expr = true, silent = true })
