@@ -7,7 +7,7 @@ local ts_utils_settings = {
 	signature_help_in_parens = true,
 	eslint_bin = "eslint_d",
 	eslint_enable_diagnostics = true,
-	enable_formatting = true,
+	enable_formatting = false,
 	formatter = "eslint_d",
 	update_imports_on_move = true,
 }

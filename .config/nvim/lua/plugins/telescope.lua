@@ -9,7 +9,11 @@ local vimp = require "vimp"
 
 require("telescope").setup {
   defaults = {
-    prompt_position = "top",
+    layout_config = {
+      horizontal = {
+        prompt_position = "top"
+      }
+    },
     sorting_strategy = "ascending",
     mappings = {
       -- insert mode
@@ -23,9 +27,9 @@ require("telescope").setup {
     },
     -- generic_sorter = require "telescope.sorters".get_fzy_sorter,
     -- file_sorter = require "telescope.sorters".get_fzy_sorter,
-    file_previewer = require "telescope.previewers".vim_buffer_cat.new,
-    grep_previewer = require "telescope.previewers".vim_buffer_vimgrep.new,
-    qflist_previewer = require "telescope.previewers".vim_buffer_qflist.new,
+    -- file_previewer = require "telescope.previewers".vim_buffer_cat.new,
+    -- grep_previewer = require "telescope.previewers".vim_buffer_vimgrep.new,
+    -- qflist_previewer = require "telescope.previewers".vim_buffer_qflist.new,
     color_devicons = true,
     set_env = {["COLORTERM"] = "truecolor"}
   }
@@ -65,9 +69,9 @@ end
 
 function M.recent_buffers()
   builtin.buffers {
-    sort_lastused = true,
+    sort_lastused = true
     -- ignore_current_buffer = true,
-    sorter = require "telescope.sorters".get_substr_matcher()
+    -- sorter = require "telescope.sorters".get_substr_matcher()
   }
 end
 
@@ -92,7 +96,7 @@ end
 
 vimp.nnoremap({"silent"}, "<Leader>fp", [[<cmd>Telescope git_files<CR>]])
 vimp.nnoremap({"silent"}, "<Leader>f.", [[<cmd>Telescope find_files<CR>]])
-vimp.nnoremap({"silent"}, "<Leader>fg", [[<cmd>Telescope live_grep<CR>]])
+vimp.nnoremap({"silent"}, "<Leader>fg", "<cmd> lua require('telescope').extensions.fzf_writer.staged_grep()<CR>")
 vimp.nnoremap({"silent"}, "<leader>fb", M.recent_buffers)
 vimp.nnoremap({"silent"}, "<leader>fd", M.search_dotfiles)
 vimp.nnoremap({"silent"}, "<leader>fa", M.arglist)

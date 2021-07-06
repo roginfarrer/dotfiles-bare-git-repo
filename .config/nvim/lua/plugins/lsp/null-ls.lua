@@ -4,10 +4,21 @@ local b = null_ls.builtins
 local sources = {
   b.formatting.prettier_d_slim.with(
     {
-      filetypes = {"javascript", "javascriptreact", "typescript", "typescriptreact", "css", "html", "json", "yaml", "markdown", "mdx"}
+      filetypes = {
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact",
+        "css",
+        "html",
+        "json",
+        "yaml",
+        "markdown",
+        "mdx"
+      }
     }
   ),
-  b.formatting.stylua,
+  b.formatting.stylua
 }
 
 local M = {}
@@ -15,8 +26,8 @@ M.setup = function(on_attach)
   null_ls.setup(
     {
       -- debug = true,
-      on_attach = on_attach,
-      sources = sources
+      on_attach = on_attach
+      -- sources = sources,
     }
   )
 end

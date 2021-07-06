@@ -1,51 +1,33 @@
--- TODO: Remove when https://github.com/neovim/neovim/pull/13479 lands
-local opts_info = vim.api.nvim_get_all_options_info()
-local opt = setmetatable({}, {
-	__index = vim.o,
-	__newindex = function(_, key, value)
-		vim.o[key] = value
-		local scope = opts_info[key].scope
-		if scope == "win" then
-			vim.wo[key] = value
-		elseif scope == "buf" then
-			vim.bo[key] = value
-		end
-	end,
-})
-
-opt.completeopt = "menuone,noselect"
-opt.expandtab = true
-opt.foldlevel = 99
-opt.foldmethod = "expr"
-opt.foldexpr = [[nvim_treesitter#foldexpr()]]
-opt.foldnestmax = 10
-opt.hidden = true
-opt.hlsearch = false
-opt.ignorecase = true
-opt.ignorecase = true
-opt.inccommand = "nosplit"
-opt.lazyredraw = true
-opt.linebreak = true
-opt.mouse = "a"
-opt.number = true
-opt.relativenumber = true
-opt.scrolloff = 10
-opt.shiftwidth = 2
-opt.tabstop = 2
-opt.signcolumn = "yes"
-opt.smartcase = true
-opt.smartindent = true
-opt.splitbelow = true
-opt.splitright = true
-opt.swapfile = false
-opt.swapfile = false
-opt.termguicolors = true
-opt.undofile = true
-opt.updatetime = 300
+vim.o.completeopt = "menuone,noselect"
+vim.o.expandtab = true
+vim.o.foldlevel = 99
+vim.o.foldmethod = "expr"
+vim.o.foldexpr = [[nvim_treesitter#foldexpr()]]
+vim.o.foldnestmax = 10
+vim.o.hidden = true
+vim.o.hlsearch = false
+vim.o.ignorecase = true
+vim.o.ignorecase = true
+vim.o.inccommand = "nosplit"
+vim.o.lazyredraw = true
+vim.o.linebreak = true
+vim.o.mouse = "a"
+vim.o.number = true
+vim.o.relativenumber = true
+vim.o.scrolloff = 10
+vim.o.shiftwidth = 2
+vim.o.tabstop = 2
+vim.o.signcolumn = "yes"
+vim.o.smartcase = true
+vim.o.smartindent = true
+vim.o.splitbelow = true
+vim.o.splitright = true
+vim.o.swapfile = false
+vim.o.swapfile = false
+vim.o.termguicolors = true
+vim.o.undofile = true
+vim.o.updatetime = 300
 
 vim.g.mapleader = " "
 -- vim.cmd("colorscheme nightfly")
--- vim.cmd("colorscheme jellybeans-nvim")
--- vim.g.tokyonight_style = "night"
 vim.cmd("colorscheme tokyonight")
--- require("material").set()
