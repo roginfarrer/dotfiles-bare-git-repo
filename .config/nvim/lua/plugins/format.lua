@@ -1,26 +1,29 @@
 local prettier = function()
   return {
-    exe = "prettier_d_slim",
-    args = {"--stdin", "--stdin-filepath", vim.api.nvim_buf_get_name(0)},
+    -- exe = "node ~/repos/prettier_d_slim/lib/bin/prettier_d_slim.js",
+    -- exe = "prettier_d_slim",
+    -- args = {"--stdin", "--stdin-filepath", vim.api.nvim_buf_get_name(0)},
+    exa = "prettierd",
+    args = {vim.api.nvim_buf_get_name(0)},
     stdin = true
   }
 end
 
 require("formatter").setup(
   {
-    logging = false,
+    logging = true,
     filetype = {
-      javascript = {prettier},
-      javascriptreact = {prettier},
-      typescript = {prettier},
-      typescriptreact = {prettier},
-      css = {prettier},
-      markdown = {prettier},
-      mdx = {prettier},
-      scss = {prettier},
-      html = {prettier},
-      json = {prettier},
-      yaml = {prettier},
+      -- javascript = {prettier},
+      -- javascriptreact = {prettier},
+      -- typescript = {prettier},
+      -- typescriptreact = {prettier},
+      -- css = {prettier},
+      -- markdown = {prettier},
+      -- mdx = {prettier},
+      -- scss = {prettier},
+      -- html = {prettier},
+      -- json = {prettier},
+      -- yaml = {prettier},
       lua = {
         function()
           return {
@@ -33,13 +36,11 @@ require("formatter").setup(
     }
   }
 )
+-- autocmd BufWritePost *.js,*.ts,*.tsx,*.md,*.mdx,*.css,*.scss,*.yaml,*.yml,*.json,*.jsx,*.lua FormatWrite
 
-vim.api.nvim_exec(
-  [[
+vim.api.nvim_exec([[
 augroup FormatAutogroup
   autocmd!
-  autocmd BufWritePost *.js,*.ts,*.tsx,*.md,*.mdx,*.css,*.scss,*.yaml,*.yml,*.json,*.jsx,*.lua FormatWrite
+  autocmd BufWritePost *.lua FormatWrite
 augroup END
-]],
-  true
-)
+]], true)
