@@ -9,12 +9,12 @@ local vimp = require "vimp"
 
 require("telescope").setup {
   defaults = {
-    layout_config = {
-      horizontal = {
-        prompt_position = "top"
-      }
-    },
-    sorting_strategy = "ascending",
+    -- layout_config = {
+    --   horizontal = {
+    --     prompt_position = "top"
+    --   }
+    -- },
+    -- sorting_strategy = "ascending",
     mappings = {
       -- insert mode
       i = {

@@ -55,7 +55,7 @@ require("lspconfig").typescript.setup(tsserver(on_attach))
 require("lspconfig").lua.setup(lua_ls(on_attach))
 
 -- Servers without configs
-local servers = { "vim", "bash" }
+local servers = { "vim", "bash", "json" }
 for _, server in pairs(servers) do
 	require("lspconfig")[server].setup({
 		on_attach = on_attach,
