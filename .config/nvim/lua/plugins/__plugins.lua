@@ -99,8 +99,17 @@ return require("packer").startup(
         end
       }
     )
-    use("justinmk/vim-dirvish")
-    use({"roginfarrer/vim-dirvish-dovish", branch = "main"})
+    -- use({"justinmk/vim-dirvish", opt = false})
+    -- use({"roginfarrer/vim-dirvish-dovish", opt = false, branch = "main"})
+    use(
+      {
+        "tamago324/lir.nvim",
+        requires = {"nvim-lua/plenary.nvim", "kyazdani42/nvim-web-devicons", "tamago324/lir-git-status.nvim"},
+        config = function()
+          require("plugins.lir")
+        end
+      }
+    )
     use("tpope/vim-eunuch")
     use("duggiefresh/vim-easydir")
     use("jesseleite/vim-agriculture")
@@ -195,7 +204,8 @@ return require("packer").startup(
     use({"jose-elias-alvarez/nvim-lsp-ts-utils", opt = not vim.g.use_nvim_lsp})
     use(
       {
-        "ray-x/lsp_signature.nvim"
+        "ray-x/lsp_signature.nvim",
+        opt = not vim.g.use_nvim_lsp
       }
     )
     use(
@@ -204,7 +214,7 @@ return require("packer").startup(
         opt = not vim.g.use_nvim_lsp
       }
     )
-    use("svermeulen/vimpeccable")
+    use({"svermeulen/vimpeccable"})
     use(
       {
         "hrsh7th/nvim-compe",
@@ -224,13 +234,22 @@ return require("packer").startup(
     )
     use(
       {
-        "glacambre/firenvim",
-        run = function()
-          vim.fn["firenvim#install"](0)
+        "kyazdani42/nvim-web-devicons",
+        config = function()
+          require "nvim-web-devicons".setup(
+            {
+              override = {
+                lir_folder_icon = {
+                  icon = "",
+                  color = "#7ebae4",
+                  name = "LirFolderNode"
+                }
+              }
+            }
+          )
         end
       }
     )
-    use("kyazdani42/nvim-web-devicons")
     use("ryanoasis/vim-devicons")
     use(
       {
