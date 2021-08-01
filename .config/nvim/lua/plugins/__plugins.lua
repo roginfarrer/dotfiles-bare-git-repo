@@ -76,21 +76,19 @@ return require("packer").startup(
       }
     )
     use("wellle/targets.vim")
-    use(
-      {
-        "nvim-telescope/telescope.nvim",
-        config = function()
-          require("plugins.telescope")
-        end,
-        -- opt = not vim.g.use_telescope,
-        opt = false,
-        requires = {
-          "nvim-lua/plenary.nvim",
-          "nvim-lua/popup.nvim",
-          "nvim-telescope/telescope-fzf-writer.nvim"
-        }
-      }
-    )
+    -- use(
+    --   {
+    --     "nvim-telescope/telescope.nvim",
+    --     config = function()
+    --       require("plugins.telescope")
+    --     end,
+    --     requires = {
+    --       "nvim-lua/plenary.nvim",
+    --       "nvim-lua/popup.nvim",
+    --       "nvim-telescope/telescope-fzf-writer.nvim"
+    --     }
+    --   }
+    -- )
     use(
       {
         "camspiers/snap",
@@ -289,11 +287,21 @@ return require("packer").startup(
     use({"folke/tokyonight.nvim"})
     use({"lighthaus-theme/vim-lighthaus"})
     use("shaunsingh/moonlight.nvim")
+
     use(
       {
         "mhartington/formatter.nvim",
         config = function()
           require("plugins.format")
+        end
+      }
+    )
+    use(
+      {
+        "windwp/nvim-spectre",
+        requires = {"nvim-lua/plenary.nvim", "nvim-lua/popup.nvim"},
+        config = function()
+          require("utils").nnoremap("<leader>fr", ":lua require('spectre').open()")
         end
       }
     )

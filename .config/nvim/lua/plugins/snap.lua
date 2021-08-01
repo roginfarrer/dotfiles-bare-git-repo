@@ -1,6 +1,20 @@
 local snap = require("snap")
 local io = snap.get("common.io")
 
+local function getKeysSortedByValue(tbl)
+  local keys = {}
+  for key in pairs(tbl) do
+    table.insert(keys, key)
+  end
+  table.sort(
+    keys,
+    function(a, b)
+      return tbl[a] > tbl[b]
+    end
+  )
+  return keys
+end
+
 local defaults = {
   reverse = true
 }
@@ -78,22 +92,20 @@ end
 
 function _G.delete_buffer()
   local bufname = vim.fn.bufname("")
-  -- Remove path from table
-  snap_buffers[bufname] = nil
-end
 
-local function getKeysSortedByValue(tbl)
-  local keys = {}
-  for key in pairs(tbl) do
-    table.insert(keys, key)
-  end
-  table.sort(
-    keys,
-    function(a, b)
-      return tbl[a] > tbl[b]
+  local function getIndex(tbl, key)
+    local index = nil
+    for i, k in ipairs(tbl) do
+      if k == key then
+        index = i
+      end
     end
-  )
-  return keys
+    return index
+  end
+
+  -- Remove path from table
+  local idx = getIndex(snap_buffers, bufname)
+  table.remove(snap_buffers, idx)
 end
 
 local function tableHasValue(tbl, val)
@@ -120,13 +132,20 @@ local function makeBufferList()
     end
   end
 
+  -- Remove the active buffer
+  table.remove(result, 1)
+
   return result
 end
 
-local function bufferProducer()
+local function bufferProducer(request)
   -- Runs the slow-mode to get the buffers
   local result = snap.sync(makeBufferList)
-  coroutine.yield(result)
+  if request.canceled() then
+    coroutine.yield(nil)
+  else
+    coroutine.yield(result)
+  end
 end
 
 vim.cmd [[
