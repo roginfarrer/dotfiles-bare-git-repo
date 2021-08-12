@@ -13,29 +13,44 @@ return require("packer").startup(
   function(use)
     use({"wbthomason/packer.nvim", opt = true})
 
-    use(
-      {
-        "itchyny/lightline.vim",
-        config = function()
-          vim.g.lightline = {
-            colorscheme = "nightfly",
-            active = {
-              left = {
-                {"mode", "paste"},
-                {"readonly", "filename", "modified"}
-              },
-              right = {
-                {"percent", "filetype"},
-                {"gitbranch"}
-              }
-            },
-            ["component_function"] = {
-              gitbranch = "FugitiveHead"
-            }
-          }
-        end
-      }
-    )
+    use {
+      "vuki656/package-info.nvim",
+      config = function()
+        require("package-info").setup()
+      end
+    }
+    use {
+      "hoob3rt/lualine.nvim",
+      requires = {
+        "kyazdani42/nvim-web-devicons"
+      },
+      config = function()
+        require("plugins.lualine")
+      end
+    }
+    -- use(
+    --   {
+    --     "itchyny/lightline.vim",
+    --     config = function()
+    --       vim.g.lightline = {
+    --         colorscheme = "tokyonight",
+    --         active = {
+    --           left = {
+    --             {"mode", "paste"},
+    --             {"readonly", "filename", "modified"}
+    --           },
+    --           right = {
+    --             {"percent", "filetype"},
+    --             {"gitbranch"}
+    --           }
+    --         },
+    --         ["component_function"] = {
+    --           gitbranch = "FugitiveHead"
+    --         }
+    --       }
+    --     end
+    --   }
+    -- )
     use(
       {
         "mhinz/vim-startify",
@@ -287,6 +302,7 @@ return require("packer").startup(
     use({"folke/tokyonight.nvim"})
     use({"lighthaus-theme/vim-lighthaus"})
     use("shaunsingh/moonlight.nvim")
+    use({"siduck76/nvim-base16.lua"})
 
     use(
       {
