@@ -17,7 +17,7 @@ xnoremap("<Leader>P", '"+P')
 -- Make Y behave like it should
 nmap("Y", "y$")
 
--- Whening changing, don't save to register
+-- When changing, don't save to register
 nnoremap("c", '"_c')
 vnoremap("c", '"_c')
 

@@ -28,6 +28,8 @@ vim.o.termguicolors = true
 vim.o.undofile = true
 vim.o.updatetime = 300
 
+vim.g.python3_host_prog = "/usr/local/bin/python3"
+
 vim.g.mapleader = " "
 -- vim.cmd("colorscheme nightfly")
 vim.cmd("colorscheme tokyonight")

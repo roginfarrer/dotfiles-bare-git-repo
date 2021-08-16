@@ -18,7 +18,7 @@ require("formatter").setup(
       typescriptreact = {prettier},
       css = {prettier},
       markdown = {prettier},
-      mdx = {prettier},
+      ["markdown.mdx"] = {prettier},
       scss = {prettier},
       html = {prettier},
       json = {prettier},

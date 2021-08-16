@@ -9,12 +9,12 @@ local vimp = require "vimp"
 
 require("telescope").setup {
   defaults = {
-    -- layout_config = {
-    --   horizontal = {
-    --     prompt_position = "top"
-    --   }
-    -- },
-    -- sorting_strategy = "ascending",
+    layout_config = {
+      horizontal = {
+        prompt_position = "top"
+      }
+    },
+    sorting_strategy = "ascending",
     mappings = {
       -- insert mode
       i = {
@@ -25,11 +25,6 @@ require("telescope").setup {
         ["<esc>"] = actions.close
       }
     },
-    -- generic_sorter = require "telescope.sorters".get_fzy_sorter,
-    -- file_sorter = require "telescope.sorters".get_fzy_sorter,
-    -- file_previewer = require "telescope.previewers".vim_buffer_cat.new,
-    -- grep_previewer = require "telescope.previewers".vim_buffer_vimgrep.new,
-    -- qflist_previewer = require "telescope.previewers".vim_buffer_qflist.new,
     color_devicons = true,
     set_env = {["COLORTERM"] = "truecolor"}
   }

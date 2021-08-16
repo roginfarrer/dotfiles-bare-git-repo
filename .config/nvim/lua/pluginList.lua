@@ -1,24 +1,28 @@
-local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
+local use_nvim_lsp = vim.g.use_nvim_lsp == true
 
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  vim.fn.execute("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
-  vim.fn.execute("packadd packer.nvim")
+local present, _ = pcall(require, "packerInit")
+local packer
+
+if present then
+  packer = require "packer"
+else
+  return false
 end
 
-vim.cmd([[packadd packer.nvim]])
--- Run :PackerCompile whenver this file is updated
-vim.cmd([[autocmd BufWritePost __plugins.lua PackerCompile]])
+local use = packer.use
 
-return require("packer").startup(
-  function(use)
+return packer.startup(
+  function()
     use({"wbthomason/packer.nvim", opt = true})
 
     use {
       "vuki656/package-info.nvim",
+      event = "BufRead",
       config = function()
         require("package-info").setup()
       end
     }
+
     use {
       "hoob3rt/lualine.nvim",
       requires = {
@@ -28,29 +32,7 @@ return require("packer").startup(
         require("plugins.lualine")
       end
     }
-    -- use(
-    --   {
-    --     "itchyny/lightline.vim",
-    --     config = function()
-    --       vim.g.lightline = {
-    --         colorscheme = "tokyonight",
-    --         active = {
-    --           left = {
-    --             {"mode", "paste"},
-    --             {"readonly", "filename", "modified"}
-    --           },
-    --           right = {
-    --             {"percent", "filetype"},
-    --             {"gitbranch"}
-    --           }
-    --         },
-    --         ["component_function"] = {
-    --           gitbranch = "FugitiveHead"
-    --         }
-    --       }
-    --     end
-    --   }
-    -- )
+
     use(
       {
         "mhinz/vim-startify",
@@ -59,61 +41,85 @@ return require("packer").startup(
         end
       }
     )
+
     use(
       {
         "nvim-treesitter/nvim-treesitter",
         run = ":TSUpdate",
+        event = "BufRead",
         config = function()
           require("plugins.treesitter")
         end
       }
     )
+
     use("machakann/vim-sandwich")
+
     use("tpope/vim-commentary")
     use("tpope/vim-sleuth")
-    use("junegunn/goyo.vim")
+    use({"junegunn/goyo.vim", cmd = "Goyo"})
+
     use(
       {
         "steelsojka/pears.nvim",
+        event = "InsertEnter",
         config = function()
           require("pears").setup()
         end
       }
     )
+
     use("tpope/vim-abolish")
-    use("dhruvasagar/vim-open-url")
+
+    use({"dhruvasagar/vim-open-url", cmd = "<Plug>(open-url-browser)"})
+
     use(
       {
         "vim-test/vim-test",
+        cmd = {"TestFile", "TestSuite", "TestNearest"},
         config = function()
           require("plugins.vim-test")
         end
       }
     )
-    use("wellle/targets.vim")
-    -- use(
-    --   {
-    --     "nvim-telescope/telescope.nvim",
-    --     config = function()
-    --       require("plugins.telescope")
-    --     end,
-    --     requires = {
-    --       "nvim-lua/plenary.nvim",
-    --       "nvim-lua/popup.nvim",
-    --       "nvim-telescope/telescope-fzf-writer.nvim"
-    --     }
-    --   }
-    -- )
+
+    use({"wellle/targets.vim", event = "BufEnter"})
+
+    use(
+      {
+        "nvim-telescope/telescope.nvim",
+        config = function()
+          require("plugins.telescope")
+        end,
+        requires = {
+          "nvim-lua/plenary.nvim",
+          "nvim-telescope/telescope-fzf-writer.nvim"
+        }
+      }
+    )
+
+    use {
+      "ahmedkhalf/project.nvim",
+      after = "telescope.nvim",
+      config = function()
+        require("project_nvim").setup {}
+        require("telescope").load_extension("projects")
+      end
+    }
+
     use(
       {
         "camspiers/snap",
+        disable = true,
         config = function()
           require("plugins.snap")
         end
       }
     )
+
     -- use({"justinmk/vim-dirvish", opt = false})
     -- use({"roginfarrer/vim-dirvish-dovish", opt = false, branch = "main"})
+
     use(
       {
         "tamago324/lir.nvim",
@@ -123,128 +129,190 @@ return require("packer").startup(
         end
       }
     )
+
     use("tpope/vim-eunuch")
     use("duggiefresh/vim-easydir")
     use("jesseleite/vim-agriculture")
+
     use(
       {
         "tpope/vim-fugitive",
+        cmd = "Git",
+        disabled = true,
         config = function()
           require("plugins.git")
         end
       }
     )
+
+    use(
+      {
+        "tpope/vim-rhubarb",
+        after = "vim-fugitive",
+        disabled = true,
+        config = function()
+          require("plugins.git")
+        end
+      }
+    )
+
+    use {
+      "ruifm/gitlinker.nvim",
+      requires = "nvim-lua/plenary.nvim",
+      config = function()
+        require "gitlinker".setup()
+      end
+    }
+
     use(
       {
         "TimUntersberger/neogit",
+        cmd = "Neogit",
+        requires = {
+          "nvim-lua/plenary.nvim",
+          "sindrets/diffview.nvim"
+        },
         config = function()
           require("neogit").setup(
             {
-              -- override/add mappings
-              mappings = {
-                -- modify status buffer mappings
-                status = {
-                  -- Adds a mapping with "B" as key that does the "BranchPopup" command
-                  ["B"] = "BranchPopup"
-                }
+              integrations = {
+                diffview = true
               }
             }
           )
         end
       }
     )
-    use(
-      {
-        "tpope/vim-rhubarb",
-        config = function()
-          require("plugins.git")
-        end
-      }
-    )
+
     use("whiteinge/diffconflicts")
-    use(
-      {
-        "lewis6991/gitsigns.nvim",
-        requires = {
-          "nvim-lua/plenary.nvim"
-        }
-      }
-    )
+
+    use {
+      "lewis6991/gitsigns.nvim",
+      requires = {
+        "nvim-lua/plenary.nvim"
+      },
+      config = function()
+        require("gitsigns").setup()
+      end
+    }
+
     use(
       {
         "neoclide/coc.nvim",
+        event = "BufRead",
         branch = "release",
-        opt = vim.g.use_nvim_lsp,
+        disable = use_nvim_lsp,
         config = function()
           require("plugins.coc")
         end
       }
     )
+
     use(
       {
         "kabouzeid/nvim-lspinstall",
-        opt = not vim.g.use_nvim_lsp,
+        disable = not use_nvim_lsp,
         config = function()
           require("lspinstall").setup()
         end
       }
     )
+
     use(
       {
         "onsails/lspkind-nvim",
-        opt = not vim.g.use_nvim_lsp,
+        event = "BufEnter",
+        disable = not use_nvim_lsp,
         config = function()
           require("lspkind").init()
         end
       }
     )
+
     use(
       {
         "folke/trouble.nvim",
-        opt = not vim.g.use_nvim_lsp,
+        requires = "kyazdani42/nvim-web-devicons",
+        disable = not use_nvim_lsp,
+        cmd = {"Trouble", "TroubleToggle"},
         config = function()
-          require("trouble").setup()
+          require("trouble").setup {}
         end
       }
     )
+
     use(
       {
         "glepnir/lspsaga.nvim",
-        opt = not vim.g.use_nvim_lsp
+        disable = not use_nvim_lsp
       }
     )
-    use({"neovim/nvim-lspconfig", opt = not vim.g.use_nvim_lsp})
-    use({"jose-elias-alvarez/nvim-lsp-ts-utils", opt = not vim.g.use_nvim_lsp})
+
     use(
       {
-        "ray-x/lsp_signature.nvim",
-        opt = not vim.g.use_nvim_lsp
+        "neovim/nvim-lspconfig"
       }
     )
+
+    use(
+      {
+        "jose-elias-alvarez/nvim-lsp-ts-utils",
+        disable = not use_nvim_lsp
+      }
+    )
+
+    -- use(
+    --   {
+    --     "ray-x/lsp_signature.nvim",
+    --     disable = not use_nvim_lsp
+    --     -- cond = function()
+    --     --   return use_nvim_lsp
+    --     -- end,
+    --   }
+    -- )
+
     use(
       {
         "jose-elias-alvarez/null-ls.nvim",
-        opt = not vim.g.use_nvim_lsp
+        disable = not use_nvim_lsp
       }
     )
+
     use({"svermeulen/vimpeccable"})
+
+    -- use(
+    --   {
+    --     "hrsh7th/nvim-compe",
+    --     opt = false,
+    --     event = "InsertEnter",
+    --     config = function()
+    --       require("plugins.compe")
+    --     end
+    --   }
+    -- )
+
     use(
       {
-        "hrsh7th/nvim-compe",
-        opt = not vim.g.use_nvim_lsp,
-        config = function()
-          require("plugins.compe")
-        end
+        "ms-jpq/coq_nvim",
+        branch = "coq",
+        requires = {
+          "ms-jpq/coq.artifacts"
+        }
       }
     )
+
+    use({"ms-jpq/coq.artifacts", {branch = "artifacts"}})
+
     use(
       {
         "voldikss/vim-floaterm",
+        cmd = {"FloatermToggle", "FloatTermNew"},
         config = function()
           require("plugins.floaterm")
         end
       }
     )
+
     use(
       {
         "kyazdani42/nvim-web-devicons",
@@ -263,33 +331,42 @@ return require("packer").startup(
         end
       }
     )
+
     use("ryanoasis/vim-devicons")
+
     use(
       {
         "norcalli/nvim-colorizer.lua",
+        event = "BufRead",
         config = function()
           require("colorizer").setup()
         end
       }
     )
+
     use(
       {
         "windwp/nvim-ts-autotag",
+        after = "nvim-treesitter",
         config = function()
           require("nvim-ts-autotag").setup()
         end
       }
     )
-    use({"jxnblk/vim-mdx-js"})
+
+    use({"jxnblk/vim-mdx-js", event = "BufRead"})
+
     use(
       {
         "tpope/vim-markdown",
+        event = "BufRead",
         config = function()
           require("plugins.polyglot")
         end
       }
     )
-    use("JoosepAlviste/nvim-ts-context-commentstring")
+
+    use({"JoosepAlviste/nvim-ts-context-commentstring", event = "BufRead"})
 
     -- Colors
     use("Rigellute/rigel")
@@ -307,11 +384,13 @@ return require("packer").startup(
     use(
       {
         "mhartington/formatter.nvim",
+        -- cmd = {"Format", "FormatWrite"},
         config = function()
           require("plugins.format")
         end
       }
     )
+
     use(
       {
         "windwp/nvim-spectre",
@@ -321,12 +400,14 @@ return require("packer").startup(
         end
       }
     )
-    -- use {
-    --   "kkoomen/vim-doge",
-    --   run = ":call doge#install()",
-    --   config = function()
-    --     require "plugins.doge"
-    --   end
-    -- }
+
+    use {
+      "kkoomen/vim-doge",
+      run = ":call doge#install()",
+      cmd = {"DogeGenerate", "DogeCreateDocStandard"},
+      config = function()
+        require "plugins.doge"
+      end
+    }
   end
 )

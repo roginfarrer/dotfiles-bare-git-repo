@@ -3,8 +3,7 @@ vim.g.use_nvim_lsp = false
 
 _G.global = {}
 
-require("plugins.__plugins")
-
+require("pluginList")
 require("settings")
 require("autocmds")
 require("keybindings")
