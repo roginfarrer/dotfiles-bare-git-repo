@@ -160,7 +160,22 @@ return packer.startup(
       "ruifm/gitlinker.nvim",
       requires = "nvim-lua/plenary.nvim",
       config = function()
-        require "gitlinker".setup()
+        if vim.fn.empty(vim.fn.glob("$HOME/.config/nvim/lua/plugins/DO_NOT_COMMIT_gitlinker.lua")) == 0 then
+          require "plugins.DO_NOT_COMMIT_gitlinker"
+        else
+          require "gitlinker".setup(
+            {
+              opts = {
+                mappings = nil,
+                -- adds current line nr in the url for normal mode
+                add_current_line_on_normal_mode = false
+              }
+            }
+          )
+        end
+      end,
+      setup = function()
+        require("mappings").gitlinker()
       end
     }
 
@@ -295,13 +310,14 @@ return packer.startup(
       {
         "ms-jpq/coq_nvim",
         branch = "coq",
+        disable = not use_nvim_lsp,
         requires = {
           "ms-jpq/coq.artifacts"
         }
       }
     )
 
-    use({"ms-jpq/coq.artifacts", {branch = "artifacts"}})
+    use({"ms-jpq/coq.artifacts", after = "coq_nvim", {branch = "artifacts"}})
 
     use(
       {

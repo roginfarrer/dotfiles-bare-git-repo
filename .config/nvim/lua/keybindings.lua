@@ -50,10 +50,10 @@ nnoremap("<Space><Space>", "za")
 nnoremap("<leader>ek", [[:vsp $HOME/.config/kitty/kitty.conf<CR>]])
 nnoremap("<leader>ev", [[:vsp $HOME/.config/nvim/init.lua<CR>]])
 
-nnoremap({"silent"}, "<leader>go", [[:GBrowse<CR>]])
-vnoremap({"silent"}, "<leader>go", [[:'<,'>GBrowse<CR>]])
-nnoremap({"silent"}, "<leader>gc", [[:GBrowse!<CR>]])
-vnoremap({"silent"}, "<leader>gc", [[:'<,'>GBrowse!<CR>]])
+-- nnoremap({"silent"}, "<leader>go", [[:GBrowse<CR>]])
+-- vnoremap({"silent"}, "<leader>go", [[:'<,'>GBrowse<CR>]])
+-- nnoremap({"silent"}, "<leader>gc", [[:GBrowse!<CR>]])
+-- vnoremap({"silent"}, "<leader>gc", [[:'<,'>GBrowse!<CR>]])
 -- vimp complains about duplicate mapping
 vim.api.nvim_set_keymap(
   "n",
