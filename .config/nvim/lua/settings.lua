@@ -31,7 +31,3 @@ vim.o.updatetime = 300
 vim.g.python3_host_prog = "/usr/local/bin/python3"
 
 vim.g.mapleader = " "
--- vim.cmd("colorscheme nightfly")
-vim.cmd("colorscheme tokyonight")
--- local base16 = require "base16"
--- base16(base16.themes("norchad"), true)

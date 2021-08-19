@@ -37,4 +37,9 @@ M.gitlinker = function()
   )
 end
 
+M.floatterm = function()
+  u.nnoremap({"silent"}, "<C-t>", [[:FloatermToggle<CR>]])
+  u.tnoremap({"silent"}, "<C-t>", [[<C-\><C-n>:FloatermToggle<CR>]])
+end
+
 return M

@@ -134,28 +134,6 @@ return packer.startup(
     use("duggiefresh/vim-easydir")
     use("jesseleite/vim-agriculture")
 
-    use(
-      {
-        "tpope/vim-fugitive",
-        cmd = "Git",
-        disabled = true,
-        config = function()
-          require("plugins.git")
-        end
-      }
-    )
-
-    use(
-      {
-        "tpope/vim-rhubarb",
-        after = "vim-fugitive",
-        disabled = true,
-        config = function()
-          require("plugins.git")
-        end
-      }
-    )
-
     use {
       "ruifm/gitlinker.nvim",
       requires = "nvim-lua/plenary.nvim",
@@ -323,8 +301,8 @@ return packer.startup(
       {
         "voldikss/vim-floaterm",
         cmd = {"FloatermToggle", "FloatTermNew"},
-        config = function()
-          require("plugins.floaterm")
+        setup = function()
+          require("mappings").floatterm()
         end
       }
     )
@@ -392,15 +370,30 @@ return packer.startup(
     use("windwp/wind-colors")
     use({"metalelf0/jellybeans-nvim", requires = {"rktjmp/lush.nvim"}})
     use("christianchiarulli/nvcode-color-schemes.vim")
-    use({"folke/tokyonight.nvim"})
+    use(
+      {
+        "folke/tokyonight.nvim",
+        config = function()
+          require("theme")
+        end
+      }
+    )
     use({"lighthaus-theme/vim-lighthaus"})
     use("shaunsingh/moonlight.nvim")
     use({"siduck76/nvim-base16.lua"})
+    use(
+      {
+        "EdenEast/nightfox.nvim",
+        config = function()
+          require("theme")
+        end
+      }
+    )
 
     use(
       {
         "mhartington/formatter.nvim",
-        -- cmd = {"Format", "FormatWrite"},
+        event = "BufRead",
         config = function()
           require("plugins.format")
         end
