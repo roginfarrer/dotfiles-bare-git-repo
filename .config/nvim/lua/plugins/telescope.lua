@@ -97,7 +97,7 @@ vimp.nnoremap({ 'silent' }, '<leader>fa', M.arglist)
 vimp.nnoremap({ 'silent' }, '<Leader>fh', [[<cmd>Telescope oldfiles<CR>]])
 
 vimp.nnoremap({ 'silent' }, '<C-p>', [[<cmd>Telescope git_files<CR>]])
-vimp.nnoremap({ 'silent' }, '<leader>;', M.recent_buffers)
+vimp.nnoremap({ 'silent' }, '<leader>;', [[<cmd>Telescope buffers<CR>]])
 
 return setmetatable({}, {
 	__index = function(_, k)
