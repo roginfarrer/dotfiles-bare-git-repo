@@ -1,4 +1,4 @@
-local ts_utils = require("nvim-lsp-ts-utils")
+local ts_utils = require('nvim-lsp-ts-utils')
 
 local ts_utils_settings = {
 	-- debug = true,
@@ -8,13 +8,13 @@ local ts_utils_settings = {
 	update_imports_on_move = true,
 
 	-- eslint
-	eslint_bin = "eslint_d",
+	eslint_bin = 'eslint_d',
 	eslint_enable_diagnostics = true,
 	eslint_show_rule_id = true,
 	enable_formatting = false,
 
 	-- formatting
-	formatter = "prettierd",
+	formatter = 'prettierd',
 }
 
 local M = function(on_attach)
@@ -33,7 +33,7 @@ local M = function(on_attach)
 			-- u.buf_map("n", "qq", ":TSLspFixCurrent<CR>", nil, bufnr)
 			-- u.buf_map("i", ".", ".<C-x><C-o>", nil, bufnr)
 
-			vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
+			vim.opt_local.omnifunc = 'v:lua.vim.lsp.omnifunc'
 		end,
 	}
 end
