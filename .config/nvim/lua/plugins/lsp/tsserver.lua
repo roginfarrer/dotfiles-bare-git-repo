@@ -6,15 +6,14 @@ local ts_utils_settings = {
 	complete_parens = true,
 	signature_help_in_parens = true,
 	update_imports_on_move = true,
-
 	-- eslint
 	eslint_bin = 'eslint_d',
 	eslint_enable_diagnostics = true,
 	eslint_show_rule_id = true,
-	enable_formatting = false,
-
+	eslint_disable_if_no_config = true,
 	-- formatting
 	formatter = 'prettierd',
+	enable_formatting = false,
 }
 
 local M = function(on_attach)

@@ -22,7 +22,6 @@ local on_attach = function(client, bufnr)
 	--     use_lspsaga = true
 	--   }
 	-- )
-	coq.lsp_ensure_capabilities({})
 
 	-- bindings
 	u.buf_map(
@@ -62,14 +61,12 @@ local on_attach = function(client, bufnr)
 		bufnr
 	)
 
-	-- if client.resolved_capabilities.document_formatting then
-	-- 	vim.cmd([[
-	--     augroup LspFormatOnSave
-	--       autocmd! * <buffer>
-	--       autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting()
-	--     augroup END
-	--   ]])
-	-- end
+	if client.resolved_capabilities.document_formatting then
+		vim.cmd('autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()')
+		require('vimp').map_command('Format', function()
+			vim.lsp.buf.formatting()
+		end)
+	end
 end
 
 require('lspsaga').init_lsp_saga({
@@ -87,7 +84,7 @@ require('lspconfig').typescript.setup(tsserver(on_attach))
 require('lspconfig').lua.setup(lua_ls(on_attach))
 
 -- Servers without configs
-local servers = { 'vim', 'bash', 'json' }
+local servers = { 'vim', 'bash' }
 for _, server in pairs(servers) do
 	require('lspconfig')[server].setup({
 		on_attach = on_attach,

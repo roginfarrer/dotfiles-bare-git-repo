@@ -81,6 +81,17 @@ return packer.startup(function()
 		config = function()
 			require('plugins.vim-test')
 		end,
+		setup = function()
+			require('mappings').test()
+		end,
+	})
+
+	use({
+		'kassio/neoterm',
+		setup = function()
+			vim.g.neoterm_default_mod = 'vertical'
+			vim.g.neoterm_shell = 'fish'
+		end,
 	})
 
 	use({ 'wellle/targets.vim', event = 'BufEnter' })
@@ -135,6 +146,7 @@ return packer.startup(function()
 	use({
 		'ruifm/gitlinker.nvim',
 		requires = 'nvim-lua/plenary.nvim',
+		cmd = { 'GBrowse' },
 		config = function()
 			require('plugins.gitlinker')
 		end,
@@ -236,7 +248,9 @@ return packer.startup(function()
 		'jose-elias-alvarez/null-ls.nvim',
 		requires = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
 		config = function()
-			require('plugins.null-ls')
+			if use_nvim_lsp then
+				require('plugins.null-ls')
+			end
 		end,
 		-- disable = not use_nvim_lsp
 	})
@@ -257,13 +271,29 @@ return packer.startup(function()
 	use({
 		'ms-jpq/coq_nvim',
 		branch = 'coq',
-		disable = not use_nvim_lsp,
+		disable = true,
 		requires = {
-			'ms-jpq/coq.artifacts',
+			{ 'ms-jpq/coq.artifacts', branch = 'artifacts' },
 		},
+		setup = function()
+			vim.g.coq_settings = {
+				auto_start = true,
+			}
+		end,
 	})
 
-	use({ 'ms-jpq/coq.artifacts', after = 'coq_nvim', { branch = 'artifacts' } })
+	use({
+		'hrsh7th/nvim-cmp',
+		requires = {
+			'hrsh7th/cmp-nvim-lsp',
+			'hrsh7th/cmp-nvim-lua',
+			'hrsh7th/cmp-buffer',
+			'hrsh7th/cmp-path',
+		},
+		config = function()
+			require('plugins.cmp')
+		end,
+	}) -- Autocompletion plugin
 
 	use({
 		'voldikss/vim-floaterm',
@@ -322,28 +352,28 @@ return packer.startup(function()
 	use({ 'JoosepAlviste/nvim-ts-context-commentstring', event = 'BufRead' })
 
 	-- Colors
-	use('Rigellute/rigel')
-	use('cocopon/iceberg.vim')
-	use('bluz71/vim-nightfly-guicolors')
-	use({ 'Dualspc/spaceodyssey', branch = 'lua' })
-	use('windwp/wind-colors')
-	use({ 'metalelf0/jellybeans-nvim', requires = { 'rktjmp/lush.nvim' } })
-	use('christianchiarulli/nvcode-color-schemes.vim')
+	-- use('Rigellute/rigel')
+	-- use('cocopon/iceberg.vim')
+	-- use('bluz71/vim-nightfly-guicolors')
+	-- use({ 'Dualspc/spaceodyssey', branch = 'lua' })
+	-- use('windwp/wind-colors')
+	-- use({ 'metalelf0/jellybeans-nvim', requires = { 'rktjmp/lush.nvim' } })
+	-- use('christianchiarulli/nvcode-color-schemes.vim')
 	use({
 		'folke/tokyonight.nvim',
 		config = function()
 			require('theme')
 		end,
 	})
-	use({ 'lighthaus-theme/vim-lighthaus' })
-	use('shaunsingh/moonlight.nvim')
-	use({ 'siduck76/nvim-base16.lua' })
-	use({
-		'EdenEast/nightfox.nvim',
-		config = function()
-			require('theme')
-		end,
-	})
+	-- use({ 'lighthaus-theme/vim-lighthaus' })
+	-- use('shaunsingh/moonlight.nvim')
+	-- use({ 'siduck76/nvim-base16.lua' })
+	-- use({
+	-- 	'EdenEast/nightfox.nvim',
+	-- 	config = function()
+	-- 		require('theme')
+	-- 	end,
+	-- })
 
 	use({
 		'mhartington/formatter.nvim',
