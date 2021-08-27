@@ -30,6 +30,8 @@ if not present then
 	end
 end
 
+vim.cmd([[autocmd BufWritePost plugins.lua source <afile> | PackerCompile]])
+
 return packer.init({
 	git = {
 		clone_timeout = 600, -- Timeout, in seconds, for git clones

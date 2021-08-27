@@ -23,7 +23,7 @@ return packer.startup(function()
 	})
 
 	use({
-		'hoob3rt/lualine.nvim',
+		'shadmansaleh/lualine.nvim',
 		requires = {
 			'kyazdani42/nvim-web-devicons',
 		},
@@ -48,20 +48,42 @@ return packer.startup(function()
 		end,
 	})
 
+	use({
+		'David-Kunz/treesitter-unit',
+		requires = { 'nvim-treesitter/nvim-treesitter' },
+		config = function()
+			vim.api.nvim_set_keymap(
+				'x',
+				'iu',
+				':lua require"treesitter-unit".select()<CR>',
+				{ noremap = true }
+			)
+			vim.api.nvim_set_keymap(
+				'x',
+				'au',
+				':lua require"treesitter-unit".select(true)<CR>',
+				{ noremap = true }
+			)
+			vim.api.nvim_set_keymap(
+				'o',
+				'iu',
+				':<c-u>lua require"treesitter-unit".select()<CR>',
+				{ noremap = true }
+			)
+			vim.api.nvim_set_keymap(
+				'o',
+				'au',
+				':<c-u>lua require"treesitter-unit".select(true)<CR>',
+				{ noremap = true }
+			)
+		end,
+	})
+
 	use('machakann/vim-sandwich')
 
 	use('tpope/vim-commentary')
 	use('tpope/vim-sleuth')
 	use({ 'junegunn/goyo.vim', cmd = 'Goyo' })
-
-	use({
-		'steelsojka/pears.nvim',
-		-- event = "InsertEnter",
-		disable = true,
-		config = function()
-			require('pears').setup()
-		end,
-	})
 
 	use({
 		'windwp/nvim-autopairs',
@@ -257,17 +279,6 @@ return packer.startup(function()
 
 	use({ 'svermeulen/vimpeccable' })
 
-	-- use(
-	--   {
-	--     "hrsh7th/nvim-compe",
-	--     opt = false,
-	--     event = "InsertEnter",
-	--     config = function()
-	--       require("plugins.compe")
-	--     end
-	--   }
-	-- )
-
 	use({
 		'ms-jpq/coq_nvim',
 		branch = 'coq',
@@ -293,7 +304,7 @@ return packer.startup(function()
 		config = function()
 			require('plugins.cmp')
 		end,
-	}) -- Autocompletion plugin
+	})
 
 	use({
 		'voldikss/vim-floaterm',
@@ -387,8 +398,12 @@ return packer.startup(function()
 	use({
 		'windwp/nvim-spectre',
 		requires = { 'nvim-lua/plenary.nvim', 'nvim-lua/popup.nvim' },
-		config = function()
-			require('utils').nnoremap('<leader>fr', ":lua require('spectre').open()")
+		cmd = { 'FindAndReplace' },
+		setup = function()
+			vim.cmd(
+				[[command! FindAndReplace lua require('spectre').open({is_insert_mode = true})]]
+			)
+			require('utils').nnoremap('<leader>fr', [[:FindAndReplace<CR>]])
 		end,
 	})
 
