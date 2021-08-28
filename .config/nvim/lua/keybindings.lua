@@ -26,9 +26,9 @@ nmap('<C-k>', '<C-W>k')
 nmap('<C-h>', '<C-W>h')
 nmap('<C-l>', '<C-W>l')
 
-nmap('<leader>w', [[:w!<CR>]])
-nmap('<leader>q', [[:q<CR>]])
-nmap('<leader>x', [[:wq<CR>]])
+-- nmap('<leader>w', [[:w!<CR>]])
+-- nmap('<leader>q', [[:q<CR>]])
+-- nmap('<leader>x', [[:wq<CR>]])
 
 -- newline without insert
 nmap('<CR>', 'o<Esc>"_cc<Esc>')
@@ -45,10 +45,10 @@ vnoremap('<A-j>', [[:m '>+1<CR>gv=gv]])
 vnoremap('<A-k>', [[:m '<-2<CR>gv=gv]])
 
 -- Toggle folds
-nnoremap('<Space><Space>', 'za')
+-- nnoremap('<Space><Space>', 'za')
 
-nnoremap('<leader>ek', [[:vsp $HOME/.config/kitty/kitty.conf<CR>]])
-nnoremap('<leader>ev', [[:vsp $HOME/.config/nvim/init.lua<CR>]])
+-- nnoremap('<leader>ek', [[:vsp $HOME/.config/kitty/kitty.conf<CR>]])
+-- nnoremap('<leader>ev', [[:vsp $HOME/.config/nvim/init.lua<CR>]])
 
 -- nnoremap({"silent"}, "<leader>go", [[:GBrowse<CR>]])
 -- vnoremap({"silent"}, "<leader>go", [[:'<,'>GBrowse<CR>]])
@@ -63,7 +63,7 @@ vim.api.nvim_set_keymap(
 )
 
 nmap('gx', '<Plug>(open-url-browser)')
-nmap('<leader>gs', [[:G<CR>]])
+-- nmap('<leader>gs', [[:G<CR>]])
 
 -- TERMINAL --
 -- To map <Esc> to exit terminal-mode: >
@@ -71,7 +71,7 @@ tnoremap('<leader><Esc>', [[<C-\><C-n>]])
 tnoremap('<leader>j', [[<C-\><C-n>]])
 
 -- Open a new split with a terminal
-nnoremap('<leader>te', [[:vs<CR>:terminal fish<CR>]])
+-- nnoremap('<leader>te', [[:vs<CR>:terminal fish<CR>]])
 
 -- a paste from register chord
 tnoremap({ 'expr' }, '<A-r>', [['<C-/>']])

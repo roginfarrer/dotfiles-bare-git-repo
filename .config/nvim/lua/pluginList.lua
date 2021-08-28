@@ -415,4 +415,11 @@ return packer.startup(function()
 			require('plugins.doge')
 		end,
 	})
+
+	use({
+		'folke/which-key.nvim',
+		config = function()
+			require('plugins.which-key')
+		end,
+	})
 end)
